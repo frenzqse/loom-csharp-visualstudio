@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="589d3be7-962a-47dd-b649-88830c77751e" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:8033/OpenEngSB/DotNet/Service" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="Service.xsd" MetadataType="Schema" ID="98310958-cbdb-4ac8-81db-a229e25b5531" SourceId="1" SourceUrl="http://localhost:8033/OpenEngSB/DotNet/Service?xsd=xsd2" />
+    <MetadataFile FileName="Service1.xsd" MetadataType="Schema" ID="d6260ed4-c86e-4ba3-a43d-dca35210368d" SourceId="1" SourceUrl="http://localhost:8033/OpenEngSB/DotNet/Service?xsd=xsd1" />
+    <MetadataFile FileName="MainWindow.wsdl" MetadataType="Wsdl" ID="450c2aad-7080-4ca1-a912-f00c556a9f15" SourceId="1" SourceUrl="http://localhost:8033/OpenEngSB/DotNet/Service?wsdl" />
+    <MetadataFile FileName="Service2.xsd" MetadataType="Schema" ID="c410ec60-6112-40e9-a59f-28a0d7215e77" SourceId="1" SourceUrl="http://localhost:8033/OpenEngSB/DotNet/Service?xsd=xsd0" />
+    <MetadataFile FileName="Service.disco" MetadataType="Disco" ID="7b492b58-6097-4488-a9c4-d201fe7cbd74" SourceId="1" SourceUrl="http://localhost:8033/OpenEngSB/DotNet/Service?disco" />
+    <MetadataFile FileName="Service3.xsd" MetadataType="Schema" ID="f4618705-9e26-48e8-ba45-6f6d6598f84a" SourceId="1" SourceUrl="http://localhost:8033/OpenEngSB/DotNet/Service?xsd=xsd3" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>
