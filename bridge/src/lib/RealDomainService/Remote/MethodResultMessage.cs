@@ -24,15 +24,13 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
 {
     public class MethodResultMessage
     {
-        public MethodResult result { get; set; }
-        public string callId { get; set; }
+        public MessageResult message { get; set; }
 
-        public static MethodResultMessage CreateInstance(MethodResult result, string callId)
+        public static MethodResultMessage CreateInstance(MessageResult message)
         {
-            MethodResultMessage msg = new MethodResultMessage();
-            msg.result = result;
-            msg.callId = callId;
-            return msg;
+            MethodResultMessage instance=new MethodResultMessage();
+            instance.message = message;
+            return instance;
         }
     }
 }

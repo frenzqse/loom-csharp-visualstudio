@@ -27,6 +27,10 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
     public class MethodCall
     {
         /// <summary>
+        /// Fully qualified class names of the arguments.
+        /// </summary>
+        public IList<string> classes { get; set; }
+        /// <summary>
         /// Name of the method to be called.
         /// </summary>
         public string methodName { get; set; }
@@ -41,10 +45,6 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
         /// </summary>
         public IDictionary<string, string> metaData { get; set; }
 
-        /// <summary>
-        /// Fully qualified class names of the arguments.
-        /// </summary>
-        public IList<string> classes { get; set; }
 
         public static MethodCall CreateInstance(string methodName, IList<object> args, IDictionary<string, string> metaData, IList<string> classes)
         {

@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="AuditConnector.cs" />
     <Compile Include="ExampleConnector.cs" />
+    <Compile Include="IOSBCOmmands.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

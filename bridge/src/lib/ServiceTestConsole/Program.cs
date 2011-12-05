@@ -41,7 +41,7 @@ namespace ServiceTestConsole
             // Methods of AuditDomain can be called by the OpenEngSb
             // after calling RegisterDomainService()
             string destination = "tcp://localhost:6549";
-            string domainType = "example";
+            string domainType = "signal";
 
             IDomainFactory factory = DomainFactoryProvider.GetDomainFactoryInstance();
             IExampleDomain auditDomain = new ExampleConnector();
@@ -55,7 +55,7 @@ namespace ServiceTestConsole
 
             IExampleDomain domain = factory.RetrieveDomainProxy<IExampleDomain>(destination, domainType+"+external-connector-proxy+" + serviceId);
 
-            domain.DoSomething("test");
+            //domain.DoSomething("test");
 
             Console.ReadLine();
 

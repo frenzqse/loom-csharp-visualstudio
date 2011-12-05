@@ -24,18 +24,17 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
 {
     public class MethodCallRequest
     {
-        public MethodCall methodCall { get; set; }
-        public string callId { get; set; }
-        public bool answer { get; set; }
-        public string destination { get; set; }
+        public Authentification authenticationData { get; set; }
+        public Message message { get; set; }
+        public long timestamp{get;set;}
 
-        public static MethodCallRequest CreateInstance(MethodCall methodCall, string callId, bool answer, string destination)
+        public static MethodCallRequest CreateInstance(Authentification authenticationData, Message message)
         {
             MethodCallRequest request = new MethodCallRequest();
-            request.methodCall = methodCall;
-            request.callId = callId;
-            request.answer = answer;
-            request.destination = destination;
+            request.authenticationData = authenticationData;
+            request.message = message;
+            //request.methodCall = methodCall;
+            request.timestamp = DateTime.Now.Ticks;
             return request;
         }
     }
