@@ -76,9 +76,9 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
             IIncomingPort portIn = new JmsIncomingPort(Destination.CreateDestinationString(_host, methodCallRequest.message.callId));
             string methodReturnMsg = portIn.Receive();
 
-            MethodResult methodReturn = _marshaller.UnmarshallObject(methodCallMsg, typeof(MethodResult)) as MethodResult;
+            MethodResultMessage methodReturn = _marshaller.UnmarshallObject(methodReturnMsg, typeof(MethodResultMessage)) as MethodResultMessage;
 
-            return ToMessage(methodReturn, callMessage);
+            return ToMessage(methodReturn.message.result, callMessage);
         }
 
         /// <summary>

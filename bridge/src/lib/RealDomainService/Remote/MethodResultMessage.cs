@@ -22,10 +22,17 @@ using System.Text;
 
 namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
 {
+    /// <summary>
+    /// Container for MethodResultMessage
+    /// </summary>
     public class MethodResultMessage
     {
         public MessageResult message { get; set; }
-
+        /// <summary>
+        /// Creates a new instance of MethodResultMessage
+        /// </summary>
+        /// <param name="message">Message</param>
+        /// <returns>Returns a new instance of MethodResultMessage</returns>
         public static MethodResultMessage CreateInstance(MessageResult message)
         {
             MethodResultMessage instance=new MethodResultMessage();

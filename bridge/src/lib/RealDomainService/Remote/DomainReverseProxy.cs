@@ -159,29 +159,7 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
 
             IOutgoingPort portOut = new JmsOutgoingPort(destination.FullDestination);
             string request = _marshaller.MarshallObject(callRequest);
-            portOut.Send(request);
-
-            //IIncomingPort portIn = new JmsIncomingPort(Destination.CreateDestinationString(destination.Host, callRequest.message.callId));
-           /* while (true) {
-                string reply = _portIn.Receive();
-                try
-                {
-                    MethodResultMessage result = _marshaller.UnmarshallObject(reply, typeof(MethodResultMessage)) as MethodResultMessage;
-                    if (result.result.type == MethodResult.ReturnType.Void) break;
-                    if (result.result.type == MethodResult.ReturnType.Exception)
-                        throw new ApplicationException("Remote Exception while creating service proxy");
-                }
-                catch {
-                    MethodCallRequest Element = _marshaller.UnmarshallObject(reply, typeof(MethodCallRequest)) as MethodCallRequest;
-                    Element.authenticationData = callRequest.authenticationData;
-                    destination.Queue=Element.message.callId;
-                    reply = _marshaller.MarshallObject(Element);
-                    portOut = new JmsOutgoingPort(destination.FullDestination);
-                    portOut.Send(reply);
-                }
-            * }
-             */   
-            
+            portOut.Send(request);            
         }
 
         /// <summary>
