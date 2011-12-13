@@ -22,20 +22,27 @@ using System.Text;
 
 namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
 {
+    /// <summary>
+    /// Container for MethodCallRequest
+    /// </summary>
     public class MethodCallRequest
     {
-        public MethodCall methodCall { get; set; }
-        public string callId { get; set; }
-        public bool answer { get; set; }
-        public string destination { get; set; }
+        public Authentification authenticationData { get; set; }
+        public Message message { get; set; }
+        public long timestamp{get;set;}
 
-        public static MethodCallRequest CreateInstance(MethodCall methodCall, string callId, bool answer, string destination)
+        /// <summary>
+        /// Creates a new instance of MessageCallRequest
+        /// </summary>
+        /// <param name="authentification">Authentication Datas</param>
+        /// <param name="message">Message</param>
+        /// <returns>Returns a new instance of MethodCallRequest</returns>
+        public static MethodCallRequest CreateInstance(Authentification authenticationData, Message message)
         {
             MethodCallRequest request = new MethodCallRequest();
-            request.methodCall = methodCall;
-            request.callId = callId;
-            request.answer = answer;
-            request.destination = destination;
+            request.authenticationData = authenticationData;
+            request.message = message;
+            request.timestamp = DateTime.Now.Ticks;
             return request;
         }
     }

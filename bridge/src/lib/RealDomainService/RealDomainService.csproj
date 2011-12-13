@@ -60,11 +60,16 @@
     <Compile Include="Communication\Jms\JmsPort.cs" />
     <Compile Include="Communication\Json\JsonMarshaller.cs" />
     <Compile Include="DomainFactoryProvider.cs" />
+    <Compile Include="Remote\Authentification.cs" />
+    <Compile Include="Remote\BinaryData.cs" />
     <Compile Include="Remote\ConnectorDescription.cs" />
     <Compile Include="Remote\ConnectorId.cs" />
     <Compile Include="Communication\Jms\Destination.cs" />
+    <Compile Include="Remote\Data.cs" />
     <Compile Include="Remote\DomainProxy.cs" />
     <Compile Include="Remote\LocalType.cs" />
+    <Compile Include="Remote\Message.cs" />
+    <Compile Include="Remote\MessageResult.cs" />
     <Compile Include="Remote\MethodCall.cs" />
     <Compile Include="Remote\MethodCallRequest.cs" />
     <Compile Include="Remote\MethodResult.cs" />

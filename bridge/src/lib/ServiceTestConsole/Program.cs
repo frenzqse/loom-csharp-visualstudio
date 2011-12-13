@@ -55,11 +55,10 @@ namespace ServiceTestConsole
 
             IExampleDomain domain = factory.RetrieveDomainProxy<IExampleDomain>(destination, domainType+"+external-connector-proxy+" + serviceId);
 
-            domain.DoSomething("test");
-
-            Console.ReadLine();
-
+            String result=domain.DoSomething("Hello World");
+            Console.WriteLine(result);
             factory.UnregisterDomainService(auditDomain);
+            Console.ReadKey();
         }
     }
 }

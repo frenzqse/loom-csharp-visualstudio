@@ -44,5 +44,13 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService
             _logger.Info("ExampleDomain.DoSomething(LogEvent)");
             return "something done with logger";
         }
+        public void setDomainId(String element)
+        {
+            _logger.Info("setDomainId:"+element);
+        }
+        public void setConnectorId(String ASDA)
+        {
+            _logger.Info("setConnectorId:" + ASDA);
+        }
     }
 }

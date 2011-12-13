@@ -27,8 +27,8 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
     /// </summary>
     public class ConnectorDescription
     {
-        public IDictionary<String, String> attributes { get; set; }
         public IDictionary<String, Object> properties { get; set; }
+        public IDictionary<String, String> attributes { get; set; }
 
         public ConnectorDescription()
         {

@@ -36,7 +36,7 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
     public class DomainReverseProxy<T>: IStoppable
     {
         private const string _CREATION_QUEUE = "receive";
-        private const string _CREATION_SERVICE_ID = "ConnectorManager";
+        private const string _CREATION_SERVICE_ID = "connectorManager";
         private const string _CREATION_METHOD_NAME = "create";
         private const string _CREATION_DELETE_METHOD_NAME = "delete";
         private const string _CREATION_PORT = "jms-json";
@@ -119,13 +119,20 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
         /// </summary>
         private void CreateRemoteProxy()
         {
-            IDictionary<string, string>  metaData = new Dictionary<string, string>();
+            IDictionary<string, string> metaData = new Dictionary<string, string>();
             metaData.Add("serviceId", _CREATION_SERVICE_ID);
+            Guid id = Guid.NewGuid();
+
+            String classname = "org.openengsb.core.api.security.model.UsernamePasswordAuthenticationInfo";
+            Data data = Data.CreateInstance("admin", "password");
+            Authentification authentification = Authentification.createInstance(classname, data, BinaryData.CreateInstance());
 
             IList<string> classes = new List<string>();
             classes.Add("org.openengsb.core.api.model.ConnectorId");
             classes.Add("org.openengsb.core.api.model.ConnectorDescription");
-
+            Destination tmp = new Destination(_destination);
+            tmp.Queue = id.ToString();
+            //_destination = tmp.FullDestination;
             IList<object> args = new List<object>();
             ConnectorDescription connectorDescription = new ConnectorDescription();
             connectorDescription.attributes.Add("serviceId", _serviceId);
@@ -142,23 +149,17 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
 
             MethodCall creationCall = MethodCall.CreateInstance(_CREATION_METHOD_NAME, args, metaData, classes);
 
-            Guid id = Guid.NewGuid();
-            MethodCallRequest callRequest = MethodCallRequest.CreateInstance(creationCall, id.ToString(), true, "");
-            callRequest.methodCall = creationCall;
+
+            Message message = Message.createInstance(creationCall, id.ToString(), true, "");
+            MethodCallRequest callRequest = MethodCallRequest.CreateInstance(authentification, message);
+            callRequest.message.methodCall = creationCall;
 
             Destination destination = new Destination(_destination);
             destination.Queue = _CREATION_QUEUE;
 
             IOutgoingPort portOut = new JmsOutgoingPort(destination.FullDestination);
             string request = _marshaller.MarshallObject(callRequest);
-            portOut.Send(request);
-
-            IIncomingPort portIn = new JmsIncomingPort(Destination.CreateDestinationString(destination.Host, callRequest.callId));
-            string reply = portIn.Receive();
-
-            MethodResultMessage result = _marshaller.UnmarshallObject(reply, typeof(MethodResultMessage)) as MethodResultMessage;
-            if (result.result.type == MethodResult.ReturnType.Exception)
-                throw new ApplicationException("Remote Exception while creating service proxy");
+            portOut.Send(request);            
         }
 
         /// <summary>
@@ -178,7 +179,12 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
             MethodCall deletionCall = MethodCall.CreateInstance(_CREATION_DELETE_METHOD_NAME, args, metaData, classes);
 
             Guid id = Guid.NewGuid();
-            MethodCallRequest callRequest = MethodCallRequest.CreateInstance(deletionCall, id.ToString(), true, "");
+            String classname = "org.openengsb.core.api.security.model.UsernamePasswordAuthenticationInfo";
+            Data data = Data.CreateInstance("admin", "password");
+            Authentification authentification = Authentification.createInstance(classname, data, BinaryData.CreateInstance());
+
+            Message message = Message.createInstance(deletionCall, id.ToString(), true, "");
+            MethodCallRequest callRequest = MethodCallRequest.CreateInstance(authentification,message);
 
             Destination destination = new Destination(_destination);
             destination.Queue = _CREATION_QUEUE;
@@ -187,11 +193,11 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
             string request = _marshaller.MarshallObject(callRequest);
             portOut.Send(request);
 
-            IIncomingPort portIn = new JmsIncomingPort(Destination.CreateDestinationString(destination.Host, callRequest.callId));
+            IIncomingPort portIn = new JmsIncomingPort(Destination.CreateDestinationString(destination.Host, callRequest.message.callId));
             string reply = portIn.Receive();
 
             MethodResultMessage result = _marshaller.UnmarshallObject(reply, typeof(MethodResultMessage)) as MethodResultMessage;
-            if (result.result.type == MethodResult.ReturnType.Exception)
+            if (result.message.result.type == MethodResult.ReturnType.Exception)
                 throw new ApplicationException("Remote Exception while deleting service proxy");
         }
 
@@ -211,11 +217,11 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
 
                 MethodResultMessage methodReturnMessage = CallMethod(methodCallRequest);
 
-                if (methodCallRequest.answer)
+                if (methodCallRequest.message.answer)
                 {
                     string returnMsg = _marshaller.MarshallObject(methodReturnMessage);
                     Destination dest = new Destination(_destination);
-                    IOutgoingPort portOut = new JmsOutgoingPort(Destination.CreateDestinationString(dest.Host, methodCallRequest.callId));
+                    IOutgoingPort portOut = new JmsOutgoingPort(Destination.CreateDestinationString(dest.Host, methodCallRequest.message.callId));
                     portOut.Send(returnMsg);
                 }
             }
@@ -228,11 +234,11 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
         /// <returns></returns>
         private MethodResultMessage CallMethod(MethodCallRequest request)
         {
-            MethodInfo methInfo = FindMethodInDomain(request.methodCall);
+            MethodInfo methInfo = FindMethodInDomain(request.message.methodCall);
             if (methInfo == null)
                 throw new ApplicationException("No corresponding method found");
 
-            object[] arguments = CreateMethodArguments(request.methodCall);
+            object[] arguments = CreateMethodArguments(request.message.methodCall);
 
             object returnValue = null;
             try
@@ -241,15 +247,15 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
             }
             catch (Exception ex)
             {
-                return CreateMethodReturn(MethodResult.ReturnType.Exception, ex, request.callId);
+                return CreateMethodReturn(MethodResult.ReturnType.Exception, ex, request.message.callId);
             }
 
             MethodResultMessage returnMsg = null;
 
             if (returnValue == null)
-                returnMsg = CreateMethodReturn(MethodResult.ReturnType.Void, "null", request.callId);
+                returnMsg = CreateMethodReturn(MethodResult.ReturnType.Void, "null", request.message.callId);
             else
-                returnMsg = CreateMethodReturn(MethodResult.ReturnType.Object, returnValue, request.callId);
+                returnMsg = CreateMethodReturn(MethodResult.ReturnType.Object, returnValue, request.message.callId);
 
             return returnMsg;
         }
@@ -266,9 +272,9 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
             MethodResult methodResult = new MethodResult();
             methodResult.type = type;
             methodResult.arg = returnValue;
-
             MethodResultMessage methodResultMessage = new MethodResultMessage();
-            methodResultMessage.callId = correlationId;
+            methodResultMessage.message=new MessageResult();
+            methodResultMessage.message.callId = correlationId;
 
             if (returnValue == null)
                 methodResult.className = "null";
@@ -277,7 +283,7 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
 
             methodResult.metaData = new Dictionary<string, string>();
 
-            methodResultMessage.result = methodResult;
+            methodResultMessage.message.result = methodResult;
             return methodResultMessage;
         }
 

@@ -73,12 +73,12 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
             IOutgoingPort portOut = new JmsOutgoingPort(Destination.CreateDestinationString(_host, HOST_QUEUE));
             portOut.Send(methodCallMsg);
 
-            IIncomingPort portIn = new JmsIncomingPort(Destination.CreateDestinationString(_host, methodCallRequest.callId));
+            IIncomingPort portIn = new JmsIncomingPort(Destination.CreateDestinationString(_host, methodCallRequest.message.callId));
             string methodReturnMsg = portIn.Receive();
 
-            MethodResult methodReturn = _marshaller.UnmarshallObject(methodCallMsg, typeof(MethodResult)) as MethodResult;
+            MethodResultMessage methodReturn = _marshaller.UnmarshallObject(methodReturnMsg, typeof(MethodResultMessage)) as MethodResultMessage;
 
-            return ToMessage(methodReturn, callMessage);
+            return ToMessage(methodReturn.message.result, callMessage);
         }
 
         /// <summary>
@@ -130,7 +130,11 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
             }
 
             MethodCall call = MethodCall.CreateInstance(methodName, msg.Args, metaData, classes);
-            return MethodCallRequest.CreateInstance(call, id.ToString(), true, "");
+            String classname = "org.openengsb.core.api.security.model.UsernamePasswordAuthenticationInfo";
+            Data data = Data.CreateInstance("admin", "password");
+            Authentification authentification = Authentification.createInstance(classname, data, BinaryData.CreateInstance());
+            Message message = Message.createInstance(call, id.ToString(), true, "");
+            return MethodCallRequest.CreateInstance(authentification,message);
         }
 
         public new T GetTransparentProxy()
