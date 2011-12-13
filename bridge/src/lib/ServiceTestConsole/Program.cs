@@ -37,27 +37,21 @@ namespace ServiceTestConsole
         static void Main(string[] args)
         {
             log4net.Config.BasicConfigurator.Configure();
-
-            // Methods of AuditDomain can be called by the OpenEngSb
-            // after calling RegisterDomainService()
+            
             string destination = "tcp://localhost:6549";
             string domainType = "example";
 
             IDomainFactory factory = DomainFactoryProvider.GetDomainFactoryInstance();
-            IExampleDomain auditDomain = new ExampleConnector();
+            IExampleDomain exampleConnector = new ExampleConnector();
+            // string serviceId = factory.RegisterDomainService("tcp://localhost:6549", exampleConnector, "example");
+            string serviceId = factory.RegisterDomainService(destination, exampleConnector, domainType);
 
-            string serviceId = factory.RegisterDomainService(destination, auditDomain, domainType);
-
-            // Services of the OpenEngSb can be called
-            // after calling RetrieveDomainProxy()
-            // You have to create an AuditDomain with the serviceId: audit-service-1234 on the OpenEngSb
-            // Any services can be obtained, as long as the interace is available
-
+            // IExampleDomain domain = factory.RetrieveDomainProxy<IExampleDomain>("tcp://localhost:6549", "example+external-connector-proxy+" + serviceId);
             IExampleDomain domain = factory.RetrieveDomainProxy<IExampleDomain>(destination, domainType+"+external-connector-proxy+" + serviceId);
-
             String result=domain.DoSomething("Hello World");
+            
             Console.WriteLine(result);
-            factory.UnregisterDomainService(auditDomain);
+            factory.UnregisterDomainService(exampleConnector);
             Console.ReadKey();
         }
     }
