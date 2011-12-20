@@ -33,13 +33,13 @@ namespace Org.OpenEngSB.DotNet.Lib.MockupDomainService
     public class DomainFactory : IDomainFactory, IMonitorServiceCallback, IDisposable
     {
         private static DomainFactory _me;
-
+        private String serviceId;
         private int _objectId;
         private object _objectIdLocker = new object();
-
+        private String domainType;
         private Dictionary<int, AllMethodInfos> _methods = new Dictionary<int, AllMethodInfos>();
         private MonitorServiceClient _monitor;
-
+        private Type domainEvents;
         private DomainFactory()
         {
             InstanceContext ic = new InstanceContext(this);
@@ -59,7 +59,7 @@ namespace Org.OpenEngSB.DotNet.Lib.MockupDomainService
             }
         }
 
-        public T RetrieveDomainProxy<T>(string host, string serviceId)
+        public T getEventhandler<T>(string host)
         {
             Proxy<T> proxy = new Proxy<T>(_monitor);
             T ret = proxy.GetTransparentProxy();
@@ -70,10 +70,11 @@ namespace Org.OpenEngSB.DotNet.Lib.MockupDomainService
             return ret;
         }
 
-        public string RegisterDomainService<T>(string destination, T service, string domainType)
+        public void RegisterDomainService<T>(string destination, T service, string domainType,Type domainEvents)
         {
+            this.domainEvents = domainEvents;
+            this.domainType = domainType;
             AddAllMethods(typeof(T), MethodType.Registered, service);
-            return "";
         }
 
         private Dictionary<MethodInfo, int> AddAllMethods(Type type, MethodType methodType, object implObject)
@@ -148,6 +149,10 @@ namespace Org.OpenEngSB.DotNet.Lib.MockupDomainService
             }
         }
 
+        public String getDomainTypServiceId()
+        {
+            return domainType + "+external-connector-proxy+" + serviceId;
+        }
 
         public void UnregisterDomainService(object service)
         {

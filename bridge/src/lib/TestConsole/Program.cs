@@ -30,13 +30,14 @@ namespace TestConsole
     {
         [STAThread]
         static void Main(string[] args)
-        {
-            IExampleDomain iex1 = DomainFactory.Instance.RetrieveDomainProxy<IExampleDomain>("", "");
+       {
+            IExampleDomain iex1 = DomainFactory.Instance.getEventhandler<IExampleDomain>("");
             
             Console.WriteLine(iex1.DoSomething("Hello, i'm here!"));
 
             IExampleDomain iexService1 = new Program();
-            DomainFactory.Instance.RegisterDomainService<IExampleDomain>("", iexService1, "");
+            SignalDomainEvents signalDomainEvents=new SignalDomainEvents();
+            DomainFactory.Instance.RegisterDomainService<IExampleDomain>("", iexService1, "", signalDomainEvents.GetType());
 
             Console.ReadLine();
 

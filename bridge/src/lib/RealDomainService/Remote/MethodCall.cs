@@ -44,15 +44,19 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
         /// Metadata
         /// </summary>
         public IDictionary<string, string> metaData { get; set; }
+        /// <summary>
+        /// Include the packagestruktur on the java side
+        /// </summary>
+        public IList<string> realClassImplementation { get; set; }
 
-
-        public static MethodCall CreateInstance(string methodName, IList<object> args, IDictionary<string, string> metaData, IList<string> classes)
+        public static MethodCall CreateInstance(string methodName, IList<object> args, IDictionary<string, string> metaData, IList<string> classes, IList<String> realClassImplementation)
         {
             MethodCall call = new MethodCall();
             call.methodName = methodName;
             call.args = args;
             call.metaData = metaData;
             call.classes = classes;
+            call.realClassImplementation = realClassImplementation;
             return call;
         }
     }

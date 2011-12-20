@@ -42,6 +42,7 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
         private const string _CREATION_PORT = "jms-json";
         private const string _CREATION_CONNECTOR_TYPE = "external-connector-proxy";
 
+        
         // Thread listening for messages
         private Thread _queueThread;
 
@@ -50,6 +51,7 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
 
         private string _destination;
 
+        private Type domainEvents;
         /// <summary>
         /// ServiceId of the proxy on the bus
         /// </summary>
@@ -82,10 +84,11 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
         /// </summary>
         private ConnectorId _connectorId;
 
-        public DomainReverseProxy(T domainService, string host, string serviceId, string domainType)
+        public DomainReverseProxy(T domainService, string host, string serviceId, string domainType,Type domainEvents)
         {
+            this.domainEvents=domainEvents;
             _marshaller = new JsonMarshaller();
-            _isEnabled = true;
+            _isEnabled = true;            
             _domainService = domainService;
             _destination = Destination.CreateDestinationString(host, serviceId);
             _queueThread = null;
@@ -147,7 +150,7 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
             args.Add(_connectorId);
             args.Add(connectorDescription);
 
-            MethodCall creationCall = MethodCall.CreateInstance(_CREATION_METHOD_NAME, args, metaData, classes);
+            MethodCall creationCall = MethodCall.CreateInstance(_CREATION_METHOD_NAME, args, metaData, classes,null);
 
 
             Message message = Message.createInstance(creationCall, id.ToString(), true, "");
@@ -176,7 +179,7 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
             IList<object> args = new List<object>();
             args.Add(_connectorId);
 
-            MethodCall deletionCall = MethodCall.CreateInstance(_CREATION_DELETE_METHOD_NAME, args, metaData, classes);
+            MethodCall deletionCall = MethodCall.CreateInstance(_CREATION_DELETE_METHOD_NAME, args, metaData, classes,null);
 
             Guid id = Guid.NewGuid();
             String classname = "org.openengsb.core.api.security.model.UsernamePasswordAuthenticationInfo";
@@ -290,15 +293,13 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
         /// <summary>
         /// Unmarshalls the arguments of a MethodCall.
         /// </summary>
-        /// <param name="methodCall"></param>
-        /// <returns></returns>
+        /// <param name="methodCall">MethodCall</param>
+        /// <returns>Arguments</returns>
         private object[] CreateMethodArguments(MethodCall methodCall)
         {
             IList<object> args = new List<object>();
 
-            // load assembly containing domains
-            Assembly asm = Assembly.LoadFile(Path.GetFullPath("openengsbDomains.dll"));
-
+            Assembly asm = domainEvents.GetType().Assembly;
             for (int i = 0; i < methodCall.args.Count; ++i)
             {
                 object arg = methodCall.args[i];
@@ -332,11 +333,24 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
 
         /// <summary>
         /// Tries to find the method that should be called.
+        ///  TODO remove " if (methodCallWrapper.args.Count > methodCallWrapper.classes.Count)" if the Bug OPENENGSB-2423/OPENENGSB-2429 is fixed
         /// </summary>
         /// <param name="methodCallWrapper"></param>
         /// <returns></returns>
         private MethodInfo FindMethodInDomain(MethodCall methodCallWrapper)
         {
+            if (methodCallWrapper.args.Count > methodCallWrapper.classes.Count)
+            {
+                int tmp=methodCallWrapper.args.Count - methodCallWrapper.classes.Count;
+                int i;
+                Object[] tmttt = new object[1];
+                String test = tmttt.GetType().ToString();
+                for (i = 0;i<tmp; i++)
+                {
+                    methodCallWrapper.classes.Add(tmttt.GetType().ToString());
+                }
+            }
+
             foreach (MethodInfo methodInfo in _domainService.GetType().GetMethods())
             {
                 if (methodCallWrapper.methodName.ToLower() != methodInfo.Name.ToLower())
@@ -381,8 +395,16 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
             return true;
         }
 
+        /// <summary>
+        /// Test if two types are equal
+        /// TODO remove "null" if the Bug OPENENGSB-2423/OPENENGSB-2429 is fixed
+        /// </summary>
+        /// <param name="remoteType"></param>
+        /// <param name="localType"></param>
+        /// <returns></returns>
         private bool TypeIsEqual(string remoteType, Type localType)
         {
+            if (remoteType.Equals("null")) return true;
             RemoteType remote_typ = new RemoteType(remoteType);
             // leading underscore fix
             return (remote_typ.LocalTypeFullName == localType.FullName);

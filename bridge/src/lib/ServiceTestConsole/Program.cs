@@ -24,9 +24,6 @@ using Org.OpenEngSB.DotNet.Lib.RealDomainService.Communication.Jms;
 using Org.OpenEngSB.DotNet.Lib.RealDomainService.Communication.Json;
 using Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote;
 using Org.OpenEngSB.DotNet.Lib.DomainService;
-using org.openengsb.domain.example;
-using org.openengsb.domain.auditing;
-using org.openengsb.core.api;
 using System.Reflection;
 using System.IO;
 
@@ -34,31 +31,34 @@ namespace ServiceTestConsole
 {
     class Program
     {
+        /// <summary>
+        /// This verion works with the openEngS 2.3.0-Snapshot Framwork
+        /// </summary>
+        /// <param name="args"></param>
         static void Main(string[] args)
         {
             log4net.Config.BasicConfigurator.Configure();
 
-            // Methods of AuditDomain can be called by the OpenEngSb
-            // after calling RegisterDomainService()
             string destination = "tcp://localhost:6549";
-            string domainType = "example";
+            string domainName = "signal";
 
             IDomainFactory factory = DomainFactoryProvider.GetDomainFactoryInstance();
-            IExampleDomain auditDomain = new ExampleConnector();
-
-            string serviceId = factory.RegisterDomainService(destination, auditDomain, domainType);
-
-            // Services of the OpenEngSb can be called
-            // after calling RetrieveDomainProxy()
-            // You have to create an AuditDomain with the serviceId: audit-service-1234 on the OpenEngSb
-            // Any services can be obtained, as long as the interace is available
-
-            IExampleDomain domain = factory.RetrieveDomainProxy<IExampleDomain>(destination, domainType+"+external-connector-proxy+" + serviceId);
-
-            String result=domain.DoSomething("Hello World");
-            Console.WriteLine(result);
-            factory.UnregisterDomainService(auditDomain);
+            
+            ISignalDomainSoapBinding localDomain = new SignalConnector();   
+            
+            //Register the connecter on the osenEngSB
+            factory.RegisterDomainService(destination, localDomain, domainName, typeof(ISignalDomainEventsSoapBinding));
+            //Get a remote handler, to raise events on obenEngSB
+            ISignalDomainEventsSoapBinding remotedomain = factory.getEventhandler<ISignalDomainEventsSoapBinding>(destination);
+            updateMeEvent events=new updateMeEvent();
+            events.name = "updateMe";
+            events.lastKnownVersion = "1321503714918";
+            events.query="cpuNumber:1";
+            events.origin = factory.getDomainTypServiceId();
+            remotedomain.raiseUpdateMeEvent(events);
+                        
             Console.ReadKey();
+            factory.UnregisterDomainService(localDomain);
         }
     }
 }

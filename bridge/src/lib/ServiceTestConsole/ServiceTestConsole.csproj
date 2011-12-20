@@ -46,14 +46,18 @@
     <Reference Include="log4net">
       <HintPath>..\RealDomainService\lib\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\RealDomainService\lib\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="SignalDomainEventsInterfaces, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ThirdPartyAssemblies\SignalDomainEventsInterfaces.dll</HintPath>
     </Reference>
-    <Reference Include="openengsbDomains">
-      <HintPath>..\ThirdPartyAssemblies\openengsbDomains.dll</HintPath>
+    <Reference Include="SignalDomainInterfaces, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ThirdPartyAssemblies\SignalDomainInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -61,9 +65,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AuditConnector.cs" />
-    <Compile Include="ExampleConnector.cs" />
-    <Compile Include="IOSBCOmmands.cs" />
+    <Compile Include="SignalConnector.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
