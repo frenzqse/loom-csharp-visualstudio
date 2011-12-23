@@ -36,7 +36,7 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
     public class DomainReverseProxy<T>: IStoppable
     {
         private const string _CREATION_QUEUE = "receive";
-        private const string _CREATION_SERVICE_ID = "connectorManager";
+        private const string CREATION_SERVICE_ID = "connectorManager";
         private const string _CREATION_METHOD_NAME = "create";
         private const string _CREATION_DELETE_METHOD_NAME = "delete";
         private const string _CREATION_PORT = "jms-json";
@@ -44,58 +44,58 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
 
         
         // Thread listening for messages
-        private Thread _queueThread;
+        private Thread queueThread;
 
         // IO port
-        private IIncomingPort _portIn;
+        private IIncomingPort portIn;
 
-        private string _destination;
+        private string destination;
 
         private Type domainEvents;
         /// <summary>
         /// ServiceId of the proxy on the bus
         /// </summary>
-        private string _serviceId;
+        private string serviceId;
 
         /// <summary>
         ///  DomainType string required for OpenengSb
         /// </summary>
-        private string _domainType;
+        private string domainType;
 
         /// <summary>
         /// domain-instance to act as reverse-proxy for
         /// </summary>
-        private T _domainService;
+        private T domainService;
         public T DomainService 
         {
-            get { return _domainService; }
+            get { return domainService; }
         }
 
         /// <summary>
         /// flag indicating if the listening thread should run
         /// </summary>
 
-        private bool _isEnabled;
+        private bool isEnabled;
 
-        private IMarshaller _marshaller;
+        private IMarshaller marshaller;
 
         /// <summary>
         /// Identifies the service-instance.
         /// </summary>
-        private ConnectorId _connectorId;
+        private ConnectorId connectorId;
 
         public DomainReverseProxy(T domainService, string host, string serviceId, string domainType,Type domainEvents)
         {
             this.domainEvents=domainEvents;
-            _marshaller = new JsonMarshaller();
-            _isEnabled = true;            
-            _domainService = domainService;
-            _destination = Destination.CreateDestinationString(host, serviceId);
-            _queueThread = null;
-            _serviceId = serviceId;
-            _domainType = domainType;
-            _portIn = new JmsIncomingPort(_destination);
-            _connectorId = null;
+            this.marshaller = new JsonMarshaller();
+            this.isEnabled = true;            
+            this.domainService = domainService;
+            this.destination = Destination.CreateDestinationString(host, serviceId);
+            this.queueThread = null;
+            this.serviceId = serviceId;
+            this.domainType = domainType;
+            this.portIn = new JmsIncomingPort(destination);
+            this.connectorId = null;
         }
 
         /// <summary>
@@ -104,17 +104,17 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
         /// </summary>
         public void Start()
         {
-            if (_queueThread != null)
+            if (queueThread != null)
                 throw new ApplicationException("QueueThread already started!");
 
-            _isEnabled = true;
+            isEnabled = true;
             CreateRemoteProxy();
             // start thread which waits for messages
-            _queueThread = new Thread(
+            queueThread = new Thread(
                 new ThreadStart(Listen)
                 );
 
-            _queueThread.Start();
+            queueThread.Start();
         }
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
         private void CreateRemoteProxy()
         {
             IDictionary<string, string> metaData = new Dictionary<string, string>();
-            metaData.Add("serviceId", _CREATION_SERVICE_ID);
+            metaData.Add("serviceId", CREATION_SERVICE_ID);
             Guid id = Guid.NewGuid();
 
             String classname = "org.openengsb.core.api.security.model.UsernamePasswordAuthenticationInfo";
@@ -133,21 +133,19 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
             IList<string> classes = new List<string>();
             classes.Add("org.openengsb.core.api.model.ConnectorId");
             classes.Add("org.openengsb.core.api.model.ConnectorDescription");
-            Destination tmp = new Destination(_destination);
-            tmp.Queue = id.ToString();
-            //_destination = tmp.FullDestination;
+
             IList<object> args = new List<object>();
             ConnectorDescription connectorDescription = new ConnectorDescription();
-            connectorDescription.attributes.Add("serviceId", _serviceId);
+            connectorDescription.attributes.Add("serviceId", serviceId);
             connectorDescription.attributes.Add("portId", _CREATION_PORT);
-            connectorDescription.attributes.Add("destination", _destination);
+            connectorDescription.attributes.Add("destination", destination);
 
-            _connectorId = new ConnectorId();
-            _connectorId.connectorType = _CREATION_CONNECTOR_TYPE;
-            _connectorId.instanceId = _serviceId;
-            _connectorId.domainType = _domainType;
+            connectorId = new ConnectorId();
+            connectorId.connectorType = _CREATION_CONNECTOR_TYPE;
+            connectorId.instanceId = serviceId;
+            connectorId.domainType = domainType;
 
-            args.Add(_connectorId);
+            args.Add(connectorId);
             args.Add(connectorDescription);
 
             MethodCall creationCall = MethodCall.CreateInstance(_CREATION_METHOD_NAME, args, metaData, classes,null);
@@ -157,11 +155,11 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
             MethodCallRequest callRequest = MethodCallRequest.CreateInstance(authentification, message);
             callRequest.message.methodCall = creationCall;
 
-            Destination destination = new Destination(_destination);
-            destination.Queue = _CREATION_QUEUE;
+            Destination destinationinfo = new Destination(destination);
+            destinationinfo.Queue = _CREATION_QUEUE;
 
-            IOutgoingPort portOut = new JmsOutgoingPort(destination.FullDestination);
-            string request = _marshaller.MarshallObject(callRequest);
+            IOutgoingPort portOut = new JmsOutgoingPort(destinationinfo.FullDestination);
+            string request = marshaller.MarshallObject(callRequest);
             portOut.Send(request);            
         }
 
@@ -171,13 +169,13 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
         private void DeleteRemoteProxy()
         {
             IDictionary<string, string> metaData = new Dictionary<string, string>();
-            metaData.Add("serviceId", _CREATION_SERVICE_ID);
+            metaData.Add("serviceId", CREATION_SERVICE_ID);
 
             IList<string> classes = new List<string>();
             classes.Add("org.openengsb.core.api.model.ConnectorId");
 
             IList<object> args = new List<object>();
-            args.Add(_connectorId);
+            args.Add(connectorId);
 
             MethodCall deletionCall = MethodCall.CreateInstance(_CREATION_DELETE_METHOD_NAME, args, metaData, classes,null);
 
@@ -189,17 +187,17 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
             Message message = Message.createInstance(deletionCall, id.ToString(), true, "");
             MethodCallRequest callRequest = MethodCallRequest.CreateInstance(authentification,message);
 
-            Destination destination = new Destination(_destination);
-            destination.Queue = _CREATION_QUEUE;
+            Destination destinationinfo = new Destination(destination);
+            destinationinfo.Queue = _CREATION_QUEUE;
 
-            IOutgoingPort portOut = new JmsOutgoingPort(destination.FullDestination);
-            string request = _marshaller.MarshallObject(callRequest);
+            IOutgoingPort portOut = new JmsOutgoingPort(destinationinfo.FullDestination);
+            string request = marshaller.MarshallObject(callRequest);
             portOut.Send(request);
 
-            IIncomingPort portIn = new JmsIncomingPort(Destination.CreateDestinationString(destination.Host, callRequest.message.callId));
+            IIncomingPort portIn = new JmsIncomingPort(Destination.CreateDestinationString(destinationinfo.Host, callRequest.message.callId));
             string reply = portIn.Receive();
 
-            MethodResultMessage result = _marshaller.UnmarshallObject(reply, typeof(MethodResultMessage)) as MethodResultMessage;
+            MethodResultMessage result = marshaller.UnmarshallObject(reply, typeof(MethodResultMessage)) as MethodResultMessage;
             if (result.message.result.type == MethodResult.ReturnType.Exception)
                 throw new ApplicationException("Remote Exception while deleting service proxy");
         }
@@ -209,21 +207,21 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
         /// </summary>
         private void Listen()
         {
-            while (_isEnabled)
+            while (isEnabled)
             {
-                String textMsg = _portIn.Receive();
+                String textMsg = portIn.Receive();
 
                 if (textMsg == null)
                     continue;
                 
-                MethodCallRequest methodCallRequest = _marshaller.UnmarshallObject(textMsg, typeof(MethodCallRequest)) as MethodCallRequest;
+                MethodCallRequest methodCallRequest = marshaller.UnmarshallObject(textMsg, typeof(MethodCallRequest)) as MethodCallRequest;
 
                 MethodResultMessage methodReturnMessage = CallMethod(methodCallRequest);
 
                 if (methodCallRequest.message.answer)
                 {
-                    string returnMsg = _marshaller.MarshallObject(methodReturnMessage);
-                    Destination dest = new Destination(_destination);
+                    string returnMsg = marshaller.MarshallObject(methodReturnMessage);
+                    Destination dest = new Destination(destination);
                     IOutgoingPort portOut = new JmsOutgoingPort(Destination.CreateDestinationString(dest.Host, methodCallRequest.message.callId));
                     portOut.Send(returnMsg);
                 }
@@ -246,7 +244,7 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
             object returnValue = null;
             try
             {
-                returnValue = methInfo.Invoke(_domainService, arguments);
+                returnValue = methInfo.Invoke(domainService, arguments);
             }
             catch (Exception ex)
             {
@@ -323,7 +321,7 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
                 }
                 else
                 {
-                    obj = _marshaller.UnmarshallObject(arg.ToString(), type);
+                    obj = marshaller.UnmarshallObject(arg.ToString(), type);
                 }
                 args.Add(obj);
             }
@@ -351,7 +349,7 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
                 }
             }
 
-            foreach (MethodInfo methodInfo in _domainService.GetType().GetMethods())
+            foreach (MethodInfo methodInfo in domainService.GetType().GetMethods())
             {
                 if (methodCallWrapper.methodName.ToLower() != methodInfo.Name.ToLower())
                 {
@@ -415,10 +413,10 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
         /// </summary>
         public void Stop()
         {
-            if (_queueThread != null)
+            if (queueThread != null)
             {
-                _isEnabled = false;
-                _portIn.Close();
+                isEnabled = false;
+                portIn.Close();
                 DeleteRemoteProxy();
             }
         }

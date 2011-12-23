@@ -44,7 +44,7 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
         /// <summary>
         /// Id identifying the service instance on the bus.
         /// </summary>
-        private string _serviceId;
+        private string serviceId;
         /// <summary>
         /// Domain type
         /// </summary>
@@ -53,18 +53,18 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
         /// <summary>
         /// Host string of the server.
         /// </summary>
-        private string _host;
+        private string host;
 
-        private IMarshaller _marshaller;
+        private IMarshaller marshaller;
         #endregion
         #region Constructors
         public DomainProxy(string host, string serviceId,String domainType)
             : base(typeof(T))
         {
-            _serviceId = serviceId;
+            this.serviceId = serviceId;
             this.domainType = domainType;
-            _host = host; ;
-            _marshaller = new JsonMarshaller();
+            this.host = host; ;
+            this.marshaller = new JsonMarshaller();
         }
         #endregion
         #region Public Methods
@@ -75,23 +75,14 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
         /// <returns></returns>
         public override IMessage Invoke(IMessage msg)
         {
-
             IMethodCallMessage callMessage = msg as IMethodCallMessage;
-            
             MethodCallRequest methodCallRequest = ToMethodCallRequest(callMessage);
-
-            string methodCallMsg = _marshaller.MarshallObject(methodCallRequest);
-
-            IOutgoingPort portOut = new JmsOutgoingPort(Destination.CreateDestinationString(_host, HOST_QUEUE));
-
-             portOut.Send(methodCallMsg);
-
-            IIncomingPort portIn = new JmsIncomingPort(Destination.CreateDestinationString(_host, methodCallRequest.message.callId));
-            
+            string methodCallMsg = marshaller.MarshallObject(methodCallRequest);
+            IOutgoingPort portOut = new JmsOutgoingPort(Destination.CreateDestinationString(host, HOST_QUEUE));
+            portOut.Send(methodCallMsg);
+            IIncomingPort portIn = new JmsIncomingPort(Destination.CreateDestinationString(host, methodCallRequest.message.callId));
             string methodReturnMsg = portIn.Receive();
-
-            MethodResultMessage methodReturn = _marshaller.UnmarshallObject(methodReturnMsg, typeof(MethodResultMessage)) as MethodResultMessage;
-
+            MethodResultMessage methodReturn = marshaller.UnmarshallObject(methodReturnMsg, typeof(MethodResultMessage)) as MethodResultMessage;
             return ToMessage(methodReturn.message.result, callMessage);
         }
         public new T GetTransparentProxy()
@@ -151,11 +142,10 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
         /// <returns>Packagename</returns>
         private String getPackageName(String fieldname)
         {
-            Boolean ismethod = false;
             Type type = typeof(T);
             MethodInfo method = type.GetMethod(fieldname);
-            ismethod = method != null;
-            if (ismethod)
+            //Tests if it is a Mehtod or a Type
+            if (method != null)
             {
                 SoapDocumentMethodAttribute soapAttribute;
                 foreach (Attribute attribute in method.GetCustomAttributes(false))
@@ -180,7 +170,7 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
                     }
                 }
             }
-            return fieldname;
+            throw new MethodAccessException("Fieldname doesn't have a corresponding attribute (Namepspace) or the attribute couldn't be found");
         }
         /// <summary>
         /// Makes the first character to a upper character
@@ -207,12 +197,14 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
 
             string methodName = msg.MethodName;
             Dictionary<string, string> metaData = new Dictionary<string, string>();
-            metaData.Add("serviceId", "domain."+domainType+".events");
+            //The structure is always domain.DOMAINTYPE.events
+            metaData.Add("serviceId", "domain." + domainType + ".events");
 
             // arbitrary string, maybe not necessary
             metaData.Add("contextId", "foo");
 
             List<string> classes = new List<string>();
+            //realClassImplementation is optinal
             List<string> realClassImplementation = new List<string>();
             foreach (object arg in msg.Args)
             {
@@ -226,7 +218,7 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
             Data data = Data.CreateInstance("admin", "password");
             Authentification authentification = Authentification.createInstance(classname, data, BinaryData.CreateInstance());
             Message message = Message.createInstance(call, id.ToString(), true, "");
-            return MethodCallRequest.CreateInstance(authentification,message);
+            return MethodCallRequest.CreateInstance(authentification, message);
         }
         #endregion
 
