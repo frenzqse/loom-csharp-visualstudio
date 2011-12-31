@@ -59,16 +59,12 @@
     <Reference Include="Apache.NMS.ActiveMQ">
       <HintPath>lib\Apache.NMS.ActiveMQ.dll</HintPath>
     </Reference>
+    <Reference Include="fastJSON, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ThirdPartyAssemblies\fastJSON.dll</HintPath>
+    </Reference>
     <Reference Include="log4net">
       <HintPath>lib\log4net.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=4.0.2.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>lib\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="openengsbDomains, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\ThirdPartyAssemblies\openengsbDomains.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />

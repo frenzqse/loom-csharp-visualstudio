@@ -61,7 +61,7 @@ namespace ServiceManager.Core
             ConfigurationDirectory dir = new ConfigurationDirectory(CONFIG_DIRECTORY);
             _configurations = dir.LoadConfigurations();
         }
-
+        //TODO Adapt RegisterServices
         private void RegisterServices()
         {
             if (_configurations == null)
@@ -71,7 +71,7 @@ namespace ServiceManager.Core
             {
                 _domainFactory.RegisterDomainService(config.DestinationString,
                     config.GetServiceInstance(),
-                    config.DomainType);
+                    config.DomainType,null);
             }
         }
 

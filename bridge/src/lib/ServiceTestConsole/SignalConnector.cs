@@ -18,39 +18,47 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Services;
 using System.Text;
-using org.openengsb.domain.example;
 using log4net;
 namespace Org.OpenEngSB.DotNet.Lib.RealDomainService
 {
-    class ExampleConnector : IExampleDomain
+    class SignalConnector : ISignalDomainSoapBinding
     {
-        private ILog _logger = LogManager.GetLogger(typeof(ExampleConnector));
+        private ILog _logger = LogManager.GetLogger(typeof(SignalConnector));
 
-        public string DoSomething(ExampleDomain1ExampleEnum arg0)
-        {
-            _logger.Info("ExampleDomain.DoSomething(ExampleDomain1ExampleEnum)");
-            return "something done";
-        }
-
-        public string DoSomething(string arg0)
-        {
-            _logger.Info("ExampleDomain.DoSomething(string)");
-            return "something done with string";
-        }
-
-        public string DoSomethingWithLogEvent(org.openengsb.domain.example._event.LogEvent arg0)
-        {
-            _logger.Info("ExampleDomain.DoSomething(LogEvent)");
-            return "something done with logger";
-        }
         public void setDomainId(String element)
         {
             _logger.Info("setDomainId:"+element);
         }
-        public void setConnectorId(String ASDA)
+        public void setConnectorId(String element)
         {
-            _logger.Info("setConnectorId:" + ASDA);
+            _logger.Info("setConnectorId:" + element);
+        }
+        
+        public void updateData(string arg0, string arg1, object[] arg2)
+        {            
+            _logger.Info("updateData");
+            foreach (Object obj in arg2)
+            {
+                _logger.Info(obj.ToString());
+            }
+        }
+
+
+        public void changeNotification()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void getAliveState(out aliveState @return, out bool returnSpecified)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string getInstanceId()
+        {
+            throw new NotImplementedException();
         }
     }
 }

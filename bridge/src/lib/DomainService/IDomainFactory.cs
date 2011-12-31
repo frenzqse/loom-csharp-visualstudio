@@ -24,9 +24,11 @@ namespace Org.OpenEngSB.DotNet.Lib.DomainService
 {
     public interface IDomainFactory
     {
-        T RetrieveDomainProxy<T>(string host, string serviceId);
+        T getEventhandler<T>(string host);
 
-        string RegisterDomainService<T>(string destination, T service, string domainType);
+        void RegisterDomainService<T>(string destination, T service, string domainType, Type domainevents);
         void UnregisterDomainService(object service);
+        String getDomainTypServiceId();
+        
     }
 }

@@ -31,7 +31,9 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService
     public class RealDomainFactory : IDomainFactory
     {
         private Dictionary<object, IStoppable> _proxies;
-
+        private String serviceId;
+        private String domainType;
+        private Type domainEvents;
         public RealDomainFactory()
         {
             Reset();
@@ -49,14 +51,16 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService
         /// <param name="destination"></param>
         /// <param name="domainService"></param>
         /// <param name="serviceId"></param>
-        /// <param name="domainType"></param>
-        public string RegisterDomainService<T>(string destination, T domainService, string domainType)
+        /// <param name="domainType">local domain</param>
+        /// <param name="domainType">remote domain</param>
+        public void RegisterDomainService<T>(string destination, T domainService, String domainType, Type domainEvents)
         {
-            string servideId = Guid.NewGuid().ToString();
-            DomainReverseProxy<T> proxy = new DomainReverseProxy<T>(domainService, destination, servideId, domainType);
+            this.domainEvents = domainEvents;
+            this.domainType = domainType;
+            this.serviceId = Guid.NewGuid().ToString();
+            DomainReverseProxy<T> proxy = new DomainReverseProxy<T>(domainService, destination, serviceId, domainType, domainEvents);
             _proxies.Add(domainService, proxy);
             proxy.Start();
-            return servideId;
         }
 
         /// <summary>
@@ -73,9 +77,13 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService
             }
         }
 
-        public T RetrieveDomainProxy<T>(string host, string serviceId)
+        public T getEventhandler<T>(string host)
         {
-            return new DomainProxy<T>(host, serviceId).GetTransparentProxy();
+            return new DomainProxy<T>(host, getDomainTypServiceId(),domainType).GetTransparentProxy();
+        }
+        public String getDomainTypServiceId()
+        {
+            return domainType + "+external-connector-proxy+" + serviceId;
         }
     }
 }
