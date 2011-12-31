@@ -36,8 +36,7 @@ namespace TestConsole
             Console.WriteLine(iex1.DoSomething("Hello, i'm here!"));
 
             IExampleDomain iexService1 = new Program();
-            SignalDomainEvents signalDomainEvents=new SignalDomainEvents();
-            DomainFactory.Instance.RegisterDomainService<IExampleDomain>("", iexService1, "", signalDomainEvents.GetType());
+            DomainFactory.Instance.RegisterDomainService<IExampleDomain>("", iexService1, "", typeof(Program));
 
             Console.ReadLine();
 

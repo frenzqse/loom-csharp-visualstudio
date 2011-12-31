@@ -20,30 +20,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
+namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote.RemoteObjects
 {
     /// <summary>
-    /// Container for MethodCallRequest
+    /// Container for MessageResult
     /// </summary>
-    public class MethodCallRequest
+    public class MessageResult
     {
-        public Authentification authenticationData { get; set; }
-        public Message message { get; set; }
-        public long timestamp{get;set;}
+        public MethodResult result { get; set; }
+        public string callId { get; set; }
 
         /// <summary>
-        /// Creates a new instance of MessageCallRequest
+        /// Creates a new instance of MessageResult
         /// </summary>
-        /// <param name="authentification">Authentication Datas</param>
-        /// <param name="message">Message</param>
-        /// <returns>Returns a new instance of MethodCallRequest</returns>
-        public static MethodCallRequest CreateInstance(Authentification authenticationData, Message message)
+        /// <param name="result">Result</param>
+        /// <param name="callId">CallId</param>
+        /// <returns>returns a new instance of MessageResult</returns>
+        public static MessageResult CreateInstance(MethodResult result, string callId)
         {
-            MethodCallRequest request = new MethodCallRequest();
-            request.authenticationData = authenticationData;
-            request.message = message;
-            request.timestamp = DateTime.Now.Ticks;
-            return request;
+            MessageResult msg = new MessageResult();
+            msg.result = result;
+            msg.callId = callId;
+            return msg;
         }
     }
 }

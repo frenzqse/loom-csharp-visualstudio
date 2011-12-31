@@ -31,8 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Innovatian.Configuration">
-      <HintPath>..\ThirdPartyAssemblies\Innovatian.Configuration.dll</HintPath>
+    <Reference Include="Innovatian.Configuration, Version=1.1.2.0, Culture=neutral, PublicKeyToken=f501c04d915905bf, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>ThirdPartyAssemblies\Innovatian.Configuration.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -106,6 +107,13 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ThirdPartyAssemblies\Innovatian.Configuration.dll" />
+    <Content Include="ThirdPartyAssemblies\Innovatian.Configuration.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

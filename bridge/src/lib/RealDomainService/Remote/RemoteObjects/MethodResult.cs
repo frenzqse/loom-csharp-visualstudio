@@ -19,45 +19,44 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
+namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote.RemoteObjects
 {
     /// <summary>
-    /// This class represents a RPC with its parameters, return types etc.
+    /// This class represents the return value of an RPC.
     /// </summary>
-    public class MethodCall
+    public class MethodResult
     {
+		public enum ReturnType { Void, Object, Exception }
+
         /// <summary>
-        /// Fully qualified class names of the arguments.
+        /// Type of the return value.
         /// </summary>
-        public IList<string> classes { get; set; }
+		public ReturnType type { get; set; }
+
         /// <summary>
-        /// Name of the method to be called.
+        /// Return value of the RPC.
         /// </summary>
-        public string methodName { get; set; }
-        
-        /// <summary>
-        /// Arguments of the call.
-        /// </summary>
-        public IList<object> args { get; set; }
+		public object arg { get; set; }
 
         /// <summary>
         /// Metadata
         /// </summary>
-        public IDictionary<string, string> metaData { get; set; }
-        /// <summary>
-        /// Include the packagestruktur on the java side
-        /// </summary>
-        public IList<string> realClassImplementation { get; set; }
+		public IDictionary<string, string> metaData { get; set; }
 
-        public static MethodCall CreateInstance(string methodName, IList<object> args, IDictionary<string, string> metaData, IList<string> classes, IList<String> realClassImplementation)
+        /// <summary>
+        /// Fully qualified class name of the return value.
+        /// </summary>
+		public string className { get; set; }
+
+        public static MethodResult CreateInstance(ReturnType type, object arg, IDictionary<string, string> metaData, string className)
         {
-            MethodCall call = new MethodCall();
-            call.methodName = methodName;
-            call.args = args;
-            call.metaData = metaData;
-            call.classes = classes;
-            call.realClassImplementation = realClassImplementation;
-            return call;
+            MethodResult result = new MethodResult();
+            result.type = type;
+            result.arg = arg;
+            result.metaData = metaData;
+            result.className = className;
+            return result;
         }
+
     }
 }

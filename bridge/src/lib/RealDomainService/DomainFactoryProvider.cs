@@ -22,7 +22,7 @@ using System.Text;
 using System.IO;
 using Org.OpenEngSB.DotNet.Lib.DomainService;
 using Org.OpenEngSB.DotNet.Lib.RealDomainService;
-using Org.OpenEngSB.DotNet.Lib.MockupDomainService;
+//using Org.OpenEngSB.DotNet.Lib.MockupDomainService;
 
 namespace Org.OpenEngSB.DotNet.Lib.RealDomainService
 {
@@ -35,8 +35,8 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService
         {
             string mockFilePath = Path.Combine(CONFIGURATION_DIRECTORY, CONFIGURATION_MOCK_FILE);
             
-            if (File.Exists(mockFilePath))
-                return DomainFactory.Instance;
+  /*          if (File.Exists(mockFilePath))
+                return DomainFactory.Instance;*/
 
             return new RealDomainFactory();
         }

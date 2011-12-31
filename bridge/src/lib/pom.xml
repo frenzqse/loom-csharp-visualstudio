@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://maven.apache.org/POM/4.0.0">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>DotNet-Lib</groupId>
+  <artifactId>DotNet-Lib-parent</artifactId>
+  <packaging>pom</packaging>
+  <name>DotNet-Lib : DotNet-Lib-parent</name>
+  <version>1.0-SNAPSHOT</version>
+  <modules>
+    <module>DomainService</module>
+    <module>RealDomainService</module>
+    <!--<module>TestConsole</module>
+	<module>MockupDomainService</module>
+	<module>ServiceManager</module>
+	!-->
+    <module>ServiceTestConsole</module>        
+  </modules>
+</project>

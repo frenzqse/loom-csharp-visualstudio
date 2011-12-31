@@ -14,29 +14,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ***/
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
+namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote.RemoteObjects
 {
     /// <summary>
-    /// Container for MethodResultMessage
+    /// Container for the datas
     /// </summary>
-    public class MethodResultMessage
+    public class Data
     {
-        public MessageResult message { get; set; }
+       // public String username { get; set; }
+        public String value { get; set; }
+
         /// <summary>
-        /// Creates a new instance of MethodResultMessage
+        /// Creates a new instance of Data
         /// </summary>
-        /// <param name="message">Message</param>
-        /// <returns>Returns a new instance of MethodResultMessage</returns>
-        public static MethodResultMessage CreateInstance(MessageResult message)
+        /// <param name="username">username</param>
+        /// <param name="value">password</param>
+        /// <returns>New instance of Data</returns>
+        public static Data CreateInstance(String value)
         {
-            MethodResultMessage instance=new MethodResultMessage();
-            instance.message = message;
+            Data instance = new Data();
+            instance.value= value;
             return instance;
         }
     }

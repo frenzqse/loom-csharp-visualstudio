@@ -27,6 +27,7 @@ using System.Web.Services.Protocols;
 using System.Reflection;
 using System.IO;
 using System.Xml.Serialization;
+using Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote.RemoteObjects;
 namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
 {
     /// <summary>
@@ -37,6 +38,14 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
     {
         #region Variables
         /// <summary>
+        /// Username for the authentification
+        /// </summary>
+        private String username;
+        /// <summary>
+        /// Password for the authentification
+        /// </summary>
+        private String password;
+        /// <summary>
         /// Name of the queue the server listens to for calls.
         /// </summary>
         private const string HOST_QUEUE = "receive";
@@ -44,7 +53,7 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
         /// <summary>
         /// Id identifying the service instance on the bus.
         /// </summary>
-        private string _serviceId;
+        private string serviceId;
         /// <summary>
         /// Domain type
         /// </summary>
@@ -53,18 +62,30 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
         /// <summary>
         /// Host string of the server.
         /// </summary>
-        private string _host;
+        private string host;
 
-        private IMarshaller _marshaller;
+        private IMarshaller marshaller;
         #endregion
         #region Constructors
-        public DomainProxy(string host, string serviceId,String domainType)
+        public DomainProxy(string host, string serviceId, String domainType)
             : base(typeof(T))
         {
-            _serviceId = serviceId;
+            this.serviceId = serviceId;
             this.domainType = domainType;
-            _host = host; ;
-            _marshaller = new JsonMarshaller();
+            this.host = host; ;
+            this.marshaller = new JsonMarshaller();
+            this.username = "admin";
+            this.password = "password";
+        }
+        public DomainProxy(string host, string serviceId, String domainType,String username,String password)
+            : base(typeof(T))
+        {
+            this.serviceId = serviceId;
+            this.domainType = domainType;
+            this.host = host; ;
+            this.marshaller = new JsonMarshaller();
+            this.username = username;
+            this.password = password;
         }
         #endregion
         #region Public Methods
@@ -75,23 +96,14 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
         /// <returns></returns>
         public override IMessage Invoke(IMessage msg)
         {
-
             IMethodCallMessage callMessage = msg as IMethodCallMessage;
-            
-            MethodCallRequest methodCallRequest = ToMethodCallRequest(callMessage);
-
-            string methodCallMsg = _marshaller.MarshallObject(methodCallRequest);
-
-            IOutgoingPort portOut = new JmsOutgoingPort(Destination.CreateDestinationString(_host, HOST_QUEUE));
-
-             portOut.Send(methodCallMsg);
-
-            IIncomingPort portIn = new JmsIncomingPort(Destination.CreateDestinationString(_host, methodCallRequest.message.callId));
-            
+            SecureMethodCallRequest methodCallRequest = ToMethodCallRequest(callMessage);
+            string methodCallMsg = marshaller.MarshallObject(methodCallRequest);
+            IOutgoingPort portOut = new JmsOutgoingPort(Destination.CreateDestinationString(host, HOST_QUEUE));
+            portOut.Send(methodCallMsg);
+            IIncomingPort portIn = new JmsIncomingPort(Destination.CreateDestinationString(host, methodCallRequest.message.callId));
             string methodReturnMsg = portIn.Receive();
-
-            MethodResultMessage methodReturn = _marshaller.UnmarshallObject(methodReturnMsg, typeof(MethodResultMessage)) as MethodResultMessage;
-
+            MethodResultMessage methodReturn = marshaller.UnmarshallObject(methodReturnMsg, typeof(MethodResultMessage)) as MethodResultMessage;
             return ToMessage(methodReturn.message.result, callMessage);
         }
         public new T GetTransparentProxy()
@@ -151,11 +163,10 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
         /// <returns>Packagename</returns>
         private String getPackageName(String fieldname)
         {
-            Boolean ismethod = false;
             Type type = typeof(T);
             MethodInfo method = type.GetMethod(fieldname);
-            ismethod = method != null;
-            if (ismethod)
+            //Tests if it is a Mehtod or a Type
+            if (method != null)
             {
                 SoapDocumentMethodAttribute soapAttribute;
                 foreach (Attribute attribute in method.GetCustomAttributes(false))
@@ -180,7 +191,7 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
                     }
                 }
             }
-            return fieldname;
+            throw new MethodAccessException("Fieldname doesn't have a corresponding attribute (Namepspace) or the attribute couldn't be found");
         }
         /// <summary>
         /// Makes the first character to a upper character
@@ -195,38 +206,42 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
             String tmp = element.Substring(1);
             return first + tmp;
         }
+
         /// <summary>
         /// Builds an MethodCall using IMethodCallMessage.
         /// TODO if bug ??? is fixed replace classes.Add(getPackageName(type.RemoteTypeFullName) + ".event." + firstLetterToUpper(type.RemoteTypeFullName)); with classes.Add(getPackageName(type.RemoteTypeFullName) + "." + firstLetterToUpper(type.RemoteTypeFullName));
         /// </summary>
         /// <param name="msg"></param>
         /// <returns></returns>
-        private MethodCallRequest ToMethodCallRequest(IMethodCallMessage msg)
+        /// MethodCallRequest
+        private SecureMethodCallRequest ToMethodCallRequest(IMethodCallMessage msg)
         {
             Guid id = Guid.NewGuid();
 
             string methodName = msg.MethodName;
             Dictionary<string, string> metaData = new Dictionary<string, string>();
-            metaData.Add("serviceId", "domain."+domainType+".events");
+            //The structure is always domain.DOMAINTYPE.events
+            metaData.Add("serviceId", "domain." + domainType + ".events");
 
             // arbitrary string, maybe not necessary
             metaData.Add("contextId", "foo");
 
             List<string> classes = new List<string>();
-            List<string> realClassImplementation = new List<string>();
+            //realClassImplementation is optinal
+            //List<string> realClassImplementation = new List<string>();
             foreach (object arg in msg.Args)
             {
                 LocalType type = new LocalType(arg.GetType());
-                realClassImplementation.Add(getPackageName(type.RemoteTypeFullName));
-                classes.Add(getPackageName(type.RemoteTypeFullName) + ".event." + firstLetterToUpper(type.RemoteTypeFullName));
+              //  realClassImplementation.Add(getPackageName(type.RemoteTypeFullName));
+                classes.Add(getPackageName(type.RemoteTypeFullName) + "." + firstLetterToUpper(type.RemoteTypeFullName));
             }
 
-            MethodCall call = MethodCall.CreateInstance(methodName, msg.Args, metaData, classes, realClassImplementation);
-            String classname = "org.openengsb.core.api.security.model.UsernamePasswordAuthenticationInfo";
-            Data data = Data.CreateInstance("admin", "password");
-            Authentification authentification = Authentification.createInstance(classname, data, BinaryData.CreateInstance());
+            RemoteMethodCall call = RemoteMethodCall.CreateInstance(methodName, msg.Args, metaData, classes);
+            String classname = "org.openengsb.connector.usernamepassword.Password";
+            Data data = Data.CreateInstance("password");
+            AuthenticationInfo authentification = AuthenticationInfo.createInstance(classname,data);
             Message message = Message.createInstance(call, id.ToString(), true, "");
-            return MethodCallRequest.CreateInstance(authentification,message);
+            return SecureMethodCallRequest.createInstance("admin",authentification, message);
         }
         #endregion
 

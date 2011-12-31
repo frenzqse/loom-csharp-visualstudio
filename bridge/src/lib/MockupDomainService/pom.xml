@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://maven.apache.org/POM/4.0.0">
+  <parent>
+    <artifactId>DotNet-Lib-parent</artifactId>
+    <groupId>DotNet-Lib</groupId>
+    <version>1.0-SNAPSHOT</version>
+    <relativePath>..\pom.xml</relativePath>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>MockupDomainService</artifactId>
+  <packaging>library</packaging>
+  <name>DotNet-Lib : MockupDomainService</name>
+  <build>
+    <sourceDirectory>./</sourceDirectory>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.npanday.plugins</groupId>
+        <artifactId>maven-compile-plugin</artifactId>
+        <extensions>true</extensions>
+        <configuration>
+          <frameworkVersion>4.0</frameworkVersion>
+          <includeSources>
+            <includeSource>AllMethodInfos.cs</includeSource>
+            <includeSource>DomainFactory.cs</includeSource>
+            <includeSource>MockupDataFinder.cs</includeSource>
+            <includeSource>MockupDataIniConfiguration.cs</includeSource>
+            <includeSource>Properties\AssemblyInfo.cs</includeSource>
+            <includeSource>Proxy.cs</includeSource>
+            <includeSource>Service References\MonitorService\Reference.cs</includeSource>
+            <includeSource>SimpleMethodInfo.cs</includeSource>
+            <includeSource>SimpleParameterInfo.cs</includeSource>
+            <includeSource>SimpleType.cs</includeSource>
+          </includeSources>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.npanday.plugins</groupId>
+        <artifactId>maven-wsdl-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>wsdl</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <webreferences>
+            <webreference>
+              <namespace>MonitorService</namespace>
+              <path>Service References/MonitorService/MainWindow.wsdl</path>
+              <output>Service References/MonitorService/</output>
+            </webreference>
+          </webreferences>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  <dependencies>
+    <dependency>
+      <groupId>DotNet-Lib</groupId>
+      <artifactId>DomainService</artifactId>
+      <version>1.0-SNAPSHOT</version>
+      <type>library</type>
+    </dependency>
+    <dependency>
+      <groupId>Innovatian.Configuration</groupId>
+      <artifactId>Innovatian.Configuration</artifactId>
+      <version>1.1.2.0</version>
+      <type>dotnet-library</type>
+      <scope>system</scope>
+      <systemPath>${project.basedir}\ThirdPartyAssemblies\Innovatian.Configuration.dll</systemPath>
+    </dependency>
+  </dependencies>
+</project>

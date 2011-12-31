@@ -62,7 +62,26 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService
             _proxies.Add(domainService, proxy);
             proxy.Start();
         }
-
+        /// <summary>
+        /// Creates, registers and starts a reverse proxy.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="destination"></param>
+        /// <param name="domainService"></param>
+        /// <param name="serviceId"></param>
+        /// <param name="domainType">local domain</param>
+        /// <param name="domainType">remote domain</param>
+        /// <param name="username">Username for the authentification</param>
+        /// <param name="password">Password for the authentification</param>
+        public void RegisterDomainService<T>(string destination, T domainService, String domainType, Type domainEvents,String username,String password)
+        {
+            this.domainEvents = domainEvents;
+            this.domainType = domainType;
+            this.serviceId = Guid.NewGuid().ToString();
+            DomainReverseProxy<T> proxy = new DomainReverseProxy<T>(domainService, destination, serviceId, domainType, domainEvents,username,password);
+            _proxies.Add(domainService, proxy);
+            proxy.Start();
+        }
         /// <summary>
         /// Deletes and stops the reverse proxy.
         /// </summary>
@@ -76,7 +95,24 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService
                 _proxies.Remove(service);
             }
         }
-
+        /// <summary>
+        /// Get Eventhandler from the spezified Domain T with authentification
+        /// </summary>
+        /// <typeparam name="T">Remote Domain</typeparam>
+        /// <param name="host">Host</param>
+        /// <param name="username">Username for the authentification</param>
+        /// <param name="password">Password for the authentificaiton</param>
+        /// <returns>Eventhandler</returns>
+        public T getEventhandler<T>(string host,String username,String password)
+        {
+            return new DomainProxy<T>(host, getDomainTypServiceId(), domainType,username,password).GetTransparentProxy();
+        }
+        /// <summary>
+        /// Get Eventhandler from the spezified Domain T
+        /// </summary>
+        /// <typeparam name="T">Remote Domain</typeparam>
+        /// <param name="host">Host</param>
+        /// <returns>Eventhandler</returns>
         public T getEventhandler<T>(string host)
         {
             return new DomainProxy<T>(host, getDomainTypServiceId(),domainType).GetTransparentProxy();

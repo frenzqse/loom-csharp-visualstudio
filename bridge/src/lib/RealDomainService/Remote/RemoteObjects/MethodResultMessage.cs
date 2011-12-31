@@ -20,16 +20,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
+namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote.RemoteObjects
 {
     /// <summary>
-    /// Container for the Binary Data
+    /// Container for MethodResultMessage
     /// </summary>
-    public class BinaryData
+    public class MethodResultMessage
     {
-        public static BinaryData CreateInstance()
+        public MessageResult message { get; set; }
+        /// <summary>
+        /// Creates a new instance of MethodResultMessage
+        /// </summary>
+        /// <param name="message">Message</param>
+        /// <returns>Returns a new instance of MethodResultMessage</returns>
+        public static MethodResultMessage CreateInstance(MessageResult message)
         {
-            return new BinaryData();
+            MethodResultMessage instance=new MethodResultMessage();
+            instance.message = message;
+            return instance;
         }
     }
 }

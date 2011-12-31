@@ -14,49 +14,40 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ***/
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
+namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote.RemoteObjects
 {
     /// <summary>
-    /// This class represents the return value of an RPC.
+    /// Container for Message
     /// </summary>
-    public class MethodResult
+    public class Message
     {
-		public enum ReturnType { Void, Object, Exception }
+        public RemoteMethodCall methodCall { get; set; }
+        public string callId { get; set; }
+        public bool answer { get; set; }
+        public string destination { get; set; }
 
         /// <summary>
-        /// Type of the return value.
+        /// Creates a new instance of Message
         /// </summary>
-		public ReturnType type { get; set; }
-
-        /// <summary>
-        /// Return value of the RPC.
-        /// </summary>
-		public object arg { get; set; }
-
-        /// <summary>
-        /// Metadata
-        /// </summary>
-		public IDictionary<string, string> metaData { get; set; }
-
-        /// <summary>
-        /// Fully qualified class name of the return value.
-        /// </summary>
-		public string className { get; set; }
-
-        public static MethodResult CreateInstance(ReturnType type, object arg, IDictionary<string, string> metaData, string className)
+        /// <param name="methodCall">MethodCall</param>
+        /// <param name="callId">CallId</param>
+        /// <param name="answer">Answer</param>
+        /// <param name="destination">Destination</param>
+        /// <returns>returns a new Message of CreateInstance</returns>
+        public static Message createInstance(RemoteMethodCall methodCall, string callId, bool answer, string destination)
         {
-            MethodResult result = new MethodResult();
-            result.type = type;
-            result.arg = arg;
-            result.metaData = metaData;
-            result.className = className;
-            return result;
+            Message instance = new Message();
+            instance.methodCall = methodCall;
+            instance.callId = callId;
+            instance.answer = answer;
+            instance.destination = destination;
+            return instance;
         }
-
     }
 }

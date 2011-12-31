@@ -34,14 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="openengsbDomains">
-      <HintPath>..\ThirdPartyAssemblies\openengsbDomains.dll</HintPath>
-    </Reference>
-    <Reference Include="SignalDomain">
-      <HintPath>..\..\..\..\..\..\..\Desktop\wsdl\SignalDomain.dll</HintPath>
-    </Reference>
-    <Reference Include="SignalDomainEvents">
-      <HintPath>..\..\..\..\..\..\..\Desktop\wsdl\SignalDomainEvents.dll</HintPath>
+    <Reference Include="openengsbDomains, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Release\openengsbDomains.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -70,6 +65,9 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

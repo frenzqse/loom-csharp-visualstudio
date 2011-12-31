@@ -20,28 +20,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
+namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote.RemoteObjects
 {
     /// <summary>
-    /// Container for MessageResult
+    /// Container for the Authentification
     /// </summary>
-    public class MessageResult
+    public class AuthenticationInfo
     {
-        public MethodResult result { get; set; }
-        public string callId { get; set; }
-
+        public String className { get; set; }
+        public Data data { get; set; }        
         /// <summary>
-        /// Creates a new instance of MessageResult
+        /// Creates a new instance of the Authentification
         /// </summary>
-        /// <param name="result">Result</param>
-        /// <param name="callId">CallId</param>
-        /// <returns>returns a new instance of MessageResult</returns>
-        public static MessageResult CreateInstance(MethodResult result, string callId)
+        /// <param name="className">ClassName</param>
+        /// <param name="data">Data</param>
+        /// <param name="binaryData">Binary Data</param>
+        /// <returns>A new instance of Authentification</returns>
+        public static AuthenticationInfo createInstance(String className, Data data)//, BinaryData binaryData)
         {
-            MessageResult msg = new MessageResult();
-            msg.result = result;
-            msg.callId = callId;
-            return msg;
+            AuthenticationInfo instance = new AuthenticationInfo();
+            instance.className = className;
+            instance.data = data;
+            //instance.binaryData = binaryData;
+            return instance;
         }
     }
 }
