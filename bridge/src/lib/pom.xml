@@ -5,14 +5,13 @@
   <artifactId>DotNet-Lib-parent</artifactId>
   <packaging>pom</packaging>
   <name>DotNet-Lib : DotNet-Lib-parent</name>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0.0-SNAPSHOT</version>
   <modules>
     <module>DomainService</module>
-    <module>RealDomainService</module>
-    <!--<module>TestConsole</module>
-	<module>MockupDomainService</module>
-	<module>ServiceManager</module>
-	!-->
-    <module>ServiceTestConsole</module>        
+    <module>RealDomainService</module>    
+    <module>ServiceTestConsole</module>
+   <!-- <module>ServiceManager</module>
+   <module>TestConsole</module>
+    <module>MockupDomainService</module>!-->
   </modules>
 </project>

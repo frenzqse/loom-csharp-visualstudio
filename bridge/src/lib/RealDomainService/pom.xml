@@ -3,7 +3,7 @@
   <parent>
     <artifactId>DotNet-Lib-parent</artifactId>
     <groupId>DotNet-Lib</groupId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <relativePath>..\pom.xml</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
@@ -28,25 +28,24 @@
             <includeSource>Communication\Jms\JmsPort.cs</includeSource>
             <includeSource>Communication\Json\JsonMarshaller.cs</includeSource>
             <includeSource>DomainFactoryProvider.cs</includeSource>
-            <includeSource>Remote\Authentification.cs</includeSource>
-            <includeSource>Remote\BinaryData.cs</includeSource>
-            <includeSource>Remote\ConnectorDescription.cs</includeSource>
-            <includeSource>Remote\ConnectorId.cs</includeSource>
+            <includeSource>Remote\RemoteObjects\AuthenticationInfo.cs</includeSource>
+            <includeSource>Remote\RemoteObjects\ConnectorDescription.cs</includeSource>
+            <includeSource>Remote\RemoteObjects\ConnectorId.cs</includeSource>
             <includeSource>Communication\Jms\Destination.cs</includeSource>
-            <includeSource>Remote\Data.cs</includeSource>
+            <includeSource>Remote\RemoteObjects\Data.cs</includeSource>
             <includeSource>Remote\DomainProxy.cs</includeSource>
             <includeSource>Remote\LocalType.cs</includeSource>
-            <includeSource>Remote\Message.cs</includeSource>
-            <includeSource>Remote\MessageResult.cs</includeSource>
-            <includeSource>Remote\MethodCall.cs</includeSource>
-            <includeSource>Remote\MethodCallRequest.cs</includeSource>
-            <includeSource>Remote\MethodResult.cs</includeSource>
             <includeSource>Remote\DomainReverseProxy.cs</includeSource>
             <includeSource>Communication\IOutgoingPort.cs</includeSource>
             <includeSource>Communication\Jms\JmsOutgoingPort.cs</includeSource>
             <includeSource>Properties\AssemblyInfo.cs</includeSource>
             <includeSource>RealDomainFactory.cs</includeSource>
-            <includeSource>Remote\MethodResultMessage.cs</includeSource>
+            <includeSource>Remote\RemoteObjects\Message.cs</includeSource>
+            <includeSource>Remote\RemoteObjects\MessageResult.cs</includeSource>
+            <includeSource>Remote\RemoteObjects\RemoteMethodCall.cs</includeSource>
+            <includeSource>Remote\RemoteObjects\MethodResult.cs</includeSource>
+            <includeSource>Remote\RemoteObjects\MethodResultMessage.cs</includeSource>
+            <includeSource>Remote\RemoteObjects\SecureMethodCallRequest.cs</includeSource>
             <includeSource>Remote\RemoteType.cs</includeSource>
           </includeSources>
         </configuration>
@@ -57,7 +56,7 @@
     <dependency>
       <groupId>DotNet-Lib</groupId>
       <artifactId>DomainService</artifactId>
-      <version>1.0-SNAPSHOT</version>
+      <version>1.0.0-SNAPSHOT</version>
       <type>library</type>
     </dependency>
     <dependency>

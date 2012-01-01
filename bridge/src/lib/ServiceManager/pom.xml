@@ -3,7 +3,7 @@
   <parent>
     <artifactId>DotNet-Lib-parent</artifactId>
     <groupId>DotNet-Lib</groupId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <relativePath>..\pom.xml</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
@@ -64,13 +64,13 @@
     <dependency>
       <groupId>DotNet-Lib</groupId>
       <artifactId>RealDomainService</artifactId>
-      <version>1.0-SNAPSHOT</version>
+      <version>1.0.0-SNAPSHOT</version>
       <type>library</type>
     </dependency>
     <dependency>
       <groupId>DotNet-Lib</groupId>
       <artifactId>DomainService</artifactId>
-      <version>1.0-SNAPSHOT</version>
+      <version>1.0.0-SNAPSHOT</version>
       <type>library</type>
     </dependency>
   </dependencies>

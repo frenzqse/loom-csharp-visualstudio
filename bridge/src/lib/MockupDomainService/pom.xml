@@ -3,7 +3,7 @@
   <parent>
     <artifactId>DotNet-Lib-parent</artifactId>
     <groupId>DotNet-Lib</groupId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <relativePath>..\pom.xml</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
@@ -59,7 +59,7 @@
     <dependency>
       <groupId>DotNet-Lib</groupId>
       <artifactId>DomainService</artifactId>
-      <version>1.0-SNAPSHOT</version>
+      <version>1.0.0-SNAPSHOT</version>
       <type>library</type>
     </dependency>
     <dependency>
@@ -68,7 +68,7 @@
       <version>1.1.2.0</version>
       <type>dotnet-library</type>
       <scope>system</scope>
-      <systemPath>${project.basedir}\ThirdPartyAssemblies\Innovatian.Configuration.dll</systemPath>
+      <systemPath>C:\Users\frenz\Projekts\.netbridge2\loom-csharp-visualstudio\bridge\src\lib\MockupDomainService\ThirdPartyAssemblies\Innovatian.Configuration.dll</systemPath>
     </dependency>
   </dependencies>
 </project>
