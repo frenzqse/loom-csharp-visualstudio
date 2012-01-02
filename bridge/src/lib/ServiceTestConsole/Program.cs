@@ -58,6 +58,7 @@ namespace ServiceTestConsole
             remotedomain.raiseUpdateMeEvent(events);
             Console.ReadKey();
             factory.UnregisterDomainService(localDomain);
+            
         }
     }
 }
