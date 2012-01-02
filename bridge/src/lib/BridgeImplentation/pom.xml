@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://maven.apache.org/POM/4.0.0">
   <parent>
-    <artifactId>DotNet-Lib-parent</artifactId>
-    <groupId>DotNet-Lib</groupId>
+    <artifactId>org.openengsb.loom.csharp.common.bridge-root</artifactId>
+    <groupId>org.openengsb.loom.csharp.common</groupId>
     <version>1.0.0-SNAPSHOT</version>
     <relativePath>..\pom.xml</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>RealDomainService</artifactId>
+  <artifactId>BridgeImplentation</artifactId>
   <packaging>library</packaging>
-  <name>DotNet-Lib : RealDomainService</name>
+  <name>org.openengsb.loom.csharp.common : BridgeImplentation</name>
   <build>
     <sourceDirectory>./</sourceDirectory>
     <plugins>
@@ -54,16 +54,10 @@
   </build>
   <dependencies>
     <dependency>
-      <groupId>DotNet-Lib</groupId>
-      <artifactId>DomainService</artifactId>
+      <groupId>org.openengsb.loom.csharp.common</groupId>
+      <artifactId>BridgeInterface</artifactId>
       <version>1.0.0-SNAPSHOT</version>
       <type>library</type>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.npanday</groupId>
-      <artifactId>NPanday.Artifact</artifactId>
-      <version>1.4.0-incubating</version>
-      <type>dotnet-library</type>
     </dependency>
     <dependency>
       <groupId>org.openengsb.wrapped.csharp</groupId>

@@ -37,9 +37,6 @@
     <Reference Include="Apache.NMS.ActiveMQ, Version=1.5.2.2508, Culture=neutral, PublicKeyToken=82756feee3957618, processorArchitecture=MSIL" />
     <Reference Include="fastJSON, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Newtonsoft.Json, Version=4.0.5.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
-    <Reference Include="NPanday.Artifact">
-      <HintPath>.references\org.apache.npanday\NPanday.Artifact-1.4.0-incubating\NPanday.Artifact.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
