@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://maven.apache.org/POM/4.0.0">
   <parent>
-    <artifactId>org.openengsb.loom.csharp.common.bridge-root</artifactId>
-    <groupId>org.openengsb.loom.csharp.common</groupId>
+    <artifactId>org.openengsb.loom.csharp.common.bridge.root</artifactId>
+    <groupId>org.openengsb.loom.csharp.common.bridge</groupId>
     <version>1.0.0-SNAPSHOT</version>
     <relativePath>..\pom.xml</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>org.openengsb.loom.csharp.common.ServiceTestConsole</artifactId>
   <packaging>exe</packaging>
-  <name>org.openengsb.loom.csharp.common : ServiceTestConsole</name>
+  <name>OpenEngSB :: Loom :: CSharp :: Common :: Bridge :: ServiceTestConsole</name>
   <build>
     <sourceDirectory>./</sourceDirectory>
     <plugins>
@@ -30,6 +30,18 @@
   </build>
   <dependencies>
     <dependency>
+      <groupId>org.openengsb.loom.csharp.common.bridge</groupId>
+      <artifactId>org.openengsb.loom.csharp.common.bridge.Implementation</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+      <type>library</type>
+    </dependency>
+    <dependency>
+      <groupId>org.openengsb.loom.csharp.common.bridge</groupId>
+      <artifactId>org.openengsb.loom.csharp.common.bridge.Interface</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+      <type>library</type>
+    </dependency>
+    <dependency>
       <groupId>SignalDomainEventsInterfaces</groupId>
       <artifactId>SignalDomainEventsInterfaces</artifactId>
       <version>0.0.0.0</version>
@@ -49,18 +61,6 @@
       <groupId>org.openengsb.wrapped.csharp</groupId>
       <artifactId>log4net</artifactId>
       <version>1.2.11_1-SNAPSHOT</version>
-      <type>dotnet-library</type>
-    </dependency>
-    <dependency>
-      <groupId>org.openengsb.loom.csharp.common</groupId>
-      <artifactId>BridgeInterface</artifactId>
-      <version>1.0.0-SNAPSHOT</version>
-      <type>dotnet-library</type>
-    </dependency>
-    <dependency>
-      <groupId>org.openengsb.loom.csharp.common</groupId>
-      <artifactId>BridgeImplentation</artifactId>
-      <version>1.0.0-SNAPSHOT</version>
       <type>dotnet-library</type>
     </dependency>
   </dependencies>

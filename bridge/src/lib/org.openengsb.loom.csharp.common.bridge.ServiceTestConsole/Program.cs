@@ -32,7 +32,7 @@ namespace ServiceTestConsole
     class Program
     {
         /// <summary>
-        /// This verion works with the openEngS 2.3.0-Snapshot Framwork
+        /// This verion works with the openEngS 3.0.0-Snapshot Framwork
         /// </summary>
         /// <param name="args"></param>
         static void Main(string[] args)
@@ -57,8 +57,7 @@ namespace ServiceTestConsole
             events.origin = factory.getDomainTypServiceId();
             remotedomain.raiseUpdateMeEvent(events);
             Console.ReadKey();
-            factory.UnregisterDomainService(localDomain);
-            
+            factory.UnregisterDomainService(localDomain);            
         }
     }
 }

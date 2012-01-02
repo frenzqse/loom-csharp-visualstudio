@@ -8,8 +8,8 @@
     <ProjectGuid>{5CCD2925-BB25-496E-824F-3894A4FBF968}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Org.OpenEngSB.DotNet.Lib.BridgeInterface</RootNamespace>
-    <AssemblyName>BridgeInterface</AssemblyName>
+    <RootNamespace>org.openengsb.loom.csharp.common.bridge.Interface</RootNamespace>
+    <AssemblyName>org.openengsb.loom.csharp.common.bridge.Interface</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

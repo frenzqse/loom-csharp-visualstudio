@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://maven.apache.org/POM/4.0.0">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.openengsb.loom.csharp.common</groupId>
-  <artifactId>org.openengsb.loom.csharp.common.bridge-root</artifactId>
+  <groupId>org.openengsb.loom.csharp.common.bridge</groupId>
+  <artifactId>org.openengsb.loom.csharp.common.bridge.root</artifactId>
   <packaging>pom</packaging>
-  <name>org.openengsb.loom.csharp.common : Bridge-root</name>
+  <name>OpenEngSB :: Loom :: CSharp :: Common :: Bridge :: Root</name>
   <version>1.0.0-SNAPSHOT</version>
   <modules>
-    <module>BridgeInterface</module>
-    <module>BridgeImplentation</module>
-    <module>ServiceTestConsole</module>
+    <module>org.openengsb.loom.csharp.common.bridge.Interface</module>
+    <module>org.openengsb.loom.csharp.common.bridge.Implentation</module>
+    <module>org.openengsb.loom.csharp.common.bridge.ServiceTestConsole</module>
   </modules>
 </project>
