@@ -85,9 +85,7 @@
   <ItemGroup>
     <WebReferences Include="Web References\" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DomainService\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\org.openengsb.loom.csharp.common.bridge.Interface\org.openengsb.loom.csharp.common.bridge.Interface.csproj">
       <Project>{5CCD2925-BB25-496E-824F-3894A4FBF968}</Project>
