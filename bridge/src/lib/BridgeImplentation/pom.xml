@@ -7,7 +7,7 @@
     <relativePath>..\pom.xml</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>BridgeImplentation</artifactId>
+  <artifactId>org.openengsb.loom.csharp.common.bridgeImplentation</artifactId>
   <packaging>library</packaging>
   <name>org.openengsb.loom.csharp.common : BridgeImplentation</name>
   <build>
