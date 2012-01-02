@@ -43,8 +43,9 @@ namespace ServiceTestConsole
             string domainName = "signal";
 
             IDomainFactory factory = DomainFactoryProvider.GetDomainFactoryInstance();
-            
+  
             ISignalDomainSoapBinding localDomain = new SignalConnector();
+
             //Register the connecter on the osenEngSB
             factory.RegisterDomainService(destination, localDomain, domainName, typeof(ISignalDomainEventsSoapBinding));
             //Get a remote handler, to raise events on obenEngSB
@@ -55,7 +56,6 @@ namespace ServiceTestConsole
             events.query="cpuNumber:1";
             events.origin = factory.getDomainTypServiceId();
             remotedomain.raiseUpdateMeEvent(events);
-                        
             Console.ReadKey();
             factory.UnregisterDomainService(localDomain);
         }

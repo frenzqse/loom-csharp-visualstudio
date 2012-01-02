@@ -221,11 +221,11 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
 
             Guid id = Guid.NewGuid();
             String classname = "org.openengsb.connector.usernamepassword.Password";
-            Data data = Data.CreateInstance("password");
+            Data data = Data.CreateInstance(password);
             AuthenticationInfo authentification = AuthenticationInfo.createInstance(classname, data);
 
             Message message = Message.createInstance(deletionCall, id.ToString(), true, "");
-            SecureMethodCallRequest callRequest = SecureMethodCallRequest.createInstance("admin",authentification,message);
+            SecureMethodCallRequest callRequest = SecureMethodCallRequest.createInstance(username,authentification,message);
 
             Destination destinationinfo = new Destination(destination);
             destinationinfo.Queue = _CREATION_QUEUE;
@@ -253,7 +253,6 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
 
                 if (textMsg == null)
                     continue;
-
                 SecureMethodCallRequest methodCallRequest = marshaller.UnmarshallObject(textMsg, typeof(SecureMethodCallRequest)) as SecureMethodCallRequest;
 
                 MethodResultMessage methodReturnMessage = CallMethod(methodCallRequest);

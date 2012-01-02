@@ -228,7 +228,9 @@ namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote
 
             List<string> classes = new List<string>();
             //realClassImplementation is optinal
+
             //List<string> realClassImplementation = new List<string>();
+
             foreach (object arg in msg.Args)
             {
                 LocalType type = new LocalType(arg.GetType());
