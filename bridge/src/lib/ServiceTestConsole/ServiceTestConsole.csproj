@@ -61,13 +61,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DomainService\DomainService.csproj">
+    <ProjectReference Include="..\BridgeInterface\BridgeInterface.csproj">
       <Project>{5CCD2925-BB25-496E-824F-3894A4FBF968}</Project>
-      <Name>DomainService</Name>
+      <Name>BridgeInterface</Name>
     </ProjectReference>
-    <ProjectReference Include="..\RealDomainService\RealDomainService.csproj">
+    <ProjectReference Include="..\BridgeImplentation\BridgeImplentation.csproj">
       <Project>{CE47C6A2-2E5E-466F-B10C-B2B82DE3F7E1}</Project>
-      <Name>RealDomainService</Name>
+      <Name>BridgeImplentation</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
