@@ -19,28 +19,36 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.IO;
-using Org.Openengsb.Loom.Csharp.Common.Bridge.Interface;
-
-namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Impl
+using Apache.NMS;
+namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Impl.OpenEngSB2_0_0.Communication.Jms
 {
-    public class DomainFactoryProvider
+    public class JmsIncomingPort : JmsPort, IIncomingPort
     {
-        private static string CONFIGURATION_DIRECTORY = "conf";
-        private static string CONFIGURATION_MOCK_FILE = "mocking.provider";
+        IMessageConsumer _consumer;
 
-        public static IDomainFactory GetDomainFactoryInstance()
+        public JmsIncomingPort(string destination) : base(destination)
         {
-            string mockFilePath = Path.Combine(CONFIGURATION_DIRECTORY, CONFIGURATION_MOCK_FILE);
-            
-            int version = 3;
+            _consumer = _session.CreateConsumer(_destination);
+        }
 
-            switch (version)
-            {
-                case (2): return new Org.OpenEngSB.Loom.Csharp.Common.Bridge.Impl.OpenEngSB2_0_0.RealDomainFactory();
-                case (3): return new Org.OpenEngSB.Loom.Csharp.Common.Bridge.Impl.OpenEngSB3_0_0.RealDomainFactory();
-            }
-            return null;
+        /// <summary>
+        /// Waits for a message on the preconfigured queue.
+        /// Blocks until a message in received or the connection is closed.
+        /// </summary>
+        /// <returns>Read message. Null if the connection is closed.</returns>
+        public string Receive()
+        {
+            ITextMessage message = _consumer.Receive() as ITextMessage;
+
+            if (message == null)
+                return null;
+            return message.Text;
+        }
+
+        public new void Close()
+        {
+            base.Close();
+            _consumer.Close();
         }
     }
 }

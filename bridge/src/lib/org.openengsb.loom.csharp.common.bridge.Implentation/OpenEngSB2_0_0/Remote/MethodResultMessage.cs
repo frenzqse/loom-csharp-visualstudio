@@ -19,28 +19,25 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.IO;
-using Org.Openengsb.Loom.Csharp.Common.Bridge.Interface;
 
-namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Impl
+namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Impl.OpenEngSB2_0_0.Remote
 {
-    public class DomainFactoryProvider
+    /// <summary>
+    /// Container for MethodResultMessage
+    /// </summary>
+    public class MethodResultMessage
     {
-        private static string CONFIGURATION_DIRECTORY = "conf";
-        private static string CONFIGURATION_MOCK_FILE = "mocking.provider";
-
-        public static IDomainFactory GetDomainFactoryInstance()
+        public MessageResult message { get; set; }
+        /// <summary>
+        /// Creates a new instance of MethodResultMessage
+        /// </summary>
+        /// <param name="message">Message</param>
+        /// <returns>Returns a new instance of MethodResultMessage</returns>
+        public static MethodResultMessage CreateInstance(MessageResult message)
         {
-            string mockFilePath = Path.Combine(CONFIGURATION_DIRECTORY, CONFIGURATION_MOCK_FILE);
-            
-            int version = 3;
-
-            switch (version)
-            {
-                case (2): return new Org.OpenEngSB.Loom.Csharp.Common.Bridge.Impl.OpenEngSB2_0_0.RealDomainFactory();
-                case (3): return new Org.OpenEngSB.Loom.Csharp.Common.Bridge.Impl.OpenEngSB3_0_0.RealDomainFactory();
-            }
-            return null;
+            MethodResultMessage instance=new MethodResultMessage();
+            instance.message = message;
+            return instance;
         }
     }
 }

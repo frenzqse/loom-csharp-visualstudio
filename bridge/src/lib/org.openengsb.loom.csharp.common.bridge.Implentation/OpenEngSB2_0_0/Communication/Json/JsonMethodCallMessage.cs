@@ -14,33 +14,41 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ***/
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.IO;
-using Org.Openengsb.Loom.Csharp.Common.Bridge.Interface;
+using Apache.NMS;
+using Newtonsoft.Json;
+using Org.OpenEngSB.Loom.Csharp.Common.Bridge.Impl.OpenEngSB2_0_0.Remote;
 
-namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Impl
+
+namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Impl.OpenEngSB2_0_0.Communication.Json
 {
-    public class DomainFactoryProvider
+    public class JsonMethodCallMessage
     {
-        private static string CONFIGURATION_DIRECTORY = "conf";
-        private static string CONFIGURATION_MOCK_FILE = "mocking.provider";
+        public MethodCallWrapper MethodCallWrap { get; set; }
 
-        public static IDomainFactory GetDomainFactoryInstance()
+        public string ReplyID
         {
-            string mockFilePath = Path.Combine(CONFIGURATION_DIRECTORY, CONFIGURATION_MOCK_FILE);
-            
-            int version = 3;
-
-            switch (version)
+            get
             {
-                case (2): return new Org.OpenEngSB.Loom.Csharp.Common.Bridge.Impl.OpenEngSB2_0_0.RealDomainFactory();
-                case (3): return new Org.OpenEngSB.Loom.Csharp.Common.Bridge.Impl.OpenEngSB3_0_0.RealDomainFactory();
+                if (MethodCallWrap != null)
+                    return MethodCallWrap.callId;
+                else
+                    return "";
             }
-            return null;
+        }
+
+        public JsonMethodCallMessage(string tm)
+        {
+            MethodCallWrap = null;
+            Parse(tm);
+        }
+
+        private void Parse(string tm)
+        {
+            MethodCallWrap = JsonConvert.DeserializeObject<MethodCallWrapper>(tm);
         }
     }
 }

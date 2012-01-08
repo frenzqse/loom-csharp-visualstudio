@@ -14,33 +14,39 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ***/
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.IO;
-using Org.Openengsb.Loom.Csharp.Common.Bridge.Interface;
+using Newtonsoft.Json;
+using Org.OpenEngSB.Loom.Csharp.Common.Bridge.Impl.OpenEngSB2_0_0.Remote;
 
-namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Impl
+namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Impl.OpenEngSB2_0_0.Communication.Json
 {
-    public class DomainFactoryProvider
+    public class JsonMethodReturnMessage
     {
-        private static string CONFIGURATION_DIRECTORY = "conf";
-        private static string CONFIGURATION_MOCK_FILE = "mocking.provider";
+        public string Text { get; set; }
 
-        public static IDomainFactory GetDomainFactoryInstance()
+        public MethodReturnWrapper ReturnMessage { get; set; }
+
+        public JsonMethodReturnMessage(MethodReturnWrapper.RETURN_TYPE type, object returnValue)
         {
-            string mockFilePath = Path.Combine(CONFIGURATION_DIRECTORY, CONFIGURATION_MOCK_FILE);
+            ReturnMessage = new MethodReturnWrapper();
+            ReturnMessage.type = type.ToString();
+            ReturnMessage.arg = returnValue;
             
-            int version = 3;
+            if (returnValue == null)
+                ReturnMessage.className = "null";
+            else
+                ReturnMessage.className = returnValue.GetType().Name;
 
-            switch (version)
-            {
-                case (2): return new Org.OpenEngSB.Loom.Csharp.Common.Bridge.Impl.OpenEngSB2_0_0.RealDomainFactory();
-                case (3): return new Org.OpenEngSB.Loom.Csharp.Common.Bridge.Impl.OpenEngSB3_0_0.RealDomainFactory();
-            }
-            return null;
+            ReturnMessage.metaData = "";
+            ToJson();
+        }
+
+        private void ToJson()
+        {
+            Text = JsonConvert.SerializeObject(ReturnMessage);
         }
     }
 }

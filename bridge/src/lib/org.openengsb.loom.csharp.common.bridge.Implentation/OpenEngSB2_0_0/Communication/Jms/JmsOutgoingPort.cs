@@ -14,33 +14,39 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ***/
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.IO;
-using Org.Openengsb.Loom.Csharp.Common.Bridge.Interface;
+using Apache.NMS;
 
-namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Impl
+namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Impl.OpenEngSB2_0_0.Communication.Jms
 {
-    public class DomainFactoryProvider
+    public class JmsOutgoingPort : JmsPort, IOutgoingPort
     {
-        private static string CONFIGURATION_DIRECTORY = "conf";
-        private static string CONFIGURATION_MOCK_FILE = "mocking.provider";
+        IMessageProducer _producer;
 
-        public static IDomainFactory GetDomainFactoryInstance()
+        public JmsOutgoingPort(string destination): base(destination)
         {
-            string mockFilePath = Path.Combine(CONFIGURATION_DIRECTORY, CONFIGURATION_MOCK_FILE);
-            
-            int version = 3;
+            _producer = _session.CreateProducer(_destination);
+            _producer.DeliveryMode = MsgDeliveryMode.Persistent;
+        }
 
-            switch (version)
-            {
-                case (2): return new Org.OpenEngSB.Loom.Csharp.Common.Bridge.Impl.OpenEngSB2_0_0.RealDomainFactory();
-                case (3): return new Org.OpenEngSB.Loom.Csharp.Common.Bridge.Impl.OpenEngSB3_0_0.RealDomainFactory();
-            }
-            return null;
+        /// <summary>
+        /// Send an string over NMS.
+        /// </summary>
+        /// <param name="text">Text to send</param>
+        /// <param name="receiver">Queue name on server side</param>
+        public void Send(string text)
+        {
+            ITextMessage message = _session.CreateTextMessage(text);
+            _producer.Send(message);
+        }
+
+        public new void Close()
+        {
+            base.Close();
+            _producer.Close();
         }
     }
 }

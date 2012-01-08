@@ -14,33 +14,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ***/
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.IO;
-using Org.Openengsb.Loom.Csharp.Common.Bridge.Interface;
 
-namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Impl
+namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Impl.OpenEngSB3_0_0.Remote.RemoteObjects
 {
-    public class DomainFactoryProvider
+    public class SecureMethodCallRequest
     {
-        private static string CONFIGURATION_DIRECTORY = "conf";
-        private static string CONFIGURATION_MOCK_FILE = "mocking.provider";
+        public String principal { get; set; }
+        public AuthenticationInfo credentials { get; set; }
+        public long timestamp { get; set; }
+        public Message message { get; set; }
 
-        public static IDomainFactory GetDomainFactoryInstance()
+        public static SecureMethodCallRequest createInstance(String principal, AuthenticationInfo credentials, Message message)
         {
-            string mockFilePath = Path.Combine(CONFIGURATION_DIRECTORY, CONFIGURATION_MOCK_FILE);
-            
-            int version = 3;
-
-            switch (version)
-            {
-                case (2): return new Org.OpenEngSB.Loom.Csharp.Common.Bridge.Impl.OpenEngSB2_0_0.RealDomainFactory();
-                case (3): return new Org.OpenEngSB.Loom.Csharp.Common.Bridge.Impl.OpenEngSB3_0_0.RealDomainFactory();
-            }
-            return null;
+            SecureMethodCallRequest instance = new SecureMethodCallRequest();
+            instance.principal = principal;
+            instance.credentials = credentials;
+            instance.timestamp = DateTime.Now.Ticks;
+            instance.message = message;
+            return instance;
         }
     }
 }

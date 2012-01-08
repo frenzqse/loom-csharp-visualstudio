@@ -20,7 +20,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Common
+namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Impl.Common
 {
     interface IStoppable
     {

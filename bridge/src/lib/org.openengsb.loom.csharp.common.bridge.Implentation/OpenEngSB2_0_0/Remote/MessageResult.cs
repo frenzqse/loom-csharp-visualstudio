@@ -19,28 +19,29 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.IO;
-using Org.Openengsb.Loom.Csharp.Common.Bridge.Interface;
 
-namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Impl
+namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Impl.OpenEngSB2_0_0.Remote
 {
-    public class DomainFactoryProvider
+    /// <summary>
+    /// Container for MessageResult
+    /// </summary>
+    public class MessageResult
     {
-        private static string CONFIGURATION_DIRECTORY = "conf";
-        private static string CONFIGURATION_MOCK_FILE = "mocking.provider";
+        public MethodResult result { get; set; }
+        public string callId { get; set; }
 
-        public static IDomainFactory GetDomainFactoryInstance()
+        /// <summary>
+        /// Creates a new instance of MessageResult
+        /// </summary>
+        /// <param name="result">Result</param>
+        /// <param name="callId">CallId</param>
+        /// <returns>returns a new instance of MessageResult</returns>
+        public static MessageResult CreateInstance(MethodResult result, string callId)
         {
-            string mockFilePath = Path.Combine(CONFIGURATION_DIRECTORY, CONFIGURATION_MOCK_FILE);
-            
-            int version = 3;
-
-            switch (version)
-            {
-                case (2): return new Org.OpenEngSB.Loom.Csharp.Common.Bridge.Impl.OpenEngSB2_0_0.RealDomainFactory();
-                case (3): return new Org.OpenEngSB.Loom.Csharp.Common.Bridge.Impl.OpenEngSB3_0_0.RealDomainFactory();
-            }
-            return null;
+            MessageResult msg = new MessageResult();
+            msg.result = result;
+            msg.callId = callId;
+            return msg;
         }
     }
 }

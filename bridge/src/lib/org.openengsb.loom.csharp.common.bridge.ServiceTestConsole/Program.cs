@@ -19,20 +19,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Org.OpenEngSB.DotNet.Lib.RealDomainService;
-using Org.OpenEngSB.DotNet.Lib.RealDomainService.Communication.Jms;
-using Org.OpenEngSB.DotNet.Lib.RealDomainService.Communication.Json;
-using Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote;
-using Org.OpenEngSB.DotNet.Lib.DomainService;
 using System.Reflection;
 using System.IO;
+using Org.OpenEngSB.Loom.Csharp.Common.Bridge.Impl;
+using Org.Openengsb.Loom.Csharp.Common.Bridge.Interface;
+using Org.OpenEngSB.Loom.Csharp.Common.ServiceTestConsole;
 
 namespace ServiceTestConsole
 {
     class Program
     {
         /// <summary>
-        /// This verion works with the openEngS 3.0.0-Snapshot Framwork
+        /// This version works with the OpenEngS 3.0.0-Snapshot Framwork
         /// </summary>
         /// <param name="args"></param>
         static void Main(string[] args)

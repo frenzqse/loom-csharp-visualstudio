@@ -21,7 +21,7 @@ using System.Linq;
 using System.Text;
 using System.Reflection;
 
-namespace Org.OpenEngSB.DotNet.Lib.DomainService
+namespace Org.Openengsb.Loom.Csharp.Common.Bridge.Interface
 {
     public class MethodInvocation
     {

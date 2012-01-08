@@ -21,7 +21,7 @@ using System.Linq;
 using System.Web.Services;
 using System.Text;
 using log4net;
-namespace Org.OpenEngSB.DotNet.Lib.RealDomainService
+namespace Org.OpenEngSB.Loom.Csharp.Common.ServiceTestConsole
 {
     class SignalConnector : ISignalDomainSoapBinding
     {
