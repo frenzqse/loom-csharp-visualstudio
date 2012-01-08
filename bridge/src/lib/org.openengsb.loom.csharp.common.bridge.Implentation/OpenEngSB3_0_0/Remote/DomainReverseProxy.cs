@@ -59,7 +59,6 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Impl.OpenEngSB3_0_0.Remote
 
         private string destination;
 
-        private Type domainEvents;
         /// <summary>
         /// ServiceId of the proxy on the bus
         /// </summary>
@@ -99,9 +98,8 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Impl.OpenEngSB3_0_0.Remote
         /// <param name="serviceId">ServiceId</param>
         /// <param name="domainType">name of the remote Domain</param>
         /// <param name="domainEvents">Type of the remoteDomainEvents</param>
-        public DomainReverseProxy(T localDomainService, string host, string serviceId, string domainType,Type domainEvents)
+        public DomainReverseProxy(T localDomainService, string host, string serviceId, string domainType)
         {
-            this.domainEvents=domainEvents;
             this.marshaller = new JsonMarshaller();
             this.isEnabled = true;            
             this.domainService = localDomainService;
@@ -124,9 +122,8 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Impl.OpenEngSB3_0_0.Remote
         /// <param name="domainEvents">Type of the remoteDomainEvents</param>
         /// <param name="username">Username for the authentification</param>
         /// <param name="password">Password for the authentification</param>
-        public DomainReverseProxy(T localDomainService, string host, string serviceId, string domainType, Type domainEvents,String username,String password)
+        public DomainReverseProxy(T localDomainService, string host, string serviceId, string domainType,String username,String password)
         {
-            this.domainEvents = domainEvents;
             this.marshaller = new JsonMarshaller();
             this.isEnabled = true;
             this.domainService = localDomainService;
@@ -336,7 +333,7 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Impl.OpenEngSB3_0_0.Remote
         {
             IList<object> args = new List<object>();
 
-            Assembly asm = domainEvents.GetType().Assembly;
+            Assembly asm = typeof(T).GetType().Assembly;
             for (int i = 0; i < methodCall.args.Count; ++i)
             {
                 object arg = methodCall.args[i];

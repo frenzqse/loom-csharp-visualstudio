@@ -26,7 +26,7 @@ namespace Org.Openengsb.Loom.Csharp.Common.Bridge.Interface
     {
         T getEventhandler<T>(string host);
 
-        void RegisterDomainService<T>(string destination, T service, string domainType, Type domainevents);
+        void RegisterDomainService<T>(string destination, T service, string domainType);
         void UnregisterDomainService(object service);
         String getDomainTypServiceId();
         

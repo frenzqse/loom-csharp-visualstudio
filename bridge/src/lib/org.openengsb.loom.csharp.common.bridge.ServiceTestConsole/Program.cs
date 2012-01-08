@@ -45,7 +45,7 @@ namespace ServiceTestConsole
             ISignalDomainSoapBinding localDomain = new SignalConnector();
 
             //Register the connecter on the osenEngSB
-            factory.RegisterDomainService(destination, localDomain, domainName, typeof(ISignalDomainEventsSoapBinding));
+            factory.RegisterDomainService(destination, localDomain, domainName);
             //Get a remote handler, to raise events on obenEngSB
             ISignalDomainEventsSoapBinding remotedomain = factory.getEventhandler<ISignalDomainEventsSoapBinding>(destination);
             updateMeEvent events=new updateMeEvent();

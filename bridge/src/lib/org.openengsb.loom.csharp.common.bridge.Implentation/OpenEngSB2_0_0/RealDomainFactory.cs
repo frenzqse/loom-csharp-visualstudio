@@ -33,7 +33,7 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Impl.OpenEngSB2_0_0
         private Dictionary<object, IStoppable> _proxies;
         private String serviceId;
         private String domainType;
-        private Type domainEvents;
+
         public RealDomainFactory()
         {
             Reset();
@@ -53,12 +53,11 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Impl.OpenEngSB2_0_0
         /// <param name="serviceId"></param>
         /// <param name="domainType">local domain</param>
         /// <param name="domainType">remote domain</param>
-        public void RegisterDomainService<T>(string destination, T domainService, String domainType, Type domainEvents)
+        public void RegisterDomainService<T>(string destination, T domainService, String domainType)
         {
-            this.domainEvents = domainEvents;
             this.domainType = domainType;
             this.serviceId = Guid.NewGuid().ToString();
-            DomainReverseProxy<T> proxy = new DomainReverseProxy<T>(domainService, destination, serviceId, domainType, domainEvents);
+            DomainReverseProxy<T> proxy = new DomainReverseProxy<T>(domainService, destination, serviceId, domainType);
             _proxies.Add(domainService, proxy);
             proxy.Start();
         }
@@ -73,12 +72,11 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Impl.OpenEngSB2_0_0
         /// <param name="domainType">remote domain</param>
         /// <param name="username">Username for the authentification</param>
         /// <param name="password">Password for the authentification</param>
-        public void RegisterDomainService<T>(string destination, T domainService, String domainType, Type domainEvents,String username,String password)
+        public void RegisterDomainService<T>(string destination, T domainService, String domainType, String username,String password)
         {
-            this.domainEvents = domainEvents;
             this.domainType = domainType;
             this.serviceId = Guid.NewGuid().ToString();
-            DomainReverseProxy<T> proxy = new DomainReverseProxy<T>(domainService, destination, serviceId, domainType, domainEvents);
+            DomainReverseProxy<T> proxy = new DomainReverseProxy<T>(domainService, destination, serviceId, domainType);
             _proxies.Add(domainService, proxy);
             proxy.Start();
         }

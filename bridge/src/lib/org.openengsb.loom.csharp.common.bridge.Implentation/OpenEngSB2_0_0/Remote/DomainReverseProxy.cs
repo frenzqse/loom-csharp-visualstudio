@@ -51,7 +51,6 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Impl.OpenEngSB2_0_0.Remote
 
         private string destination;
 
-        private Type domainEvents;
         /// <summary>
         /// ServiceId of the proxy on the bus
         /// </summary>
@@ -84,9 +83,8 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Impl.OpenEngSB2_0_0.Remote
         /// </summary>
         private ConnectorId connectorId;
 
-        public DomainReverseProxy(T domainService, string host, string serviceId, string domainType,Type domainEvents)
-        {
-            this.domainEvents=domainEvents;
+        public DomainReverseProxy(T domainService, string host, string serviceId, string domainType)
+        {            
             this.marshaller = new JsonMarshaller();
             this.isEnabled = true;            
             this.domainService = domainService;
@@ -297,7 +295,7 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Impl.OpenEngSB2_0_0.Remote
         {
             IList<object> args = new List<object>();
 
-            Assembly asm = domainEvents.GetType().Assembly;
+            Assembly asm = typeof(T).GetType().Assembly;
             for (int i = 0; i < methodCall.args.Count; ++i)
             {
                 object arg = methodCall.args[i];
