@@ -21,8 +21,8 @@ using System.Linq;
 using System.Text;
 using System.Reflection;
 using System.IO;
-using Org.OpenEngSB.Loom.Csharp.Common.Bridge.Impl;
-using Org.Openengsb.Loom.Csharp.Common.Bridge.Interface;
+using Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation;
+using Org.OpenEngSB.Loom.Csharp.Common.Bridge.Interface;
 using Org.OpenEngSB.Loom.Csharp.Common.ServiceTestConsole;
 
 namespace ServiceTestConsole
@@ -40,7 +40,7 @@ namespace ServiceTestConsole
             string destination = "tcp://localhost:6549";
             string domainName = "signal";
 
-            IDomainFactory factory = DomainFactoryProvider.GetDomainFactoryInstance();
+            IDomainFactory factory = DomainFactoryProvider.GetDomainFactoryInstance(new Uri("http://localhost:8090"));
   
             ISignalDomainSoapBinding localDomain = new SignalConnector();
 

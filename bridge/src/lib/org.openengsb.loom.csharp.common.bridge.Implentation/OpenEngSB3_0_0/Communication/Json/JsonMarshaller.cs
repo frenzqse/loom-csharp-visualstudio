@@ -22,7 +22,7 @@ using System.Text;
 using System.IO;
 using Newtonsoft.Json;
 
-namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Impl.OpenEngSB3_0_0.Communication.Json
+namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB3_0_0.Communication.Json
 {
     /// <summary>
     /// This class converts any given object to an json-message.

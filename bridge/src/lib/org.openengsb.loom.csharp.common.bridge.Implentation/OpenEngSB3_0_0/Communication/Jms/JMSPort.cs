@@ -21,7 +21,7 @@ using System.Linq;
 using System.Text;
 using Apache.NMS;
 
-namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Impl.OpenEngSB3_0_0.Communication.Jms
+namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB3_0_0.Communication.Jms
 {
     public abstract class JmsPort
     {

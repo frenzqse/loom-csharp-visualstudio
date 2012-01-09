@@ -36,6 +36,9 @@
     <Reference Include="Apache.NMS, Version=1.5.0.2194, Culture=neutral, PublicKeyToken=82756feee3957618, processorArchitecture=MSIL" />
     <Reference Include="Apache.NMS.ActiveMQ, Version=1.5.2.2508, Culture=neutral, PublicKeyToken=82756feee3957618, processorArchitecture=MSIL" />
     <Reference Include="fastJSON, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="log4net">
+      <HintPath>.references\org.openengsb.wrapped.csharp\log4net-1.2.11_1-SNAPSHOT\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.0.5.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -50,7 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="OpenEngSB2_0_0\RealDomainFactory.cs" />
+    <Compile Include="OpenEngSB2_4_0\RealDomainFactory.cs" />
     <Compile Include="OpenEngSB3_0_0\Communication\IIncomingPort.cs" />
     <Compile Include="OpenEngSB3_0_0\Communication\IMarshaller.cs" />
     <Compile Include="OpenEngSB3_0_0\Communication\IPort.cs" />
@@ -59,34 +62,34 @@
     <Compile Include="OpenEngSB3_0_0\Communication\Json\JsonMarshaller.cs" />
     <Compile Include="DomainFactoryProvider.cs" />
     <Compile Include="Common\IStoppable.cs" />
-    <Compile Include="OpenEngSB2_0_0\Communication\IIncomingPort.cs" />
-    <Compile Include="OpenEngSB2_0_0\Communication\IMarshaller.cs" />
-    <Compile Include="OpenEngSB2_0_0\Communication\IOutgoingPort.cs" />
-    <Compile Include="OpenEngSB2_0_0\Communication\IPort.cs" />
-    <Compile Include="OpenEngSB2_0_0\Communication\Jms\Destination.cs" />
-    <Compile Include="OpenEngSB2_0_0\Communication\Jms\JmsIncomingPort.cs" />
-    <Compile Include="OpenEngSB2_0_0\Communication\Jms\JmsOutgoingPort.cs" />
-    <Compile Include="OpenEngSB2_0_0\Communication\Jms\JMSPort.cs" />
-    <Compile Include="OpenEngSB2_0_0\Communication\Json\JsonMarshaller.cs" />
-    <Compile Include="OpenEngSB2_0_0\Communication\Json\JsonMethodCallMessage.cs" />
-    <Compile Include="OpenEngSB2_0_0\Communication\Json\JsonMethodReturnMessage.cs" />
-    <Compile Include="OpenEngSB2_0_0\Remote\Authentification.cs" />
-    <Compile Include="OpenEngSB2_0_0\Remote\BinaryData.cs" />
-    <Compile Include="OpenEngSB2_0_0\Remote\ConnectorDescription.cs" />
-    <Compile Include="OpenEngSB2_0_0\Remote\ConnectorId.cs" />
-    <Compile Include="OpenEngSB2_0_0\Remote\Data.cs" />
-    <Compile Include="OpenEngSB2_0_0\Remote\DomainProxy.cs" />
-    <Compile Include="OpenEngSB2_0_0\Remote\DomainReverseProxy.cs" />
-    <Compile Include="OpenEngSB2_0_0\Remote\LocalType.cs" />
-    <Compile Include="OpenEngSB2_0_0\Remote\Message.cs" />
-    <Compile Include="OpenEngSB2_0_0\Remote\MessageResult.cs" />
-    <Compile Include="OpenEngSB2_0_0\Remote\MethodCall.cs" />
-    <Compile Include="OpenEngSB2_0_0\Remote\MethodCallRequest.cs" />
-    <Compile Include="OpenEngSB2_0_0\Remote\MethodCallWrapper.cs" />
-    <Compile Include="OpenEngSB2_0_0\Remote\MethodResult.cs" />
-    <Compile Include="OpenEngSB2_0_0\Remote\MethodResultMessage.cs" />
-    <Compile Include="OpenEngSB2_0_0\Remote\MethodReturnWrapper.cs" />
-    <Compile Include="OpenEngSB2_0_0\Remote\RemoteType.cs" />
+    <Compile Include="OpenEngSB2_4_0\Communication\IIncomingPort.cs" />
+    <Compile Include="OpenEngSB2_4_0\Communication\IMarshaller.cs" />
+    <Compile Include="OpenEngSB2_4_0\Communication\IOutgoingPort.cs" />
+    <Compile Include="OpenEngSB2_4_0\Communication\IPort.cs" />
+    <Compile Include="OpenEngSB2_4_0\Communication\Jms\Destination.cs" />
+    <Compile Include="OpenEngSB2_4_0\Communication\Jms\JmsIncomingPort.cs" />
+    <Compile Include="OpenEngSB2_4_0\Communication\Jms\JmsOutgoingPort.cs" />
+    <Compile Include="OpenEngSB2_4_0\Communication\Jms\JMSPort.cs" />
+    <Compile Include="OpenEngSB2_4_0\Communication\Json\JsonMarshaller.cs" />
+    <Compile Include="OpenEngSB2_4_0\Communication\Json\JsonMethodCallMessage.cs" />
+    <Compile Include="OpenEngSB2_4_0\Communication\Json\JsonMethodReturnMessage.cs" />
+    <Compile Include="OpenEngSB2_4_0\Remote\Authentification.cs" />
+    <Compile Include="OpenEngSB2_4_0\Remote\BinaryData.cs" />
+    <Compile Include="OpenEngSB2_4_0\Remote\ConnectorDescription.cs" />
+    <Compile Include="OpenEngSB2_4_0\Remote\ConnectorId.cs" />
+    <Compile Include="OpenEngSB2_4_0\Remote\Data.cs" />
+    <Compile Include="OpenEngSB2_4_0\Remote\DomainProxy.cs" />
+    <Compile Include="OpenEngSB2_4_0\Remote\DomainReverseProxy.cs" />
+    <Compile Include="OpenEngSB2_4_0\Remote\LocalType.cs" />
+    <Compile Include="OpenEngSB2_4_0\Remote\Message.cs" />
+    <Compile Include="OpenEngSB2_4_0\Remote\MessageResult.cs" />
+    <Compile Include="OpenEngSB2_4_0\Remote\MethodCall.cs" />
+    <Compile Include="OpenEngSB2_4_0\Remote\MethodCallRequest.cs" />
+    <Compile Include="OpenEngSB2_4_0\Remote\MethodCallWrapper.cs" />
+    <Compile Include="OpenEngSB2_4_0\Remote\MethodResult.cs" />
+    <Compile Include="OpenEngSB2_4_0\Remote\MethodResultMessage.cs" />
+    <Compile Include="OpenEngSB2_4_0\Remote\MethodReturnWrapper.cs" />
+    <Compile Include="OpenEngSB2_4_0\Remote\RemoteType.cs" />
     <Compile Include="OpenEngSB3_0_0\Remote\RemoteObjects\AuthenticationInfo.cs" />
     <Compile Include="OpenEngSB3_0_0\Remote\RemoteObjects\ConnectorDescription.cs" />
     <Compile Include="OpenEngSB3_0_0\Remote\RemoteObjects\ConnectorId.cs" />

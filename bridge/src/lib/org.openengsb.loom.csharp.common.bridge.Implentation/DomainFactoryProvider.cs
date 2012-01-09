@@ -12,6 +12,7 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
+
  * limitations under the License.
  ***/
 
@@ -20,27 +21,51 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
-using Org.Openengsb.Loom.Csharp.Common.Bridge.Interface;
+using Org.OpenEngSB.Loom.Csharp.Common.Bridge.Interface;
+using Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.Exceptions;
+using System.Net;
 
-namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Impl
+namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation
 {
+    /// <summary>
+    /// Factory Provider
+    /// </summary>
     public class DomainFactoryProvider
     {
-        private static string CONFIGURATION_DIRECTORY = "conf";
-        private static string CONFIGURATION_MOCK_FILE = "mocking.provider";
-
-        public static IDomainFactory GetDomainFactoryInstance()
+        /// <summary>
+        /// Retrieve a factory, depending on the openEngSB version
+        /// </summary>
+        /// <param name="stringVersion">Version of the OpenEngSB-framework in String format</param>
+        /// <returns>Factory</returns>
+        public static IDomainFactory GetDomainFactoryInstance(String stringVersion)
         {
-            string mockFilePath = Path.Combine(CONFIGURATION_DIRECTORY, CONFIGURATION_MOCK_FILE);
-            
-            int version = 3;
-
-            switch (version)
+            try
             {
-                case (2): return new Org.OpenEngSB.Loom.Csharp.Common.Bridge.Impl.OpenEngSB2_0_0.RealDomainFactory();
-                case (3): return new Org.OpenEngSB.Loom.Csharp.Common.Bridge.Impl.OpenEngSB3_0_0.RealDomainFactory();
+                String versionnbr = stringVersion.Replace(".", "");
+                versionnbr = stringVersion.Replace("-SNAPSHOT", "");
+                int version = int.Parse(versionnbr);
+                if (version >= 300) return new Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB3_0_0.RealDomainFactory();
+                if (version >= 240) return new Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.RealDomainFactory();
+                return null;
             }
-            return null;
+            catch 
+            {
+                throw new ConnectOpenEngSBException("Unable to receive the actually version from: "+stringVersion);
+            }
+        }
+        /// <summary>
+        /// Retrieve a factory, depending on the openEngSB version
+        /// </summary>
+        /// <param name="urlVersion">Version of the OpenEngSB-framework in url format</param>
+        /// <returns>factory</returns>
+        public static IDomainFactory GetDomainFactoryInstance(Uri urlVersion)
+        {
+            Uri uri = urlVersion;
+            if (!uri.ToString().Contains("system/framework.version.info")) uri = new Uri(uri.ToString() + "system/framework.version.info");
+            WebClient myWebClient = new WebClient();
+            Byte[] myDataBuffer = myWebClient.DownloadData(uri);
+            String stringVersion = Encoding.ASCII.GetString(myDataBuffer);
+            return GetDomainFactoryInstance(stringVersion);
         }
     }
 }

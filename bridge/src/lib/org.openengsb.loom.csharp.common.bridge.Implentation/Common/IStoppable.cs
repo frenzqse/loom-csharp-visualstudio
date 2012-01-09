@@ -20,10 +20,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Impl.Common
+namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.Common
 {
-    interface IStoppable
+    /// <summary>
+    /// Interfacedescription for stopping a Thread
+    /// </summary>
+    public interface IStoppable
     {
+        //Description to stop a Thread
         void Stop();
     }
 }
