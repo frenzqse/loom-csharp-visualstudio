@@ -20,23 +20,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB3_0_0.Communication.Jms
+namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.Communication.Jms
 {
+    /// <summary>
+    /// Type for URLS
+    /// </summary>
     public class Destination
     {
-        public string Host { get; set; }
-        public string Queue { get; set; }
-
-        public string FullDestination
-        {
-            get
-            {
-                if(string.IsNullOrEmpty(Queue))
-                    return Host;
-                return Host + "?" + Queue;
-            }
-        }
-
+        #region Constructor
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        /// <param name="destination">Url of the Destination</param>
         public Destination(string destination)
         {
             string[] parts = destination.Split('?');
@@ -47,10 +42,36 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB3_0_0.
             Host = parts[0].Trim();
             Queue = parts[1].Trim();
         }
-
+        #endregion
+        #region Variables
+        public string Host { get; set; }
+        public string Queue { get; set; }
+        #endregion
+        #region Propreties
+        /// <summary>
+        /// Get the hole URL String
+        /// </summary>
+        public string FullDestination
+        {
+            get
+            {
+                if(string.IsNullOrEmpty(Queue))
+                    return Host;
+                return Host + "?" + Queue;
+            }
+        }
+        #endregion        
+        #region Public static Methods
+        /// <summary>
+        /// Combines host and queue
+        /// </summary>
+        /// <param name="host">Host</param>
+        /// <param name="queue">Queue</param>
+        /// <returns>Combination of the host and queue</returns>
         public static string CreateDestinationString(string host, string queue)
         {
             return host + "?" + queue;
         }
+        #endregion
     }
 }

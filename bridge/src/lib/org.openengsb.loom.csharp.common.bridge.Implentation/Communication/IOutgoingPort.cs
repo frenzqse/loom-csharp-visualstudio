@@ -18,35 +18,19 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Newtonsoft.Json;
-using Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote;
 
-namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Communication.Json
+namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.Communication
 {
-    public class JsonMethodReturnMessage
+    /// <summary>
+    /// This interfaces specifies the operations for a communication port.
+    /// The interface supports sending and receiving text messages over any arbitrary protocol.
+    /// </summary>
+    public interface IOutgoingPort: IPort
     {
-        public string Text { get; set; }
-
-        public MethodReturnWrapper ReturnMessage { get; set; }
-
-        public JsonMethodReturnMessage(MethodReturnWrapper.RETURN_TYPE type, object returnValue)
-        {
-            ReturnMessage = new MethodReturnWrapper();
-            ReturnMessage.type = type.ToString();
-            ReturnMessage.arg = returnValue;
-            
-            if (returnValue == null)
-                ReturnMessage.className = "null";
-            else
-                ReturnMessage.className = returnValue.GetType().Name;
-
-            ReturnMessage.metaData = "";
-            ToJson();
-        }
-
-        private void ToJson()
-        {
-            Text = JsonConvert.SerializeObject(ReturnMessage);
-        }
+        /// <summary>
+        /// Definition to send a message
+        /// </summary>
+        /// <param name="Text">message to send</param>
+        void Send(string Text);
     }
 }

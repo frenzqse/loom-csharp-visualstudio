@@ -24,9 +24,9 @@ using System.Web.Services.Protocols;
 using System.Reflection;
 using System.IO;
 using System.Xml.Serialization;
-using Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.Communication.Jms;
-using Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.Communication;
-using Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.Communication.Json;
+using Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.Communication.Jms;
+using Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.Communication;
+using Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.Communication.Json;
 namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.Remote
 {
     /// <summary>
@@ -58,6 +58,12 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.
         private IMarshaller marshaller;
         #endregion
         #region Constructors
+        /// <summary>
+        /// Defautl constrcutor
+        /// </summary>
+        /// <param name="host">Host</param>
+        /// <param name="serviceId">ServiceId</param>
+        /// <param name="domainType">DomainType</param>
         public DomainProxy(string host, string serviceId,String domainType)
             : base(typeof(T))
         {
@@ -71,8 +77,8 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.
         /// <summary>
         /// Will be invoked when a call to the proxy has been made.
         /// </summary>
-        /// <param name="msg"></param>
-        /// <returns></returns>
+        /// <param name="msg">Message, which contains the Parameters of the Method</param>
+        /// <returns>Received Method</returns>
         public override IMessage Invoke(IMessage msg)
         {
             IMethodCallMessage callMessage = msg as IMethodCallMessage;
@@ -85,6 +91,7 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.
             MethodResultMessage methodReturn = marshaller.UnmarshallObject(methodReturnMsg, typeof(MethodResultMessage)) as MethodResultMessage;
             return ToMessage(methodReturn.message.result, callMessage);
         }
+
         public new T GetTransparentProxy()
         {
             return (T)base.GetTransparentProxy();
@@ -95,8 +102,8 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.
         /// Builds an IMessage using MethodReturn.
         /// </summary>
         /// <param name="methodReturn">Servers return message</param>
-        /// <param name="callMessage"></param>
-        /// <returns></returns>
+        /// <param name="callMessage">Method Information</param>
+        /// <returns>The result of the Message</returns>
         private IMessage ToMessage(MethodResult methodReturn, IMethodCallMessage callMessage)
         {
             IMethodReturnMessage returnMessage = null;
@@ -187,10 +194,10 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.
         }
         /// <summary>
         /// Builds an MethodCall using IMethodCallMessage.
-        /// TODO if bug ??? is fixed replace classes.Add(getPackageName(type.RemoteTypeFullName) + ".event." + firstLetterToUpper(type.RemoteTypeFullName)); with classes.Add(getPackageName(type.RemoteTypeFullName) + "." + firstLetterToUpper(type.RemoteTypeFullName));
+        /// In the of the OpenEngSB version 3.0.0  classes.Add(getPackageName(type.RemoteTypeFullName) + ".event." + firstLetterToUpper(type.RemoteTypeFullName)); with classes.Add(getPackageName(type.RemoteTypeFullName) + "." + firstLetterToUpper(type.RemoteTypeFullName)) is removed;
         /// </summary>
-        /// <param name="msg"></param>
-        /// <returns></returns>
+        /// <param name="msg">Information, to create a MethodCallRequest</param>
+        /// <returns>A new instance of methodCallrequest</returns>
         private MethodCallRequest ToMethodCallRequest(IMethodCallMessage msg)
         {
             Guid id = Guid.NewGuid();
@@ -200,11 +207,11 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.
             //The structure is always domain.DOMAINTYPE.events
             metaData.Add("serviceId", "domain." + domainType + ".events");
 
-            // arbitrary string, maybe not necessary
+            // Arbitrary string, maybe not necessary
             metaData.Add("contextId", "foo");
 
             List<string> classes = new List<string>();
-            //realClassImplementation is optinal
+            //RealClassImplementation is optinal
             List<string> realClassImplementation = new List<string>();
             foreach (object arg in msg.Args)
             {

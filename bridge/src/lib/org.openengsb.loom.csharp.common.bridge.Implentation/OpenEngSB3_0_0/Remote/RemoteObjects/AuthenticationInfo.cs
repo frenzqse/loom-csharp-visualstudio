@@ -27,8 +27,11 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB3_0_0.
     /// </summary>
     public class AuthenticationInfo
     {
+        #region variables
         public String className { get; set; }
-        public Data data { get; set; }        
+        public Data data { get; set; }
+        #endregion
+        #region Public static Methods
         /// <summary>
         /// Creates a new instance of the Authentification
         /// </summary>
@@ -44,5 +47,6 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB3_0_0.
             //instance.binaryData = binaryData;
             return instance;
         }
+        #endregion
     }
 }

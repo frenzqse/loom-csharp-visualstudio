@@ -14,20 +14,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ***/
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.Remote
+namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.Communication
 {
-    public class MethodCallWrapper
+    /// <summary>
+    /// This interface specifies operations for marshalling objects
+    /// in an arbitrary format. This is usually necessary for serializing
+    /// and sending objects over any communication channels.
+    /// </summary>
+    interface IMarshaller
     {
-        public string[] classes { get; set; }
-        public string methodName { get; set; }
-        public object[] args { get; set; }
-        public string callId { get; set; }
-        public bool answer { get; set; }
-        public string[] realClassImplementation { get; set; }
+        /// <summary>
+        /// Serialize a object
+        /// </summary>
+        /// <param name="obj">Object to serialize</param>
+        /// <returns>Serialized string</returns>
+        string MarshallObject(object obj);
+        /// <summary>
+        /// Deserialze a object
+        /// </summary>
+        /// <param name="jsonText">Json object in string format</param>
+        /// <param name="objectType">Type of the object to return</param>
+        /// <returns>The deserialized object</returns>
+        object UnmarshallObject(string jsonText, Type objectType);
     }
 }

@@ -14,40 +14,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ***/
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Apache.NMS;
-using Newtonsoft.Json;
-using Org.OpenEngSB.DotNet.Lib.RealDomainService.Remote;
 
-namespace Org.OpenEngSB.DotNet.Lib.RealDomainService.Communication.Json
+namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.Remote
 {
-    public class JsonMethodCallMessage
+    /// <summary>
+    /// Container for MethodResultMessage
+    /// </summary>
+    public class MethodResultMessage
     {
-        public MethodCallWrapper MethodCallWrap { get; set; }
-
-        public string ReplyID
+        #region Variables
+        public MessageResult message { get; set; }
+        #endregion
+        #region Public static Methods
+        /// <summary>
+        /// Creates a new instance of MethodResultMessage
+        /// </summary>
+        /// <param name="message">Message</param>
+        /// <returns>Returns a new instance of MethodResultMessage</returns>
+        public static MethodResultMessage CreateInstance(MessageResult message)
         {
-            get
-            {
-                if (MethodCallWrap != null)
-                    return MethodCallWrap.callId;
-                else
-                    return "";
-            }
+            MethodResultMessage instance=new MethodResultMessage();
+            instance.message = message;
+            return instance;
         }
-
-        public JsonMethodCallMessage(string tm)
-        {
-            MethodCallWrap = null;
-            Parse(tm);
-        }
-
-        private void Parse(string tm)
-        {
-            MethodCallWrap = JsonConvert.DeserializeObject<MethodCallWrapper>(tm);
-        }
+        #endregion
     }
 }

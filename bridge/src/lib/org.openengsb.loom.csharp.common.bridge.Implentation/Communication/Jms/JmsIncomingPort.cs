@@ -20,17 +20,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Apache.NMS;
-namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB3_0_0.Communication.Jms
+namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.Communication.Jms
 {
+    /// <summary>
+    /// Receive the datas
+    /// </summary>
     public class JmsIncomingPort : JmsPort, IIncomingPort
     {
+        #region variables
         IMessageConsumer _consumer;
-
+        #endregion
+        #region Constructor
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        /// <param name="destination">URL to OpenEngSB</param>
         public JmsIncomingPort(string destination) : base(destination)
         {
             _consumer = _session.CreateConsumer(_destination);
         }
-
+        #endregion
+        #region Public Methods
         /// <summary>
         /// Waits for a message on the preconfigured queue.
         /// Blocks until a message in received or the connection is closed.
@@ -44,11 +54,14 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB3_0_0.
                 return null;
             return message.Text;
         }
-
+        /// <summary>
+        /// Close the Connection
+        /// </summary>
         public new void Close()
         {
             base.Close();
             _consumer.Close();
         }
+        #endregion
     }
 }

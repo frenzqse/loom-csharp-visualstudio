@@ -23,28 +23,30 @@ using System.Text;
 namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.Remote
 {
     /// <summary>
-    /// Container for the Authentification
+    /// Container for MethodCallRequest
     /// </summary>
-    public class Authentification
+    public class MethodCallRequest
     {
-        public String className { get; set; }
-        public Data data { get; set; }
-        public BinaryData binaryData { get; set; }
-
+        #region Variables
+        public Authentification authenticationData { get; set; }
+        public Message message { get; set; }
+        public long timestamp{get;set;}
+        #endregion
+        #region Public static Methods
         /// <summary>
-        /// Creates a new instance of the Authentification
+        /// Creates a new instance of MessageCallRequest
         /// </summary>
-        /// <param name="className">ClassName</param>
-        /// <param name="data">Data</param>
-        /// <param name="binaryData">Binary Data</param>
-        /// <returns>A new instance of Authentification</returns>
-        public static Authentification createInstance(String className, Data data, BinaryData binaryData)
+        /// <param name="authentification">Authentication Datas</param>
+        /// <param name="message">Message</param>
+        /// <returns>Returns a new instance of MethodCallRequest</returns>
+        public static MethodCallRequest CreateInstance(Authentification authenticationData, Message message)
         {
-            Authentification instance = new Authentification();
-            instance.className = className;
-            instance.data = data;
-            instance.binaryData = binaryData;
-            return instance;
+            MethodCallRequest request = new MethodCallRequest();
+            request.authenticationData = authenticationData;
+            request.message = message;
+            request.timestamp = DateTime.Now.Ticks;
+            return request;
         }
+        #endregion
     }
 }

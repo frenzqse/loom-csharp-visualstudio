@@ -19,36 +19,27 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Apache.NMS;
-namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.Communication.Jms
+
+namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.Remote
 {
-    public class JmsIncomingPort : JmsPort, IIncomingPort
+    /// <summary>
+    /// This class represents an Connector instance on the bus.
+    /// </summary>
+    public class ConnectorDescription
     {
-        IMessageConsumer _consumer;
-
-        public JmsIncomingPort(string destination) : base(destination)
-        {
-            _consumer = _session.CreateConsumer(_destination);
-        }
-
+        #region Variables
+        public IDictionary<String, Object> properties { get; set; }
+        public IDictionary<String, String> attributes { get; set; }
+        #endregion
+        #region Constructor
         /// <summary>
-        /// Waits for a message on the preconfigured queue.
-        /// Blocks until a message in received or the connection is closed.
+        /// Default constructor
         /// </summary>
-        /// <returns>Read message. Null if the connection is closed.</returns>
-        public string Receive()
+        public ConnectorDescription()
         {
-            ITextMessage message = _consumer.Receive() as ITextMessage;
-
-            if (message == null)
-                return null;
-            return message.Text;
+            attributes = new Dictionary<string, string>();
+            properties = new Dictionary<string, object>();
         }
-
-        public new void Close()
-        {
-            base.Close();
-            _consumer.Close();
-        }
+        #endregion
     }
 }

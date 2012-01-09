@@ -23,27 +23,14 @@ using System.Text;
 namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.Remote
 {
     /// <summary>
-    /// Container for MethodCallRequest
+    /// This class  indentifies an Connector instance on the bus.
     /// </summary>
-    public class MethodCallRequest
+    public class ConnectorId
     {
-        public Authentification authenticationData { get; set; }
-        public Message message { get; set; }
-        public long timestamp{get;set;}
-
-        /// <summary>
-        /// Creates a new instance of MessageCallRequest
-        /// </summary>
-        /// <param name="authentification">Authentication Datas</param>
-        /// <param name="message">Message</param>
-        /// <returns>Returns a new instance of MethodCallRequest</returns>
-        public static MethodCallRequest CreateInstance(Authentification authenticationData, Message message)
-        {
-            MethodCallRequest request = new MethodCallRequest();
-            request.authenticationData = authenticationData;
-            request.message = message;
-            request.timestamp = DateTime.Now.Ticks;
-            return request;
-        }
+        #region Variables
+        public String domainType { get; set; }
+        public String connectorType { get; set; }
+        public String instanceId { get; set; }
+        #endregion
     }
 }

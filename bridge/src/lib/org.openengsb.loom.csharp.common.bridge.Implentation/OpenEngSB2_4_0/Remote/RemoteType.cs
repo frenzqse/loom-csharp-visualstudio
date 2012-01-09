@@ -27,19 +27,29 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.
     /// </summary>
     public class RemoteType
     {
+        #region Propreties
         public string FullName { get; set; }
 
         public string Name { get; set; }
 
         public string LocalTypeFullName { get; set; }
-
+        #endregion
+        #region Constructor
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        /// <param name="typeString">Type in a String format</param>
         public RemoteType(string typeString)
         {
             FullName = typeString;
             Name = FullName.Split('.').Last().Trim();
             SetLocalTypeFullName();
         }
-
+        #endregion
+        #region Public Methods
+        /// <summary>
+        /// Find the name of the local Type
+        /// </summary>
         public void SetLocalTypeFullName()
         {
             // Workaround: built-in types.
@@ -66,5 +76,6 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.
             // Workaround: event-keyword
             LocalTypeFullName = builder.ToString().Replace(".event","._event");
         }
+        #endregion
     }
 }

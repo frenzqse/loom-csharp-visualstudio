@@ -21,10 +21,14 @@ using System.Linq;
 using System.Text;
 using Apache.NMS;
 
-namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.Communication.Jms
+namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.Communication.Jms
 {
+    /// <summary>
+    /// Abstract class to connect to a destination
+    /// </summary>
     public abstract class JmsPort
     {
+        #region Variables
         /// <summary>
         /// ActiveMQ NMS
         /// </summary>
@@ -32,7 +36,12 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.
         protected IConnectionFactory _factory;
         protected ISession _session;
         protected IDestination _destination;
-
+        #endregion
+        #region Constructor 
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        /// <param name="destination">Destionation to connect with OpenEngSB</param>
         protected JmsPort(string destination)
         {
             _connection = null;
@@ -41,7 +50,12 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.
             _destination = null;
             Configure(destination);
         }
-
+        #endregion
+        #region private Methods
+        /// <summary>
+        /// Configurate the Connection
+        /// </summary>
+        /// <param name="destination">Destionation</param>
         private void Configure(string destination)
         {
             Destination dest = new Destination(destination);
@@ -53,10 +67,15 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.
             _connection.Start();
             _destination = _session.GetDestination(dest.Queue);
         }
-
+        #endregion
+        #region Protected Methods
+        /// <summary>
+        /// Close the connection
+        /// </summary>
         protected void Close()
         {
             _connection.Close();
         }
+        #endregion
     }
 }

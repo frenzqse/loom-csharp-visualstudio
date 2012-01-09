@@ -20,10 +20,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.Communication
+namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.Remote
 {
-    interface IIncomingPort: IPort
+    /// <summary>
+    /// Container for the Binary Data
+    /// </summary>
+    public class BinaryData
     {
-        string Receive();
+        #region Public static Methods
+        /// <summary>
+        /// Creates an Instance of BinaryData
+        /// </summary>
+        /// <returns>A new instance of BinarayData</returns>
+        public static BinaryData CreateInstance()
+        {
+            return new BinaryData();
+        }
+        #endregion
     }
 }

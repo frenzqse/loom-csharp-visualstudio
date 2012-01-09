@@ -14,33 +14,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ***/
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.Remote
+namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.Communication
 {
     /// <summary>
-    /// Container for the datas
+    /// Definiton, to receive a message
     /// </summary>
-    public class Data
+    interface IIncomingPort: IPort
     {
-        public String username { get; set; }
-        public String password { get; set; }
-
         /// <summary>
-        /// Creates a new instance of Data
+        /// Used to receive messages from a desination
         /// </summary>
-        /// <param name="username">username</param>
-        /// <param name="password">password</param>
-        /// <returns>New instance of Data</returns>
-        public static Data CreateInstance(String username, String password)
-        {
-            Data instance = new Data();
-            instance.username = username;
-            instance.password = password;
-            return instance;
-        }
+        /// <returns>received message</returns>
+        string Receive();
     }
 }

@@ -26,6 +26,7 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.
     /// </summary>
     public class MethodCall
     {
+        #region Variables
         /// <summary>
         /// Fully qualified class names of the arguments.
         /// </summary>
@@ -48,7 +49,8 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.
         /// Include the packagestruktur on the java side
         /// </summary>
         public IList<string> realClassImplementation { get; set; }
-
+        #endregion
+        #region Public static Methods
         public static MethodCall CreateInstance(string methodName, IList<object> args, IDictionary<string, string> metaData, IList<string> classes, IList<String> realClassImplementation)
         {
             MethodCall call = new MethodCall();
@@ -59,5 +61,6 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.
             call.realClassImplementation = realClassImplementation;
             return call;
         }
+        #endregion
     }
 }

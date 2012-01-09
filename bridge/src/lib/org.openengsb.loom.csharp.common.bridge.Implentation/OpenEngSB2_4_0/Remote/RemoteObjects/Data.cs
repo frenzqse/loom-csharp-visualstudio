@@ -21,13 +21,29 @@ using System.Text;
 
 namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.Remote
 {
-    public class MethodReturnWrapper
+    /// <summary>
+    /// Container for the datas
+    /// </summary>
+    public class Data
     {
-        public enum RETURN_TYPE { Object, Exception, Void };
-
-        public string type { get; set; }
-        public string className { get; set; }
-        public object metaData { get; set; }
-        public object arg { get; set; }
+        #region Variables
+        public String username { get; set; }
+        public String password { get; set; }
+        #endregion
+        #region Public static Methods
+        /// <summary>
+        /// Creates a new instance of Data
+        /// </summary>
+        /// <param name="username">username</param>
+        /// <param name="password">password</param>
+        /// <returns>New instance of Data</returns>
+        public static Data CreateInstance(String username, String password)
+        {
+            Data instance = new Data();
+            instance.username = username;
+            instance.password = password;
+            return instance;
+        }
+        #endregion
     }
 }

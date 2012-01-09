@@ -21,9 +21,9 @@ using System.Text;
 using System.Threading;
 using System.Reflection;
 using System.IO;
-using Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.Communication.Jms;
-using Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.Communication;
-using Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.Communication.Json;
+using Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.Communication.Jms;
+using Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.Communication;
+using Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.Communication.Json;
 using Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.Common;
 
 namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.Remote
@@ -33,16 +33,25 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.
     /// client side for the bus.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class DomainReverseProxy<T>: IStoppable
+    public class DomainReverseProxy<T> : IStoppable
     {
+        #region Const.
         private const string _CREATION_QUEUE = "receive";
         private const string CREATION_SERVICE_ID = "connectorManager";
         private const string _CREATION_METHOD_NAME = "create";
         private const string _CREATION_DELETE_METHOD_NAME = "delete";
         private const string _CREATION_PORT = "jms-json";
         private const string _CREATION_CONNECTOR_TYPE = "external-connector-proxy";
-
-        
+        #endregion
+        #region Variables
+        /// <summary>
+        /// Username for the authentification
+        /// </summary>
+        private String username;
+        /// <summary>
+        /// Username for the password
+        /// </summary>
+        private String password;
         // Thread listening for messages
         private Thread queueThread;
 
@@ -65,11 +74,6 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.
         /// domain-instance to act as reverse-proxy for
         /// </summary>
         private T domainService;
-        public T DomainService 
-        {
-            get { return domainService; }
-        }
-
         /// <summary>
         /// flag indicating if the listening thread should run
         /// </summary>
@@ -81,21 +85,63 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.
         /// <summary>
         /// Identifies the service-instance.
         /// </summary>
-        private ConnectorId connectorId;
-
-        public DomainReverseProxy(T domainService, string host, string serviceId, string domainType)
-        {            
+        private ConnectorId connectorId;        
+        #endregion
+        #region Propreties
+        public T DomainService
+        {
+            get { return domainService; }
+        }
+        #endregion
+        #region Constructors
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        /// <param name="localDomainService">LocalDomain</param>
+        /// <param name="host">Host</param>
+        /// <param name="serviceId">ServiceId</param>
+        /// <param name="domainType">name of the remote Domain</param>
+        /// <param name="domainEvents">Type of the remoteDomainEvents</param>
+        public DomainReverseProxy(T localDomainService, string host, string serviceId, string domainType)
+        {
             this.marshaller = new JsonMarshaller();
-            this.isEnabled = true;            
-            this.domainService = domainService;
+            this.isEnabled = true;
+            this.domainService = localDomainService;
             this.destination = Destination.CreateDestinationString(host, serviceId);
             this.queueThread = null;
             this.serviceId = serviceId;
             this.domainType = domainType;
             this.portIn = new JmsIncomingPort(destination);
             this.connectorId = null;
+            this.username = "admin";
+            this.password = "password";
         }
-
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        /// <param name="localDomainService">LocalDomain</param>
+        /// <param name="host">Host</param>
+        /// <param name="serviceId">ServiceId</param>
+        /// <param name="domainType">name of the remote Domain</param>
+        /// <param name="domainEvents">Type of the remoteDomainEvents</param>
+        /// <param name="username">Username for the authentification</param>
+        /// <param name="password">Password for the authentification</param>
+        public DomainReverseProxy(T localDomainService, string host, string serviceId, string domainType, String username, String password)
+        {
+            this.marshaller = new JsonMarshaller();
+            this.isEnabled = true;
+            this.domainService = localDomainService;
+            this.destination = Destination.CreateDestinationString(host, serviceId);
+            this.queueThread = null;
+            this.serviceId = serviceId;
+            this.domainType = domainType;
+            this.portIn = new JmsIncomingPort(destination);
+            this.connectorId = null;
+            this.username = username;
+            this.password = password;
+        }
+        #endregion
+        #region Public Methods
         /// <summary>
         /// Starts a thread which waits for messages.
         /// An exception will be thrown, if the method has already been called.
@@ -114,7 +160,8 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.
 
             queueThread.Start();
         }
-
+        #endregion
+        #region Private Methods
         /// <summary>
         /// Creates an Proxy on the bus.
         /// </summary>
@@ -262,9 +309,9 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.
         /// <summary>
         /// Builds an return message.
         /// </summary>
-        /// <param name="type"></param>
-        /// <param name="returnValue"></param>
-        /// <param name="correlationId"></param>
+        /// <param name="type">Type</param>
+        /// <param name="returnValue">Return Value</param>
+        /// <param name="correlationId">Correlation Id</param>
         /// <returns></returns>
         private MethodResultMessage CreateMethodReturn(MethodResult.ReturnType type, object returnValue, string correlationId)
         {
@@ -331,34 +378,34 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.
         /// Tries to find the method that should be called.
         ///  TODO remove " if (methodCallWrapper.args.Count > methodCallWrapper.classes.Count)" if the Bug OPENENGSB-2423/OPENENGSB-2429 is fixed
         /// </summary>
-        /// <param name="methodCallWrapper"></param>
-        /// <returns></returns>
-        private MethodInfo FindMethodInDomain(MethodCall methodCallWrapper)
+        /// <param name="methodCall">Method Call information</param>
+        /// <returns>MethodInfo</returns>
+        private MethodInfo FindMethodInDomain(MethodCall methodCall)
         {
-            if (methodCallWrapper.args.Count > methodCallWrapper.classes.Count)
+            if (methodCall.args.Count > methodCall.classes.Count)
             {
-                int tmp=methodCallWrapper.args.Count - methodCallWrapper.classes.Count;
+                int tmp=methodCall.args.Count - methodCall.classes.Count;
                 int i;
                 Object[] tmttt = new object[1];
                 String test = tmttt.GetType().ToString();
                 for (i = 0;i<tmp; i++)
                 {
-                    methodCallWrapper.classes.Add(tmttt.GetType().ToString());
+                    methodCall.classes.Add(tmttt.GetType().ToString());
                 }
             }
 
             foreach (MethodInfo methodInfo in domainService.GetType().GetMethods())
             {
-                if (methodCallWrapper.methodName.ToLower() != methodInfo.Name.ToLower())
+                if (methodCall.methodName.ToLower() != methodInfo.Name.ToLower())
                 {
                     continue;
                 }
 
-                if (methodInfo.GetParameters().Length != methodCallWrapper.args.Count)
+                if (methodInfo.GetParameters().Length != methodCall.args.Count)
                 {
                     continue;
                 }
-                if (!TypesAreEqual(methodCallWrapper.classes, methodInfo.GetParameters()))
+                if (!TypesAreEqual(methodCall.classes, methodInfo.GetParameters()))
                 {
                     continue;
                 }
@@ -372,9 +419,9 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.
         /// <summary>
         /// Tests if the list of type names are equal to the types of the method parameter.
         /// </summary>
-        /// <param name="typeStrings"></param>
-        /// <param name="parameterInfos"></param>
-        /// <returns></returns>
+        /// <param name="typeStrings">TypeSting</param>
+        /// <param name="parameterInfos">Parameter Infos</param>
+        /// <returns>If types are equal</returns>
         private bool TypesAreEqual(IList<string> typeStrings, ParameterInfo[] parameterInfos)
         {
             if (typeStrings.Count != parameterInfos.Length)
@@ -395,9 +442,9 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.
         /// Test if two types are equal
         /// TODO remove "null" if the Bug OPENENGSB-2423/OPENENGSB-2429 is fixed
         /// </summary>
-        /// <param name="remoteType"></param>
-        /// <param name="localType"></param>
-        /// <returns></returns>
+        /// <param name="remoteType">Remote Type</param>
+        /// <param name="localType">Local Type</param>
+        /// <returns>If to types are equal</returns>
         private bool TypeIsEqual(string remoteType, Type localType)
         {
             if (remoteType.Equals("null")) return true;

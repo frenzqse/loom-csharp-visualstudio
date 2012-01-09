@@ -18,11 +18,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using System.Text;
 using System.IO;
 using Newtonsoft.Json;
 
-namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.Communication.Json
+namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.Communication.Json
 {
     /// <summary>
     /// This class converts any given object to an json-message.

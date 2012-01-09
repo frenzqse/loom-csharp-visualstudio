@@ -20,10 +20,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.Communication
+namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.Remote
 {
-    public interface IPort
+    /// <summary>
+    /// Container for MessageResult
+    /// </summary>
+    public class MessageResult
     {
-        void Close();
+        #region Variables
+        public MethodResult result { get; set; }
+        public string callId { get; set; }
+        #endregion
+        #region Public static Method
+        /// <summary>
+        /// Creates a new instance of MessageResult
+        /// </summary>
+        /// <param name="result">Result</param>
+        /// <param name="callId">CallId</param>
+        /// <returns>returns a new instance of MessageResult</returns>
+        public static MessageResult CreateInstance(MethodResult result, string callId)
+        {
+            MessageResult msg = new MessageResult();
+            msg.result = result;
+            msg.callId = callId;
+            return msg;
+        }
+        #endregion
     }
 }

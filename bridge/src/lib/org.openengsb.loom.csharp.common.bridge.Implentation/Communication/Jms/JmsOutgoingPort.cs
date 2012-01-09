@@ -20,18 +20,28 @@ using System.Linq;
 using System.Text;
 using Apache.NMS;
 
-namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.Communication.Jms
+namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.Communication.Jms
 {
+    /// <summary>
+    /// Send Message
+    /// </summary>
     public class JmsOutgoingPort : JmsPort, IOutgoingPort
     {
+        #region Variables
         IMessageProducer _producer;
-
+        #endregion
+        #region Constructor
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        /// <param name="destination">URL to OpenEngSB</param>
         public JmsOutgoingPort(string destination): base(destination)
         {
             _producer = _session.CreateProducer(_destination);
             _producer.DeliveryMode = MsgDeliveryMode.Persistent;
         }
-
+        #endregion
+        #region Public Methods
         /// <summary>
         /// Send an string over NMS.
         /// </summary>
@@ -43,10 +53,14 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.
             _producer.Send(message);
         }
 
+        /// <summary>
+        /// Close the Connection
+        /// </summary>
         public new void Close()
         {
             base.Close();
             _producer.Close();
         }
+        #endregion
     }
 }

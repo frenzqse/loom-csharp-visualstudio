@@ -22,9 +22,9 @@ using System.Threading;
 using System.Reflection;
 using System.IO;
 using Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB3_0_0.Remote.RemoteObjects;
-using Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB3_0_0.Communication.Json;
-using Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB3_0_0.Communication.Jms;
-using Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB3_0_0.Communication;
+using Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.Communication.Json;
+using Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.Communication.Jms;
+using Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.Communication;
 using Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.Common;
 
 namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB3_0_0.Remote
