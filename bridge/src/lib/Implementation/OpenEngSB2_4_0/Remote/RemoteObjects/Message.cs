@@ -28,7 +28,7 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.
     public class Message
     {
         #region Variables
-        public MethodCall methodCall { get; set; }
+        public RemoteMethodCall methodCall { get; set; }
         public string callId { get; set; }
         public bool answer { get; set; }
         public string destination { get; set; }
@@ -42,7 +42,7 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.
         /// <param name="answer">Answer</param>
         /// <param name="destination">Destination</param>
         /// <returns>returns a new Message of CreateInstance</returns>
-        public static Message createInstance(MethodCall methodCall, string callId, bool answer, string destination)
+        public static Message createInstance(RemoteMethodCall methodCall, string callId, bool answer, string destination)
         {
             Message instance = new Message();
             instance.methodCall = methodCall;

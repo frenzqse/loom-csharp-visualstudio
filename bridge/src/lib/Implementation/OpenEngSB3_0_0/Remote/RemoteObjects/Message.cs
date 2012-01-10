@@ -27,11 +27,13 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB3_0_0.
     /// </summary>
     public class Message
     {
+        #region Variables
         public RemoteMethodCall methodCall { get; set; }
         public string callId { get; set; }
         public bool answer { get; set; }
         public string destination { get; set; }
-
+        #endregion
+        #region Public Static Methods
         /// <summary>
         /// Creates a new instance of Message
         /// </summary>
@@ -49,5 +51,6 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB3_0_0.
             instance.destination = destination;
             return instance;
         }
+        #endregion
     }
 }

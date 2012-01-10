@@ -24,7 +24,7 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.
     /// <summary>
     /// This class represents a RPC with its parameters, return types etc.
     /// </summary>
-    public class MethodCall
+    public class RemoteMethodCall
     {
         #region Variables
         /// <summary>
@@ -51,9 +51,9 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.
         public IList<string> realClassImplementation { get; set; }
         #endregion
         #region Public static Methods
-        public static MethodCall CreateInstance(string methodName, IList<object> args, IDictionary<string, string> metaData, IList<string> classes, IList<String> realClassImplementation)
+        public static RemoteMethodCall CreateInstance(string methodName, IList<object> args, IDictionary<string, string> metaData, IList<string> classes, IList<String> realClassImplementation)
         {
-            MethodCall call = new MethodCall();
+            RemoteMethodCall call = new RemoteMethodCall();
             call.methodName = methodName;
             call.args = args;
             call.metaData = metaData;

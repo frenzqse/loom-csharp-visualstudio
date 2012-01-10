@@ -19,13 +19,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB3_0_0.Remote
+namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.Common
 {
     /// <summary>
     /// This class maps remote types on the bus to local types.
     /// </summary>
     public class LocalType
     {
+        #region Variables
+        private Type _type;
+        #endregion
+        #region Propreties
         public string RemoteTypeFullName
         {
             get
@@ -37,12 +41,12 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB3_0_0.
                 return _type.FullName;
             }
         }
-
-        private Type _type;
-
+        #endregion
+        #region Constructor
         public LocalType(Type type)
         {
             _type = type;
         }
+        #endregion
     }
 }

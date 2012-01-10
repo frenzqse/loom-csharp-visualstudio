@@ -23,6 +23,8 @@
             <includeSource>OpenEngSB2_4_0\RealDomainFactory.cs</includeSource>
             <includeSource>DomainFactoryProvider.cs</includeSource>
             <includeSource>Common\IStoppable.cs</includeSource>
+			<includeSource>Common\LocalType.cs</includeSource>
+			<includeSource>Common\RemoteType.cs</includeSource>
             <includeSource>Communication\IIncomingPort.cs</includeSource>
             <includeSource>Communication\IMarshaller.cs</includeSource>
             <includeSource>Communication\IOutgoingPort.cs</includeSource>
@@ -32,7 +34,6 @@
             <includeSource>Communication\Jms\JmsOutgoingPort.cs</includeSource>
             <includeSource>Communication\Jms\JMSPort.cs</includeSource>
             <includeSource>Communication\Json\JsonMarshaller.cs</includeSource>
-            <includeSource>OpenEngSB2_4_0\Remote\LocalType.cs</includeSource>
             <includeSource>OpenEngSB2_4_0\Remote\RemoteObjects\Authentification.cs</includeSource>
             <includeSource>OpenEngSB2_4_0\Remote\RemoteObjects\BinaryData.cs</includeSource>
             <includeSource>OpenEngSB2_4_0\Remote\RemoteObjects\ConnectorDescription.cs</includeSource>
@@ -42,17 +43,15 @@
             <includeSource>OpenEngSB2_4_0\Remote\DomainReverseProxy.cs</includeSource>
             <includeSource>OpenEngSB2_4_0\Remote\RemoteObjects\Message.cs</includeSource>
             <includeSource>OpenEngSB2_4_0\Remote\RemoteObjects\MessageResult.cs</includeSource>
-            <includeSource>OpenEngSB2_4_0\Remote\RemoteObjects\MethodCall.cs</includeSource>
+            <includeSource>OpenEngSB2_4_0\Remote\RemoteObjects\RemoteMethodCall.cs</includeSource>
             <includeSource>OpenEngSB2_4_0\Remote\RemoteObjects\MethodCallRequest.cs</includeSource>
             <includeSource>OpenEngSB2_4_0\Remote\RemoteObjects\MethodResult.cs</includeSource>
             <includeSource>OpenEngSB2_4_0\Remote\RemoteObjects\MethodResultMessage.cs</includeSource>
-            <includeSource>OpenEngSB2_4_0\Remote\RemoteType.cs</includeSource>
             <includeSource>OpenEngSB3_0_0\Remote\RemoteObjects\AuthenticationInfo.cs</includeSource>
             <includeSource>OpenEngSB3_0_0\Remote\RemoteObjects\ConnectorDescription.cs</includeSource>
             <includeSource>OpenEngSB3_0_0\Remote\RemoteObjects\ConnectorId.cs</includeSource>
             <includeSource>OpenEngSB3_0_0\Remote\RemoteObjects\Data.cs</includeSource>
             <includeSource>OpenEngSB3_0_0\Remote\DomainProxy.cs</includeSource>
-            <includeSource>OpenEngSB3_0_0\Remote\LocalType.cs</includeSource>
             <includeSource>OpenEngSB3_0_0\Remote\DomainReverseProxy.cs</includeSource>
             <includeSource>Properties\AssemblyInfo.cs</includeSource>
             <includeSource>OpenEngSB3_0_0\RealDomainFactory.cs</includeSource>
@@ -62,7 +61,6 @@
             <includeSource>OpenEngSB3_0_0\Remote\RemoteObjects\MethodResult.cs</includeSource>
             <includeSource>OpenEngSB3_0_0\Remote\RemoteObjects\MethodResultMessage.cs</includeSource>
             <includeSource>OpenEngSB3_0_0\Remote\RemoteObjects\SecureMethodCallRequest.cs</includeSource>
-            <includeSource>OpenEngSB3_0_0\Remote\RemoteType.cs</includeSource>
           </includeSources>
         </configuration>
       </plugin>

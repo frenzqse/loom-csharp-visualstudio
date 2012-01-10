@@ -27,9 +27,11 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB3_0_0.
     /// </summary>
     public class MessageResult
     {
+        #region Variables
         public MethodResult result { get; set; }
         public string callId { get; set; }
-
+        #endregion
+        #region Public Static Methods
         /// <summary>
         /// Creates a new instance of MessageResult
         /// </summary>
@@ -43,5 +45,6 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB3_0_0.
             msg.callId = callId;
             return msg;
         }
+        #endregion
     }
 }

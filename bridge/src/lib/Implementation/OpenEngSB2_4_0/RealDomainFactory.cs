@@ -30,29 +30,38 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0
     /// </summary>
     public class RealDomainFactory : IDomainFactory
     {
+        #region Variables
         private Dictionary<object, IStoppable> _proxies;
         private String serviceId;
         private String domainType;
-
+        #endregion
+        #region Constructor
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public RealDomainFactory()
         {
             Reset();
         }
-
+        #endregion
+        #region Private Mehtods
+        /// <summary>
+        /// Remove all the proxies 
+        /// </summary>
         private void Reset()
         {
             _proxies = new Dictionary<object, IStoppable>();
         }
-
+        #endregion
+        #region Public Methods
         /// <summary>
-        /// Creates, registers and starts a reverse proxy.
+        /// Creates, registers and starts a reverse proxy with defaul Authentification
+        /// RENAME
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="destination"></param>
-        /// <param name="domainService"></param>
-        /// <param name="serviceId"></param>
-        /// <param name="domainType">local domain</param>
-        /// <param name="domainType">remote domain</param>
+        /// <typeparam name="T">Type of remote Domain</typeparam>
+        /// <param name="destination">Destination</param>
+        /// <param name="domainService">Local Domain</param>
+        /// <param name="domainType">Name of the Domain</param>
         public void RegisterDomainService<T>(string destination, T domainService, String domainType)
         {
             this.domainType = domainType;
@@ -62,28 +71,27 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0
             proxy.Start();
         }
         /// <summary>
-        /// Creates, registers and starts a reverse proxy.
+        /// Creates, registers and starts a reverse proxy with Authentification
+        /// RENAME
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="destination"></param>
-        /// <param name="domainService"></param>
-        /// <param name="serviceId"></param>
-        /// <param name="domainType">local domain</param>
-        /// <param name="domainType">remote domain</param>
+        /// <typeparam name="T">Type of remote Domain</typeparam>
+        /// <param name="destination">Destination</param>
+        /// <param name="domainService">Local Domain</param>
+        /// <param name="domainType">Name of the Domain</param>
         /// <param name="username">Username for the authentification</param>
         /// <param name="password">Password for the authentification</param>
-        public void RegisterDomainService<T>(string destination, T domainService, String domainType, String username,String password)
+        public void RegisterDomainService<T>(string destination, T domainService, String domainType, String username, String password)
         {
             this.domainType = domainType;
             this.serviceId = Guid.NewGuid().ToString();
-            DomainReverseProxy<T> proxy = new DomainReverseProxy<T>(domainService, destination, serviceId, domainType);
+            DomainReverseProxy<T> proxy = new DomainReverseProxy<T>(domainService, destination, serviceId, domainType, username, password);
             _proxies.Add(domainService, proxy);
             proxy.Start();
         }
         /// <summary>
         /// Deletes and stops the reverse proxy.
         /// </summary>
-        /// <param name="service"></param>
+        /// <param name="service">proxy to delete</param>
         public void UnregisterDomainService(object service)
         {
             IStoppable stoppable = null;
@@ -115,9 +123,14 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0
         {
             return new DomainProxy<T>(host, getDomainTypServiceId(),domainType).GetTransparentProxy();
         }
+        /// <summary>
+        /// Returns the domainType + "+external-connector-proxy+" + serviceId
+        /// </summary>
+        /// <returns>String Value</returns>
         public String getDomainTypServiceId()
         {
             return domainType + "+external-connector-proxy+" + serviceId;
         }
+        #endregion
     }
 }

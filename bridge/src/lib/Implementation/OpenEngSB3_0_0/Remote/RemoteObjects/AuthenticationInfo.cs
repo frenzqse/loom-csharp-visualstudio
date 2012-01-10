@@ -27,7 +27,7 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB3_0_0.
     /// </summary>
     public class AuthenticationInfo
     {
-        #region variables
+        #region Variables
         public String className { get; set; }
         public Data data { get; set; }
         #endregion

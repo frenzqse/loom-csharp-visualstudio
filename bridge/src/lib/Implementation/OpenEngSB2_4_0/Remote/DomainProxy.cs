@@ -27,6 +27,7 @@ using System.Xml.Serialization;
 using Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.Communication.Jms;
 using Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.Communication;
 using Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.Communication.Json;
+using Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.Common;
 namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.Remote
 {
     /// <summary>
@@ -102,7 +103,7 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.
         /// Builds an IMessage using MethodReturn.
         /// </summary>
         /// <param name="methodReturn">Servers return message</param>
-        /// <param name="callMessage">Method Information</param>
+        /// <param name="callMessage">Method an parameters</param>
         /// <returns>The result of the Message</returns>
         private IMessage ToMessage(MethodResult methodReturn, IMethodCallMessage callMessage)
         {
@@ -220,7 +221,7 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.
                 classes.Add(getPackageName(type.RemoteTypeFullName) + ".event." + firstLetterToUpper(type.RemoteTypeFullName));
             }
 
-            MethodCall call = MethodCall.CreateInstance(methodName, msg.Args, metaData, classes, realClassImplementation);
+            RemoteMethodCall call = RemoteMethodCall.CreateInstance(methodName, msg.Args, metaData, classes, realClassImplementation);
             String classname = "org.openengsb.core.api.security.model.UsernamePasswordAuthenticationInfo";
             Data data = Data.CreateInstance("admin", "password");
             Authentification authentification = Authentification.createInstance(classname, data, BinaryData.CreateInstance());

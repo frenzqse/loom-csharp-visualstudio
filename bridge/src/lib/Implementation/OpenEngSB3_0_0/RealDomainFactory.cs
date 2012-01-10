@@ -46,8 +46,8 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB3_0_0
         /// <summary>
         /// Creates, registers and starts a reverse proxy.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="destination"></param>
+        /// <typeparam name="T">local Domain Type</typeparam>
+        /// <param name="destination">Registration destionation</param>
         /// <param name="domainService"></param>
         /// <param name="serviceId"></param>
         /// <param name="domainType">local domain</param>

@@ -32,7 +32,7 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.
     /// This class builds reverse proxies for resources (class instances) on the
     /// client side for the bus.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T">Type of the Domain</typeparam>
     public class DomainReverseProxy<T> : IStoppable
     {
         #region Const.
@@ -117,13 +117,12 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.
             this.password = "password";
         }
         /// <summary>
-        /// Default constructor
+        /// Constructor with Authentification
         /// </summary>
         /// <param name="localDomainService">LocalDomain</param>
         /// <param name="host">Host</param>
         /// <param name="serviceId">ServiceId</param>
         /// <param name="domainType">name of the remote Domain</param>
-        /// <param name="domainEvents">Type of the remoteDomainEvents</param>
         /// <param name="username">Username for the authentification</param>
         /// <param name="password">Password for the authentification</param>
         public DomainReverseProxy(T localDomainService, string host, string serviceId, string domainType, String username, String password)
@@ -193,7 +192,7 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.
             args.Add(connectorId);
             args.Add(connectorDescription);
 
-            MethodCall creationCall = MethodCall.CreateInstance(_CREATION_METHOD_NAME, args, metaData, classes,null);
+            RemoteMethodCall creationCall = RemoteMethodCall.CreateInstance(_CREATION_METHOD_NAME, args, metaData, classes,null);
 
 
             Message message = Message.createInstance(creationCall, id.ToString(), true, "");
@@ -222,7 +221,7 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.
             IList<object> args = new List<object>();
             args.Add(connectorId);
 
-            MethodCall deletionCall = MethodCall.CreateInstance(_CREATION_DELETE_METHOD_NAME, args, metaData, classes,null);
+            RemoteMethodCall deletionCall = RemoteMethodCall.CreateInstance(_CREATION_DELETE_METHOD_NAME, args, metaData, classes,null);
 
             Guid id = Guid.NewGuid();
             String classname = "org.openengsb.core.api.security.model.UsernamePasswordAuthenticationInfo";
@@ -338,7 +337,7 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.
         /// </summary>
         /// <param name="methodCall">MethodCall</param>
         /// <returns>Arguments</returns>
-        private object[] CreateMethodArguments(MethodCall methodCall)
+        private object[] CreateMethodArguments(RemoteMethodCall methodCall)
         {
             IList<object> args = new List<object>();
 
@@ -380,7 +379,7 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.
         /// </summary>
         /// <param name="methodCall">Method Call information</param>
         /// <returns>MethodInfo</returns>
-        private MethodInfo FindMethodInDomain(MethodCall methodCall)
+        private MethodInfo FindMethodInDomain(RemoteMethodCall methodCall)
         {
             if (methodCall.args.Count > methodCall.classes.Count)
             {

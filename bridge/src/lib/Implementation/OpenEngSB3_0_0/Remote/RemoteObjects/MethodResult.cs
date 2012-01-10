@@ -26,28 +26,38 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB3_0_0.
     /// </summary>
     public class MethodResult
     {
-		public enum ReturnType { Void, Object, Exception }
+        #region Variables
+        public enum ReturnType { Void, Object, Exception }
 
         /// <summary>
         /// Type of the return value.
         /// </summary>
-		public ReturnType type { get; set; }
+        public ReturnType type { get; set; }
 
         /// <summary>
         /// Return value of the RPC.
         /// </summary>
-		public object arg { get; set; }
+        public object arg { get; set; }
 
         /// <summary>
         /// Metadata
         /// </summary>
-		public IDictionary<string, string> metaData { get; set; }
+        public IDictionary<string, string> metaData { get; set; }
 
         /// <summary>
         /// Fully qualified class name of the return value.
         /// </summary>
-		public string className { get; set; }
-
+        public string className { get; set; }
+        #endregion
+        #region Public static Methods
+        /// <summary>
+        /// Creates an instance
+        /// </summary>
+        /// <param name="type">Returntype</param>
+        /// <param name="arg">Arguments</param>
+        /// <param name="metaData">MetaDatas</param>
+        /// <param name="className">ClassName</param>
+        /// <returns>New instance of MethodResult</returns>
         public static MethodResult CreateInstance(ReturnType type, object arg, IDictionary<string, string> metaData, string className)
         {
             MethodResult result = new MethodResult();
@@ -57,6 +67,7 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB3_0_0.
             result.className = className;
             return result;
         }
+        #endregion
 
     }
 }

@@ -28,6 +28,7 @@ using Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB3_0_0.Remo
 using Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.Communication.Jms;
 using Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.Communication;
 using Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.Communication.Json;
+using Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.Common;
 namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB3_0_0.Remote
 {
     /// <summary>
@@ -92,8 +93,8 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB3_0_0.
         /// <summary>
         /// Will be invoked when a call to the proxy has been made.
         /// </summary>
-        /// <param name="msg"></param>
-        /// <returns></returns>
+        /// <param name="msg">Message, which contains the Parameters of the Method</param>
+        /// <returns>Received Method</returns>
         public override IMessage Invoke(IMessage msg)
         {
             IMethodCallMessage callMessage = msg as IMethodCallMessage;
@@ -116,8 +117,8 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB3_0_0.
         /// Builds an IMessage using MethodReturn.
         /// </summary>
         /// <param name="methodReturn">Servers return message</param>
-        /// <param name="callMessage"></param>
-        /// <returns></returns>
+        /// <param name="callMessage">Method an parameters</param>
+        /// <returns>The result of the Message</returns>
         private IMessage ToMessage(MethodResult methodReturn, IMethodCallMessage callMessage)
         {
             IMethodReturnMessage returnMessage = null;
@@ -165,7 +166,7 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB3_0_0.
         {
             Type type = typeof(T);
             MethodInfo method = type.GetMethod(fieldname);
-            //Tests if it is a Mehtod or a Type
+            //Tests if it is a Method or a type
             if (method != null)
             {
                 SoapDocumentMethodAttribute soapAttribute;
@@ -209,11 +210,9 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB3_0_0.
 
         /// <summary>
         /// Builds an MethodCall using IMethodCallMessage.
-        /// TODO if bug ??? is fixed replace classes.Add(getPackageName(type.RemoteTypeFullName) + ".event." + firstLetterToUpper(type.RemoteTypeFullName)); with classes.Add(getPackageName(type.RemoteTypeFullName) + "." + firstLetterToUpper(type.RemoteTypeFullName));
         /// </summary>
-        /// <param name="msg"></param>
-        /// <returns></returns>
-        /// MethodCallRequest
+        /// <param name="msg">Information, to create a MethodCallRequest</param>
+        /// <returns>A new instance of methodCallrequest</returns>
         private SecureMethodCallRequest ToMethodCallRequest(IMethodCallMessage msg)
         {
             Guid id = Guid.NewGuid();
@@ -223,22 +222,19 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB3_0_0.
             //The structure is always domain.DOMAINTYPE.events
             metaData.Add("serviceId", "domain." + domainType + ".events");
 
-            // arbitrary string, maybe not necessary
+            // Arbitrary string, maybe not necessary
             metaData.Add("contextId", "foo");
 
             List<string> classes = new List<string>();
-            //realClassImplementation is optinal
 
-            //List<string> realClassImplementation = new List<string>();
 
             foreach (object arg in msg.Args)
             {
                 LocalType type = new LocalType(arg.GetType());
-              //  realClassImplementation.Add(getPackageName(type.RemoteTypeFullName));
                 classes.Add(getPackageName(type.RemoteTypeFullName) + "." + firstLetterToUpper(type.RemoteTypeFullName));
             }
 
-            RemoteMethodCall call = RemoteMethodCall.CreateInstance(methodName, msg.Args, metaData, classes);
+            RemoteMethodCall call = RemoteMethodCall.CreateInstance(methodName, msg.Args, metaData, classes,null);
             String classname = "org.openengsb.connector.usernamepassword.Password";
             Data data = Data.CreateInstance("password");
             AuthenticationInfo authentification = AuthenticationInfo.createInstance(classname,data);

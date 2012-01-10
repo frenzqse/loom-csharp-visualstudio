@@ -36,13 +36,15 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB3_0_0.
     /// <typeparam name="T"></typeparam>
     public class DomainReverseProxy<T>: IStoppable
     {
+        #region Const.
         private const string _CREATION_QUEUE = "receive";
         private const string CREATION_SERVICE_ID = "connectorManager";
         private const string _CREATION_METHOD_NAME = "create";
         private const string _CREATION_DELETE_METHOD_NAME = "delete";
         private const string _CREATION_PORT = "jms-json";
         private const string _CREATION_CONNECTOR_TYPE = "external-connector-proxy";
-
+        #endregion
+        #region Variabels
         /// <summary>
         /// Username for the authentification
         /// </summary>
@@ -73,10 +75,6 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB3_0_0.
         /// domain-instance to act as reverse-proxy for
         /// </summary>
         private T domainService;
-        public T DomainService 
-        {
-            get { return domainService; }
-        }
 
         /// <summary>
         /// flag indicating if the listening thread should run
@@ -90,6 +88,14 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB3_0_0.
         /// Identifies the service-instance.
         /// </summary>
         private ConnectorId connectorId;
+        #endregion
+        #region Propreties
+        public T DomainService
+        {
+            get { return domainService; }
+        }
+        #endregion
+        #region Constructor
         /// <summary>
         /// Default constructor
         /// </summary>
@@ -113,13 +119,12 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB3_0_0.
             this.password = "password";
         }
         /// <summary>
-        /// Default constructor
+        /// Constructor with Autehntification
         /// </summary>
         /// <param name="localDomainService">LocalDomain</param>
         /// <param name="host">Host</param>
         /// <param name="serviceId">ServiceId</param>
         /// <param name="domainType">name of the remote Domain</param>
-        /// <param name="domainEvents">Type of the remoteDomainEvents</param>
         /// <param name="username">Username for the authentification</param>
         /// <param name="password">Password for the authentification</param>
         public DomainReverseProxy(T localDomainService, string host, string serviceId, string domainType,String username,String password)
@@ -136,7 +141,8 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB3_0_0.
             this.username = username;
             this.password = password;
         }
-
+        #endregion
+        #region Public Methods
         /// <summary>
         /// Starts a thread which waits for messages.
         /// An exception will be thrown, if the method has already been called.
@@ -155,10 +161,22 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB3_0_0.
 
             queueThread.Start();
         }
-
+        /// <summary>
+        /// Stops the queue listening for messages and deletes the proxy on the bus.
+        /// </summary>
+        public void Stop()
+        {
+            if (queueThread != null)
+            {
+                isEnabled = false;
+                portIn.Close();
+                DeleteRemoteProxy();
+            }
+        }
+        #endregion
+        #region Private Methods
         /// <summary>
         /// Creates an Proxy on the bus.
-        /// TODO Change hardcoded Password and Username
         /// </summary>
         private void CreateRemoteProxy()
         {
@@ -186,7 +204,7 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB3_0_0.
             args.Add(connectorId);
             args.Add(connectorDescription);
 
-            RemoteMethodCall creationCall = RemoteMethodCall.CreateInstance(_CREATION_METHOD_NAME, args, metaData, classes);
+            RemoteMethodCall creationCall = RemoteMethodCall.CreateInstance(_CREATION_METHOD_NAME, args, metaData, classes,null);
             Message message = Message.createInstance(creationCall, id.ToString(), true, "");
 
             Destination destinationinfo = new Destination(destination);
@@ -214,7 +232,7 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB3_0_0.
             IList<object> args = new List<object>();
             args.Add(connectorId);
 
-            RemoteMethodCall deletionCall = RemoteMethodCall.CreateInstance(_CREATION_DELETE_METHOD_NAME, args, metaData, classes);
+            RemoteMethodCall deletionCall = RemoteMethodCall.CreateInstance(_CREATION_DELETE_METHOD_NAME, args, metaData, classes,null);
 
             Guid id = Guid.NewGuid();
             String classname = "org.openengsb.connector.usernamepassword.Password";
@@ -433,9 +451,9 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB3_0_0.
         /// Test if two types are equal
         /// TODO remove "null" if the Bug OPENENGSB-2423/OPENENGSB-2429 is fixed
         /// </summary>
-        /// <param name="remoteType"></param>
-        /// <param name="localType"></param>
-        /// <returns></returns>
+        /// <param name="remoteType">Remote Type</param>
+        /// <param name="localType">Local Type</param>
+        /// <returns>If to types are equal</returns>
         private bool TypeIsEqual(string remoteType, Type localType)
         {
             if (remoteType.Equals("null")) return true;
@@ -443,18 +461,6 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB3_0_0.
             // leading underscore fix
             return (remote_typ.LocalTypeFullName == localType.FullName);
         }
-
-        /// <summary>
-        /// Stops the queue listening for messages and deletes the proxy on the bus.
-        /// </summary>
-        public void Stop()
-        {
-            if (queueThread != null)
-            {
-                isEnabled = false;
-                portIn.Close();
-                DeleteRemoteProxy();
-            }
-        }
+        #endregion
     }
 }

@@ -27,7 +27,10 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB3_0_0.
     /// </summary>
     public class MethodResultMessage
     {
+        #region Variables
         public MessageResult message { get; set; }
+        #endregion
+        #region Public static Methods
         /// <summary>
         /// Creates a new instance of MethodResultMessage
         /// </summary>
@@ -35,9 +38,10 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB3_0_0.
         /// <returns>Returns a new instance of MethodResultMessage</returns>
         public static MethodResultMessage CreateInstance(MessageResult message)
         {
-            MethodResultMessage instance=new MethodResultMessage();
+            MethodResultMessage instance = new MethodResultMessage();
             instance.message = message;
             return instance;
         }
+        #endregion
     }
 }

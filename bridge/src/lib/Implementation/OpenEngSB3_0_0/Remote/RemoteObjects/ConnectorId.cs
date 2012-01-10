@@ -20,15 +20,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB3_0_0.Remote.RemoteObjects
+namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB3_0_0.Remote
 {
     /// <summary>
     /// This class  indentifies an Connector instance on the bus.
     /// </summary>
     public class ConnectorId
     {
+        #region Variables
         public String domainType { get; set; }
         public String connectorType { get; set; }
         public String instanceId { get; set; }
+        #endregion
     }
 }

@@ -21,13 +21,25 @@ using System.Text;
 
 namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB3_0_0.Remote.RemoteObjects
 {
+    /// <summary>
+    /// Container for a Secured Method Call
+    /// </summary>
     public class SecureMethodCallRequest
     {
+        #region Variables
         public String principal { get; set; }
         public AuthenticationInfo credentials { get; set; }
         public long timestamp { get; set; }
         public Message message { get; set; }
-
+        #endregion
+        #region Public Static Methods
+        /// <summary>
+        /// Creates an instance of SecureMethodCallRequest
+        /// </summary>
+        /// <param name="principal">Principal</param>
+        /// <param name="credentials">Credentials</param>
+        /// <param name="message">Message</param>
+        /// <returns>Instance of SecureMethodCallRequest</returns>
         public static SecureMethodCallRequest createInstance(String principal, AuthenticationInfo credentials, Message message)
         {
             SecureMethodCallRequest instance = new SecureMethodCallRequest();
@@ -37,5 +49,6 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB3_0_0.
             instance.message = message;
             return instance;
         }
+        #endregion
     }
 }

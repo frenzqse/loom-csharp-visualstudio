@@ -63,7 +63,7 @@
     <Compile Include="Communication\Jms\JmsOutgoingPort.cs" />
     <Compile Include="Communication\Jms\JMSPort.cs" />
     <Compile Include="Communication\Json\JsonMarshaller.cs" />
-    <Compile Include="OpenEngSB2_4_0\Remote\LocalType.cs" />
+    <Compile Include="Common\LocalType.cs" />
     <Compile Include="OpenEngSB2_4_0\Remote\RemoteObjects\Authentification.cs" />
     <Compile Include="OpenEngSB2_4_0\Remote\RemoteObjects\BinaryData.cs" />
     <Compile Include="OpenEngSB2_4_0\Remote\RemoteObjects\ConnectorDescription.cs" />
@@ -73,17 +73,16 @@
     <Compile Include="OpenEngSB2_4_0\Remote\DomainReverseProxy.cs" />
     <Compile Include="OpenEngSB2_4_0\Remote\RemoteObjects\Message.cs" />
     <Compile Include="OpenEngSB2_4_0\Remote\RemoteObjects\MessageResult.cs" />
-    <Compile Include="OpenEngSB2_4_0\Remote\RemoteObjects\MethodCall.cs" />
+    <Compile Include="OpenEngSB2_4_0\Remote\RemoteObjects\RemoteMethodCall.cs" />
     <Compile Include="OpenEngSB2_4_0\Remote\RemoteObjects\MethodCallRequest.cs" />
     <Compile Include="OpenEngSB2_4_0\Remote\RemoteObjects\MethodResult.cs" />
     <Compile Include="OpenEngSB2_4_0\Remote\RemoteObjects\MethodResultMessage.cs" />
-    <Compile Include="OpenEngSB2_4_0\Remote\RemoteType.cs" />
+    <Compile Include="Common\RemoteType.cs" />
     <Compile Include="OpenEngSB3_0_0\Remote\RemoteObjects\AuthenticationInfo.cs" />
     <Compile Include="OpenEngSB3_0_0\Remote\RemoteObjects\ConnectorDescription.cs" />
     <Compile Include="OpenEngSB3_0_0\Remote\RemoteObjects\ConnectorId.cs" />
     <Compile Include="OpenEngSB3_0_0\Remote\RemoteObjects\Data.cs" />
     <Compile Include="OpenEngSB3_0_0\Remote\DomainProxy.cs" />
-    <Compile Include="OpenEngSB3_0_0\Remote\LocalType.cs" />
     <Compile Include="OpenEngSB3_0_0\Remote\DomainReverseProxy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="OpenEngSB3_0_0\RealDomainFactory.cs" />
@@ -93,7 +92,6 @@
     <Compile Include="OpenEngSB3_0_0\Remote\RemoteObjects\MethodResult.cs" />
     <Compile Include="OpenEngSB3_0_0\Remote\RemoteObjects\MethodResultMessage.cs" />
     <Compile Include="OpenEngSB3_0_0\Remote\RemoteObjects\SecureMethodCallRequest.cs" />
-    <Compile Include="OpenEngSB3_0_0\Remote\RemoteType.cs" />
   </ItemGroup>
   <ItemGroup>
     <WebReferences Include="Web References\" />

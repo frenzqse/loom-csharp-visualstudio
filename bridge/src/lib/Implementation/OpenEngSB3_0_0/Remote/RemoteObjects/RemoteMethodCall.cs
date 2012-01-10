@@ -26,6 +26,7 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB3_0_0.
     /// </summary>
     public class RemoteMethodCall
     {
+        #region Variables
         /// <summary>
         /// Fully qualified class names of the arguments.
         /// </summary>
@@ -34,7 +35,7 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB3_0_0.
         /// Name of the method to be called.
         /// </summary>
         public string methodName { get; set; }
-        
+
         /// <summary>
         /// Arguments of the call.
         /// </summary>
@@ -47,17 +48,19 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB3_0_0.
         /// <summary>
         /// Include the packagestruktur on the java side
         /// </summary>
-       // public IList<string> realClassImplementation { get; set; }
-
-        public static RemoteMethodCall CreateInstance(string methodName, IList<object> args, IDictionary<string, string> metaData, IList<string> classes)//, IList<String> realClassImplementation)
+        public IList<string> realClassImplementation { get; set; }
+        #endregion
+        #region Public static Methods
+        public static RemoteMethodCall CreateInstance(string methodName, IList<object> args, IDictionary<string, string> metaData, IList<string> classes, IList<String> realClassImplementation)
         {
             RemoteMethodCall call = new RemoteMethodCall();
             call.methodName = methodName;
             call.args = args;
             call.metaData = metaData;
             call.classes = classes;
-            //call.realClassImplementation = realClassImplementation;
+            call.realClassImplementation = realClassImplementation;
             return call;
         }
+        #endregion
     }
 }
