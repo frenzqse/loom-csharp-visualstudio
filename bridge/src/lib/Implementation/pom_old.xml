@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://maven.apache.org/POM/4.0.0">
   <parent>
-    <artifactId>Bridge-parent</artifactId>
-    <groupId>Bridge</groupId>
+    <artifactId>root</artifactId>
+    <groupId>org.openengsb.loom.csharp.common.bridge</groupId>
     <version>1.0.0-SNAPSHOT</version>
-    <relativePath>..\pom.xml</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>org.openengsb.loom.csharp.common.bridge.Implementation</artifactId>
+  <artifactId>Implementation</artifactId>
   <packaging>library</packaging>
-  <name>Bridge : org.openengsb.loom.csharp.common.bridge.Implementation</name>
+  <name>OpenEngSB :: Loom :: CSharp :: Common :: Bridge :: Implementation</name>
   <build>
     <sourceDirectory>./</sourceDirectory>
     <plugins>
@@ -20,53 +19,41 @@
         <configuration>
           <frameworkVersion>4.0</frameworkVersion>
           <includeSources>
+            <includeSource>Exceptions\ConnectOpenEngSBException.cs</includeSource>
             <includeSource>OpenEngSB2_4_0\RealDomainFactory.cs</includeSource>
-            <includeSource>OpenEngSB3_0_0\Communication\IIncomingPort.cs</includeSource>
-            <includeSource>OpenEngSB3_0_0\Communication\IMarshaller.cs</includeSource>
-            <includeSource>OpenEngSB3_0_0\Communication\IPort.cs</includeSource>
-            <includeSource>OpenEngSB3_0_0\Communication\Jms\JmsIncomingPort.cs</includeSource>
-            <includeSource>OpenEngSB3_0_0\Communication\Jms\JmsPort.cs</includeSource>
-            <includeSource>OpenEngSB3_0_0\Communication\Json\JsonMarshaller.cs</includeSource>
             <includeSource>DomainFactoryProvider.cs</includeSource>
             <includeSource>Common\IStoppable.cs</includeSource>
-            <includeSource>OpenEngSB2_4_0\Communication\IIncomingPort.cs</includeSource>
-            <includeSource>OpenEngSB2_4_0\Communication\IMarshaller.cs</includeSource>
-            <includeSource>OpenEngSB2_4_0\Communication\IOutgoingPort.cs</includeSource>
-            <includeSource>OpenEngSB2_4_0\Communication\IPort.cs</includeSource>
-            <includeSource>OpenEngSB2_4_0\Communication\Jms\Destination.cs</includeSource>
-            <includeSource>OpenEngSB2_4_0\Communication\Jms\JmsIncomingPort.cs</includeSource>
-            <includeSource>OpenEngSB2_4_0\Communication\Jms\JmsOutgoingPort.cs</includeSource>
-            <includeSource>OpenEngSB2_4_0\Communication\Jms\JMSPort.cs</includeSource>
-            <includeSource>OpenEngSB2_4_0\Communication\Json\JsonMarshaller.cs</includeSource>
-            <includeSource>OpenEngSB2_4_0\Communication\Json\JsonMethodCallMessage.cs</includeSource>
-            <includeSource>OpenEngSB2_4_0\Communication\Json\JsonMethodReturnMessage.cs</includeSource>
-            <includeSource>OpenEngSB2_4_0\Remote\Authentification.cs</includeSource>
-            <includeSource>OpenEngSB2_4_0\Remote\BinaryData.cs</includeSource>
-            <includeSource>OpenEngSB2_4_0\Remote\ConnectorDescription.cs</includeSource>
-            <includeSource>OpenEngSB2_4_0\Remote\ConnectorId.cs</includeSource>
-            <includeSource>OpenEngSB2_4_0\Remote\Data.cs</includeSource>
+            <includeSource>Communication\IIncomingPort.cs</includeSource>
+            <includeSource>Communication\IMarshaller.cs</includeSource>
+            <includeSource>Communication\IOutgoingPort.cs</includeSource>
+            <includeSource>Communication\IPort.cs</includeSource>
+            <includeSource>Communication\Jms\Destination.cs</includeSource>
+            <includeSource>Communication\Jms\JmsIncomingPort.cs</includeSource>
+            <includeSource>Communication\Jms\JmsOutgoingPort.cs</includeSource>
+            <includeSource>Communication\Jms\JMSPort.cs</includeSource>
+            <includeSource>Communication\Json\JsonMarshaller.cs</includeSource>
+            <includeSource>OpenEngSB2_4_0\Remote\LocalType.cs</includeSource>
+            <includeSource>OpenEngSB2_4_0\Remote\RemoteObjects\Authentification.cs</includeSource>
+            <includeSource>OpenEngSB2_4_0\Remote\RemoteObjects\BinaryData.cs</includeSource>
+            <includeSource>OpenEngSB2_4_0\Remote\RemoteObjects\ConnectorDescription.cs</includeSource>
+            <includeSource>OpenEngSB2_4_0\Remote\RemoteObjects\ConnectorId.cs</includeSource>
+            <includeSource>OpenEngSB2_4_0\Remote\RemoteObjects\Data.cs</includeSource>
             <includeSource>OpenEngSB2_4_0\Remote\DomainProxy.cs</includeSource>
             <includeSource>OpenEngSB2_4_0\Remote\DomainReverseProxy.cs</includeSource>
-            <includeSource>OpenEngSB2_4_0\Remote\LocalType.cs</includeSource>
-            <includeSource>OpenEngSB2_4_0\Remote\Message.cs</includeSource>
-            <includeSource>OpenEngSB2_4_0\Remote\MessageResult.cs</includeSource>
-            <includeSource>OpenEngSB2_4_0\Remote\MethodCall.cs</includeSource>
-            <includeSource>OpenEngSB2_4_0\Remote\MethodCallRequest.cs</includeSource>
-            <includeSource>OpenEngSB2_4_0\Remote\MethodCallWrapper.cs</includeSource>
-            <includeSource>OpenEngSB2_4_0\Remote\MethodResult.cs</includeSource>
-            <includeSource>OpenEngSB2_4_0\Remote\MethodResultMessage.cs</includeSource>
-            <includeSource>OpenEngSB2_4_0\Remote\MethodReturnWrapper.cs</includeSource>
+            <includeSource>OpenEngSB2_4_0\Remote\RemoteObjects\Message.cs</includeSource>
+            <includeSource>OpenEngSB2_4_0\Remote\RemoteObjects\MessageResult.cs</includeSource>
+            <includeSource>OpenEngSB2_4_0\Remote\RemoteObjects\MethodCall.cs</includeSource>
+            <includeSource>OpenEngSB2_4_0\Remote\RemoteObjects\MethodCallRequest.cs</includeSource>
+            <includeSource>OpenEngSB2_4_0\Remote\RemoteObjects\MethodResult.cs</includeSource>
+            <includeSource>OpenEngSB2_4_0\Remote\RemoteObjects\MethodResultMessage.cs</includeSource>
             <includeSource>OpenEngSB2_4_0\Remote\RemoteType.cs</includeSource>
             <includeSource>OpenEngSB3_0_0\Remote\RemoteObjects\AuthenticationInfo.cs</includeSource>
             <includeSource>OpenEngSB3_0_0\Remote\RemoteObjects\ConnectorDescription.cs</includeSource>
             <includeSource>OpenEngSB3_0_0\Remote\RemoteObjects\ConnectorId.cs</includeSource>
-            <includeSource>OpenEngSB3_0_0\Communication\Jms\Destination.cs</includeSource>
             <includeSource>OpenEngSB3_0_0\Remote\RemoteObjects\Data.cs</includeSource>
             <includeSource>OpenEngSB3_0_0\Remote\DomainProxy.cs</includeSource>
             <includeSource>OpenEngSB3_0_0\Remote\LocalType.cs</includeSource>
             <includeSource>OpenEngSB3_0_0\Remote\DomainReverseProxy.cs</includeSource>
-            <includeSource>OpenEngSB3_0_0\Communication\IOutgoingPort.cs</includeSource>
-            <includeSource>OpenEngSB3_0_0\Communication\Jms\JmsOutgoingPort.cs</includeSource>
             <includeSource>Properties\AssemblyInfo.cs</includeSource>
             <includeSource>OpenEngSB3_0_0\RealDomainFactory.cs</includeSource>
             <includeSource>OpenEngSB3_0_0\Remote\RemoteObjects\Message.cs</includeSource>
@@ -85,14 +72,8 @@
     <dependency>
       <groupId>Bridge</groupId>
       <artifactId>org.openengsb.loom.csharp.common.bridge.Interface</artifactId>
-      <version>1.0.0-SNAPSHOT</version>
+      <version>1.0-SNAPSHOT</version>
       <type>library</type>
-    </dependency>
-    <dependency>
-      <groupId>org.openengsb.wrapped.csharp</groupId>
-      <artifactId>log4net</artifactId>
-      <version>1.2.11_1-SNAPSHOT</version>
-      <type>dotnet-library</type>
     </dependency>
     <dependency>
       <groupId>org.openengsb.wrapped.csharp</groupId>
@@ -116,6 +97,12 @@
       <groupId>org.openengsb.wrapped.csharp</groupId>
       <artifactId>Newtonsoft.Json</artifactId>
       <version>5.0_1-SNAPSHOT</version>
+      <type>dotnet-library</type>
+    </dependency>
+    <dependency>
+      <groupId>org.openengsb.loom.csharp.common.bridge</groupId>
+      <artifactId>Interface</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
       <type>dotnet-library</type>
     </dependency>
   </dependencies>

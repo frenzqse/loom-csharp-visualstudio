@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://maven.apache.org/POM/4.0.0">
   <parent>
-    <artifactId>Bridge-parent</artifactId>
-    <groupId>Bridge</groupId>
+    <artifactId>root</artifactId>
+    <groupId>org.openengsb.loom.csharp.common.bridge</groupId>
     <version>1.0.0-SNAPSHOT</version>
-    <relativePath>..\pom.xml</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>org.openengsb.loom.csharp.common.ServiceTestConsole</artifactId>
+  <artifactId>org.openengsb.loom.csharp.common.servicetestconsole</artifactId>
   <packaging>exe</packaging>
-  <name>Bridge : org.openengsb.loom.csharp.common.ServiceTestConsole</name>
+  <name>OpenEngSB :: Loom :: CSharp :: Common :: Bridge :: ServiceTestConsole</name>
   <build>
     <sourceDirectory>./</sourceDirectory>
     <plugins>
@@ -31,36 +30,44 @@
   <dependencies>
     <dependency>
       <groupId>Bridge</groupId>
-      <artifactId>org.openengsb.loom.csharp.common.bridge.Implementation</artifactId>
-      <version>1.0.0-SNAPSHOT</version>
+      <artifactId>org.openengsb.loom.csharp.common.bridge.implementation</artifactId>
+      <version>1.0-SNAPSHOT</version>
       <type>library</type>
     </dependency>
     <dependency>
       <groupId>Bridge</groupId>
-      <artifactId>org.openengsb.loom.csharp.common.bridge.Interface</artifactId>
-      <version>1.0.0-SNAPSHOT</version>
+      <artifactId>org.openengsb.loom.csharp.common.bridge.interface</artifactId>
+      <version>1.0-SNAPSHOT</version>
       <type>library</type>
-    </dependency>
-    <dependency>
-      <groupId>SignalDomainEventsInterfaces</groupId>
-      <artifactId>SignalDomainEventsInterfaces</artifactId>
-      <version>0.0.0.0</version>
-      <type>dotnet-library</type>
-      <scope>system</scope>
-      <systemPath>C:\Users\frenz\Projekts\.netbridge2\loom-csharp-visualstudio\bridge\src\lib\org.openengsb.loom.csharp.common.bridge.ServiceTestConsole\SignalDomain\SignalDomainEventsInterfaces.dll</systemPath>
-    </dependency>
-    <dependency>
-      <groupId>SignalDomainInterfaces</groupId>
-      <artifactId>SignalDomainInterfaces</artifactId>
-      <version>0.0.0.0</version>
-      <type>dotnet-library</type>
-      <scope>system</scope>
-      <systemPath>C:\Users\frenz\Projekts\.netbridge2\loom-csharp-visualstudio\bridge\src\lib\org.openengsb.loom.csharp.common.bridge.ServiceTestConsole\SignalDomain\SignalDomainInterfaces.dll</systemPath>
     </dependency>
     <dependency>
       <groupId>org.openengsb.wrapped.csharp</groupId>
       <artifactId>log4net</artifactId>
       <version>1.2.11_1-SNAPSHOT</version>
+      <type>dotnet-library</type>
+    </dependency>
+    <dependency>
+      <groupId>org.openengsb.wrapped.csharp</groupId>
+      <artifactId>SignalDomainEventsInterfaces</artifactId>
+      <version>0.0.0</version>
+      <type>dotnet-library</type>
+    </dependency>
+    <dependency>
+      <groupId>org.openengsb.wrapped.csharp</groupId>
+      <artifactId>SignalDomainInterfaces</artifactId>
+      <version>0.0.0</version>
+      <type>dotnet-library</type>
+    </dependency>
+    <dependency>
+      <groupId>org.openengsb.loom.csharp.common.bridge</groupId>
+      <artifactId>Interface</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+      <type>dotnet-library</type>
+    </dependency>
+    <dependency>
+      <groupId>org.openengsb.loom.csharp.common.bridge</groupId>
+      <artifactId>Implementation</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
       <type>dotnet-library</type>
     </dependency>
   </dependencies>

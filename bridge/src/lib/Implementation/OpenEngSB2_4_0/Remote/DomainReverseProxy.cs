@@ -465,5 +465,6 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.
                 DeleteRemoteProxy();
             }
         }
+        #endregion
     }
 }
