@@ -32,7 +32,7 @@ namespace ServiceTestConsole
         /// <summary>
         /// This version works with the OpenEngS 3.0.0-Snapshot Framwork
         /// </summary>
-        /// <param name="args"></param>
+        /// <param name="args">System Arguments</param>
         static void Main(string[] args)
         {
             log4net.Config.BasicConfigurator.Configure();

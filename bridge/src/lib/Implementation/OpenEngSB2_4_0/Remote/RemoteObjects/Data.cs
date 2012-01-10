@@ -30,7 +30,7 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.
         public String username { get; set; }
         public String password { get; set; }
         #endregion
-        #region Public static Methods
+        #region Public Static Methods
         /// <summary>
         /// Creates a new instance of Data
         /// </summary>

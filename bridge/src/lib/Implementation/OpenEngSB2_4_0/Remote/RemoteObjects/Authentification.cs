@@ -32,7 +32,7 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.
         public Data data { get; set; }
         public BinaryData binaryData { get; set; }
         #endregion
-        #region Public static Mehtod
+        #region Public Static Mehtod
         /// <summary>
         /// Creates a new instance of the Authentification
         /// </summary>

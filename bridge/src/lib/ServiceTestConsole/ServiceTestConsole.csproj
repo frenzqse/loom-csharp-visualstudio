@@ -36,8 +36,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="log4net, Version=1.2.11.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL" />
-    <Reference Include="SignalDomainEventsInterfaces, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
-    <Reference Include="SignalDomainInterfaces, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="SignalDomainEventsInterfaces">
+      <HintPath>.references\org.openengsb.wrapped.csharp\SignalDomainEventsInterfaces-0.0.0\SignalDomainEventsInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="SignalDomainInterfaces">
+      <HintPath>.references\org.openengsb.wrapped.csharp\SignalDomainInterfaces-0.0.0\SignalDomainInterfaces.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
@@ -55,13 +59,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="SignalDomain\SignalDomainEventsInterfaces.dll" />
-    <Content Include="SignalDomain\SignalDomainInterfaces.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <WebReferences Include="Web References\" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Implementation\Implementation.csproj">
       <Project>{CE47C6A2-2E5E-466F-B10C-B2B82DE3F7E1}</Project>
       <Name>Implementation</Name>
@@ -70,6 +67,9 @@
       <Project>{5CCD2925-BB25-496E-824F-3894A4FBF968}</Project>
       <Name>Interface</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -27,7 +27,7 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.
     /// </summary>
     public class BinaryData
     {
-        #region Public static Methods
+        #region Public Static Methods
         /// <summary>
         /// Creates an Instance of BinaryData
         /// </summary>
