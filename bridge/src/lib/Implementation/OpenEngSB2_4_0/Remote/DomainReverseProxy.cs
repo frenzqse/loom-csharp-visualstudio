@@ -171,7 +171,7 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.
             Guid id = Guid.NewGuid();
 
             String classname = "org.openengsb.core.api.security.model.UsernamePasswordAuthenticationInfo";
-            Data data = Data.CreateInstance("admin", "password");
+            Data data = Data.CreateInstance(username, password);
             Authentification authentification = Authentification.createInstance(classname, data, BinaryData.CreateInstance());
 
             IList<string> classes = new List<string>();
@@ -225,7 +225,7 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.
 
             Guid id = Guid.NewGuid();
             String classname = "org.openengsb.core.api.security.model.UsernamePasswordAuthenticationInfo";
-            Data data = Data.CreateInstance("admin", "password");
+            Data data = Data.CreateInstance(username, password);
             Authentification authentification = Authentification.createInstance(classname, data, BinaryData.CreateInstance());
 
             Message message = Message.createInstance(deletionCall, id.ToString(), true, "");
@@ -383,13 +383,13 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.
         {
             if (methodCall.args.Count > methodCall.classes.Count)
             {
-                int tmp=methodCall.args.Count - methodCall.classes.Count;
+                int tmp = methodCall.args.Count - methodCall.classes.Count;
                 int i;
-                Object[] tmttt = new object[1];
-                String test = tmttt.GetType().ToString();
-                for (i = 0;i<tmp; i++)
+                Object[] nullObject = new object[1];
+                String nullObjectString = nullObject.GetType().ToString();
+                for (i = 0; i < tmp; i++)
                 {
-                    methodCall.classes.Add(tmttt.GetType().ToString());
+                    methodCall.classes.Add(nullObject.GetType().ToString());
                 }
             }
 

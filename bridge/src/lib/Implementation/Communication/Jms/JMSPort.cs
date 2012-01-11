@@ -61,7 +61,7 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.Communication.J
             Destination dest = new Destination(destination);
 
             Uri connectionUri = new Uri(dest.Host);
-            _factory = new NMSConnectionFactory(connectionUri);
+            _factory = new Apache.NMS.ActiveMQ.ConnectionFactory(connectionUri);
             _connection = _factory.CreateConnection();
             _session = _connection.CreateSession();
             _connection.Start();

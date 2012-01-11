@@ -35,7 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="log4net, Version=1.2.11.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL" />
+    <Reference Include="log4net">
+      <HintPath>.references\org.openengsb.wrapped.csharp\log4net-1.2.11_1-SNAPSHOT\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="SignalDomainEventsInterfaces">
       <HintPath>.references\org.openengsb.wrapped.csharp\SignalDomainEventsInterfaces-0.0.0\SignalDomainEventsInterfaces.dll</HintPath>
     </Reference>

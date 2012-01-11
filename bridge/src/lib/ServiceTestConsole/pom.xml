@@ -42,12 +42,6 @@
     </dependency>
     <dependency>
       <groupId>org.openengsb.wrapped.csharp</groupId>
-      <artifactId>log4net</artifactId>
-      <version>1.2.11_1-SNAPSHOT</version>
-      <type>dotnet-library</type>
-    </dependency>
-    <dependency>
-      <groupId>org.openengsb.wrapped.csharp</groupId>
       <artifactId>SignalDomainEventsInterfaces</artifactId>
       <version>0.0.0</version>
       <type>dotnet-library</type>
@@ -56,6 +50,12 @@
       <groupId>org.openengsb.wrapped.csharp</groupId>
       <artifactId>SignalDomainInterfaces</artifactId>
       <version>0.0.0</version>
+      <type>dotnet-library</type>
+    </dependency>
+    <dependency>
+      <groupId>org.openengsb.wrapped.csharp</groupId>
+      <artifactId>log4net</artifactId>
+      <version>1.2.11_1-SNAPSHOT</version>
       <type>dotnet-library</type>
     </dependency>
   </dependencies>

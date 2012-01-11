@@ -395,11 +395,11 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB3_0_0.
             {
                 int tmp=methodCallWrapper.args.Count - methodCallWrapper.classes.Count;
                 int i;
-                Object[] tmttt = new object[1];
-                String test = tmttt.GetType().ToString();
+                Object[] nullObject = new object[1];
+                String nullObjectString = nullObject.GetType().ToString();
                 for (i = 0;i<tmp; i++)
                 {
-                    methodCallWrapper.classes.Add(tmttt.GetType().ToString());
+                    methodCallWrapper.classes.Add(nullObject.GetType().ToString());
                 }
             }
 

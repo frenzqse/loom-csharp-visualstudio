@@ -42,7 +42,7 @@ namespace Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation
             try
             {
                 String versionnbr = stringVersion.Replace(".", "");
-                versionnbr = stringVersion.Replace("-SNAPSHOT", "");
+                versionnbr = versionnbr.Replace("-SNAPSHOT", "");
                 int version = int.Parse(versionnbr);
                 if (version >= 300) return new Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB3_0_0.RealDomainFactory();
                 if (version >= 240) return new Org.OpenEngSB.Loom.Csharp.Common.Bridge.Implementation.OpenEngSB2_4_0.RealDomainFactory();

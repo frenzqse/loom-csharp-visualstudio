@@ -23,8 +23,8 @@
             <includeSource>OpenEngSB2_4_0\RealDomainFactory.cs</includeSource>
             <includeSource>DomainFactoryProvider.cs</includeSource>
             <includeSource>Common\IStoppable.cs</includeSource>
-			<includeSource>Common\LocalType.cs</includeSource>
-			<includeSource>Common\RemoteType.cs</includeSource>
+            <includeSource>Common\LocalType.cs</includeSource>
+            <includeSource>Common\RemoteType.cs</includeSource>
             <includeSource>Communication\IIncomingPort.cs</includeSource>
             <includeSource>Communication\IMarshaller.cs</includeSource>
             <includeSource>Communication\IOutgoingPort.cs</includeSource>
@@ -89,6 +89,12 @@
       <groupId>org.openengsb.wrapped.csharp</groupId>
       <artifactId>fastJSON</artifactId>
       <version>1.9.6_1-SNAPSHOT</version>
+      <type>dotnet-library</type>
+    </dependency>
+    <dependency>
+      <groupId>org.openengsb.wrapped.csharp</groupId>
+      <artifactId>log4net</artifactId>
+      <version>1.2.11_1-SNAPSHOT</version>
       <type>dotnet-library</type>
     </dependency>
     <dependency>
