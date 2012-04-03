@@ -26,10 +26,10 @@ namespace Org.OpenEngSB.Loom.Csharp.VisualStudio.Plugins.Assistants.Service
                 Artifact a = gen.NextArtifact();
                 for (int j = 0; j < 2; j++)
                 {
-                    ItemVersion v = gen.NextVersion();
+                    ItemVersion v = gen.NextVersion(a);
                     for (int k = 0; k < 2; k++)
                     {
-                        Item it = gen.NextItem();
+                        Item it = gen.NextItem(v);
                         v.Items.Add(it);
                     }
                     a.Versions.Add(v);

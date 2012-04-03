@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Org.OpenEngSB.Loom.Csharp.VisualStudio.Plugins.Assistants.Common
 {
-    class Artifact
+    public class Artifact
     {
         public string Id { get; set; }
         public IList<ItemVersion> Versions { get; set; }

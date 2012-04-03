@@ -5,16 +5,15 @@ using System.Text;
 
 namespace Org.OpenEngSB.Loom.Csharp.VisualStudio.Plugins.Assistants.Common
 {
-    public class ItemVersion
+    public class WizardConfiguration
     {
-        public string Id { get; set; }
+        public string Path { get; set; }
         public IList<Item> Items { get; set; }
-        public Artifact ParentArtifact { get; set; }
-        public ItemVersion(string id, Artifact artifact)
+
+        public WizardConfiguration()
         {
-            Id = id;
+            Path = ".";
             Items = new List<Item>();
-            ParentArtifact = artifact;
         }
     }
 }

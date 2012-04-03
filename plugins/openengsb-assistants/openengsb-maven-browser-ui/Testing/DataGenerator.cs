@@ -19,14 +19,14 @@ namespace Org.OpenEngSB.Loom.Csharp.VisualStudio.Plugins.Assistants.Testing
             _nextItem = 0;
         }
 
-        public Item NextItem()
+        public Item NextItem(ItemVersion version)
         {
-            return new Item("Item " + _nextItem, "https://maven.org?item=" + _nextItem++);
+            return new Item("Item " + _nextItem, "https://maven.org?item=" + _nextItem++, version);
         }
         
-        public ItemVersion NextVersion()
+        public ItemVersion NextVersion(Artifact artifact)
         {
-            return new ItemVersion("Version: " + _nextVersion++);
+            return new ItemVersion("Version: " + _nextVersion++, artifact);
         }
 
         public Artifact NextArtifact()

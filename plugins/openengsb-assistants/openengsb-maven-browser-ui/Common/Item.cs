@@ -5,15 +5,16 @@ using System.Text;
 
 namespace Org.OpenEngSB.Loom.Csharp.VisualStudio.Plugins.Assistants.Common
 {
-    class Item
+    public class Item
     {
         public string Name { get; set; }
         public string Url { get; set; }
-
-        public Item(string name, string url)
+        public ItemVersion ParentVersion { get; set; }
+        public Item(string name, string url, ItemVersion version)
         {
             Name = name;
             Url = url;
+            ParentVersion = version;
         }
     }
 }
