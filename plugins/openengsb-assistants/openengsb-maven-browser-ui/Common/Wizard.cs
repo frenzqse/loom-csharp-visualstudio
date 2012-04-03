@@ -49,7 +49,8 @@ namespace Org.OpenEngSB.Loom.Csharp.VisualStudio.Plugins.Assistants.Common
             foreach (Item i in Configuration.Items)
             {
                 uris.Add(i.Url);
-                names.Add(i.Name);
+                i.Path = _fileService.CreatePath(Configuration.Path, i.Name);
+                names.Add(i.Path);
             }
 
             _fileService.LoadFilesFrom(uris.ToArray(), names.ToArray());
@@ -63,6 +64,10 @@ namespace Org.OpenEngSB.Loom.Csharp.VisualStudio.Plugins.Assistants.Common
         public void CancelDownloads()
         {
             _fileService.CancelDownloads();
+        }
+
+        public void CreateSolution()
+        {
         }
     }
 }

@@ -50,5 +50,10 @@ namespace Org.OpenEngSB.Loom.Csharp.VisualStudio.Plugins.Assistants.Service
         {
             _webClient.CancelAsync();
         }
+
+        public string CreatePath(string directory, string fileName)
+        {
+            return directory + "\\" + fileName;
+        }
     }
 }
