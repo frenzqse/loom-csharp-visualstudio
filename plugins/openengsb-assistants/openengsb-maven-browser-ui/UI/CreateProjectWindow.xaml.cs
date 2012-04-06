@@ -10,6 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Collections.ObjectModel;
 using Org.OpenEngSB.Loom.Csharp.VisualStudio.Plugins.Assistants.Common;
 
 namespace Org.OpenEngSB.Loom.Csharp.VisualStudio.Plugins.Assistants.UI
@@ -19,25 +20,28 @@ namespace Org.OpenEngSB.Loom.Csharp.VisualStudio.Plugins.Assistants.UI
     /// </summary>
     public partial class CreateProjectWindow : Window, IWizardStep
     {
-        private Wizard _wizard { get; set; }
-
+        public Wizard SolutionWizard { get; set; }
+        public ObservableCollection<string> ProjectReferences { get; set; }
         public CreateProjectWindow(Wizard wizard)
         {
             InitializeComponent();
-            _wizard = wizard;
-            referenceItems();
+            SolutionWizard = wizard;
+            DataContext = this;
+            ProjectReferences = new ObservableCollection<string>();
         }
 
         private void referenceItems()
         {
-            foreach (Item i in _wizard.Configuration.Items)
+            foreach (Item i in SolutionWizard.Configuration.Items)
             {
-                _wizard.Configuration.ProjectReferences.Add(i.Path);
+                ProjectReferences.Add(i.Path);
             }
         }
 
         public bool DoStep()
         {
+            referenceItems();
+
             this.ShowDialog();
 
             if (this.DialogResult.HasValue)
@@ -48,12 +52,11 @@ namespace Org.OpenEngSB.Loom.Csharp.VisualStudio.Plugins.Assistants.UI
 
         private void button_add_Click(object sender, RoutedEventArgs e)
         {
-
         }
 
         private void button_remove_Click(object sender, RoutedEventArgs e)
         {
-
+            ProjectReferences.Remove((string)listBox_files.SelectedItem);
         }
 
         private void button_finish_Click(object sender, RoutedEventArgs e)
@@ -70,9 +73,10 @@ namespace Org.OpenEngSB.Loom.Csharp.VisualStudio.Plugins.Assistants.UI
                 return;
             }
 
-            _wizard.Configuration.ProjectName = textBox_project.Text;
-            _wizard.Configuration.SolutionName = textBox_solution.Text;
-            _wizard.CreateSolution();
+            SolutionWizard.Configuration.ProjectReferences = new List<string>(ProjectReferences);
+            SolutionWizard.Configuration.ProjectName = textBox_project.Text;
+            SolutionWizard.Configuration.SolutionName = textBox_solution.Text;
+            SolutionWizard.CreateSolution();
         }
     }
 }

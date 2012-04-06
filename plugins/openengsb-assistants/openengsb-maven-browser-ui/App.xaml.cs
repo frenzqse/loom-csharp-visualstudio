@@ -16,10 +16,7 @@ namespace Org.OpenEngSB.Loom.Csharp.VisualStudio.Plugins.Assistants
     {
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            Wizard wizard = new Wizard(new WizardConfiguration());
-
-            wizard.Steps.Add(new BrowserWindow(wizard));
-            wizard.Steps.Add(new DownloadWindow(wizard));
+            MavenWizard wizard = new MavenWizard();
 
             wizard.DoSteps();
 

@@ -47,6 +47,8 @@ namespace Org.OpenEngSB.Loom.Csharp.VisualStudio.Plugins.Assistants.UI
 
             StartDownload();
 
+            Close();
+
             return !_canceled;
         }
 
@@ -54,7 +56,7 @@ namespace Org.OpenEngSB.Loom.Csharp.VisualStudio.Plugins.Assistants.UI
         {
             _canceled = true;
             _wizard.CancelDownloads();
-            this.Close();
+            Close();
         }
     }
 }

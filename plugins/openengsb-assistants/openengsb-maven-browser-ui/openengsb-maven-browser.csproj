@@ -76,6 +76,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Common\Wizard.cs" />
+    <Compile Include="MavenWizard.cs" />
     <Compile Include="Service\FileService.cs" />
     <Compile Include="UI\CreateProjectWindow.xaml.cs">
       <DependentUpon>CreateProjectWindow.xaml</DependentUpon>
