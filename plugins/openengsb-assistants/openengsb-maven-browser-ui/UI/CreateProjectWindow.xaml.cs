@@ -22,11 +22,15 @@ namespace Org.OpenEngSB.Loom.Csharp.VisualStudio.Plugins.Assistants.UI
     {
         public Wizard SolutionWizard { get; set; }
         public ObservableCollection<string> ProjectReferences { get; set; }
+
+        private IWizardStep _nextStep;
+
         public CreateProjectWindow(Wizard wizard)
         {
             InitializeComponent();
             SolutionWizard = wizard;
             DataContext = this;
+            _nextStep = null;
             ProjectReferences = new ObservableCollection<string>();
         }
 
@@ -38,18 +42,22 @@ namespace Org.OpenEngSB.Loom.Csharp.VisualStudio.Plugins.Assistants.UI
             }
         }
 
-        public bool DoStep()
+        public void DoStep()
         {
             referenceItems();
-
             this.ShowDialog();
 
-            if (this.DialogResult.HasValue)
-                return this.DialogResult.Value;
+            if (this._nextStep == null)
+                return;
 
-            return false;
+            if (this.DialogResult.HasValue && this.DialogResult.Value == true)
+                _nextStep.DoStep();
         }
 
+        public void SetNextStep(IWizardStep step)
+        {
+            _nextStep = step;
+        }
         private void button_add_Click(object sender, RoutedEventArgs e)
         {
         }
@@ -77,6 +85,7 @@ namespace Org.OpenEngSB.Loom.Csharp.VisualStudio.Plugins.Assistants.UI
             SolutionWizard.Configuration.ProjectName = textBox_project.Text;
             SolutionWizard.Configuration.SolutionName = textBox_solution.Text;
             SolutionWizard.CreateSolution();
+            Close();
         }
     }
 }

@@ -16,7 +16,6 @@ namespace Org.OpenEngSB.Loom.Csharp.VisualStudio.Plugins.Assistants.Service
         public delegate void UpdateProgressHandler(int i);
         public event UpdateProgressHandler ProgressEvent;
 
-
         public FileService()
         {
             _webClient = new WebClient();
@@ -41,7 +40,7 @@ namespace Org.OpenEngSB.Loom.Csharp.VisualStudio.Plugins.Assistants.Service
             for(int i = 0; i < urls.Length; i++)
             {
                 //_webClient.DownloadFileAsync(new Uri(urls[i]), destinations[i]);
-                Thread.Sleep(500);
+                Thread.Sleep(2000);
                 ProgressEvent(1);
             }
         }

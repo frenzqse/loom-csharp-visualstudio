@@ -14,9 +14,13 @@ namespace Org.OpenEngSB.Loom.Csharp.VisualStudio.Plugins.Assistants
         public MavenWizard()
         {
             _wizard = new Wizard(new WizardConfiguration());
-            _wizard.Steps.Add(new BrowserWindow(_wizard));
-            _wizard.Steps.Add(new DownloadWindow(_wizard));
-            _wizard.Steps.Add(new CreateProjectWindow(_wizard));
+            IWizardStep step1 = new BrowserWindow(_wizard);
+            IWizardStep step2 = new DownloadWindow(_wizard);
+            IWizardStep step3 = new CreateProjectWindow(_wizard);
+            step1.SetNextStep(step2);
+            step2.SetNextStep(step3);
+
+            _wizard.StartStep = step1;
         }
 
         public void DoSteps()

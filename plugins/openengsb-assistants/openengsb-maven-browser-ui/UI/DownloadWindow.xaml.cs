@@ -14,47 +14,51 @@ namespace Org.OpenEngSB.Loom.Csharp.VisualStudio.Plugins.Assistants.UI
     public partial class DownloadWindow : Window, IWizardStep
     {
         private Wizard _wizard;
-        private System.Timers.Timer _timer;
-        private bool _canceled;
+        private IWizardStep _nextStep;
 
         public DownloadWindow(Wizard wizard)
         {
             InitializeComponent();
             _wizard = wizard;
-            _timer = new System.Timers.Timer();
-            _timer.Interval = 100;
-            _timer.Elapsed += new ElapsedEventHandler(UpdateProgress);
-            _canceled = false;
+            _wizard.ProgressChanged += new Wizard.ProgressHandler(UpdateProgress);
+            _nextStep = null;
+            progressBar.Maximum = 1;
+            progressBar.Minimum = 0;
         }
 
-        private void StartDownload()
+        public void UpdateProgress(double progress)
         {
-            progressBar.Maximum = _wizard.Configuration.Items.Count;
-            _timer.Start();
-            _wizard.DownloadItems();
+            Dispatcher.BeginInvoke((Action)delegate()
+            {
+                progressBar.Value = progress;
+                
+                if (progress == 1)
+                {
+                    if (this._nextStep == null)
+                        return;
+
+                    Close();
+
+                    _nextStep.DoStep();
+                }
+            });
         }
 
-        public void UpdateProgress(object sender, EventArgs e)
+        public void DoStep()
         {
-            //progressBar.Value = _wizard.Progress;
-            if (_wizard.DonwloadsComplete())
-                _timer.Stop();
+            Thread thread = new Thread(new ThreadStart(_wizard.DownloadItems));
+            thread.Start();
+
+            ShowDialog();
         }
 
-        public bool DoStep()
+        public void SetNextStep(IWizardStep step)
         {
-            Show();
-
-            StartDownload();
-
-            Close();
-
-            return !_canceled;
+            _nextStep = step;
         }
 
         private void button_cancel_Click(object sender, RoutedEventArgs e)
         {
-            _canceled = true;
             _wizard.CancelDownloads();
             Close();
         }

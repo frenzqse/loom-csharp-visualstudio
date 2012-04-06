@@ -7,6 +7,7 @@ namespace Org.OpenEngSB.Loom.Csharp.VisualStudio.Plugins.Assistants.Common
 {
     public interface IWizardStep
     {
-        bool DoStep();
+        void DoStep();
+        void SetNextStep(IWizardStep step);
     }
 }

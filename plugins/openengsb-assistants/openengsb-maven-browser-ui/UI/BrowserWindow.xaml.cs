@@ -10,12 +10,13 @@ namespace Org.OpenEngSB.Loom.Csharp.VisualStudio.Plugins.Assistants.UI
     public partial class BrowserWindow : Window, IWizardStep
     {
         private Wizard _wizard;
+        private IWizardStep _nextStep;
 
-        public BrowserWindow(Wizard wizards)
+        public BrowserWindow(Wizard wizard)
         {
             InitializeComponent();
-            _wizard = wizards;
-
+            _wizard = wizard;
+            _nextStep = null;
             label_path.Content = _wizard.Configuration.Path;
         }
 
@@ -32,14 +33,20 @@ namespace Org.OpenEngSB.Loom.Csharp.VisualStudio.Plugins.Assistants.UI
             Close();
         }
 
-        public bool DoStep()
+        public void DoStep()
         {
             this.ShowDialog();
 
-            if (this.DialogResult.HasValue)
-                return this.DialogResult.Value;
+            if (this._nextStep == null)
+                return;
 
-            return false;
+            if (this.DialogResult.HasValue && this.DialogResult.Value == true)
+                _nextStep.DoStep();
+        }
+
+        public void SetNextStep(IWizardStep step)
+        {
+            _nextStep = step;
         }
 
         private void saveSelectedItems()

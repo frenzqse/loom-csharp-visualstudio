@@ -8,37 +8,37 @@ namespace Org.OpenEngSB.Loom.Csharp.VisualStudio.Plugins.Assistants.Common
 {
     public class Wizard
     {
-        public IList<IWizardStep> Steps { get; set; }
+        public IWizardStep StartStep { get; set; }
 
         public WizardConfiguration Configuration { get; set; }
 
         private FileService _fileService;
+        private MavenService _mavenService;
 
-        public int Progress { get; private set; }
+        private int _progress;
+
+        public delegate void ProgressHandler (double progress);
+        public event ProgressHandler ProgressChanged;
 
         public Wizard(WizardConfiguration config)
         {
             Configuration = config;
+            _mavenService = new MavenService();
             _fileService = new FileService();
             _fileService.ProgressEvent += new FileService.UpdateProgressHandler(UpdateProgress);
-            Steps = new List<IWizardStep>();
-            Progress = 0;
+            StartStep = null;
+            _progress = 0;
         }
 
         public void DoSteps()
         {
-            IEnumerator<IWizardStep> _stepEnumerator = Steps.GetEnumerator();
-
-            while (_stepEnumerator.MoveNext())
-            {
-                if (!_stepEnumerator.Current.DoStep())
-                    break;
-            }
+            StartStep.DoStep();
         }
 
         public void UpdateProgress(int i)
         {
-            Progress += i;
+            _progress += i;
+            ProgressChanged(GetProgress());
         }
 
         public void DownloadItems()
@@ -56,9 +56,22 @@ namespace Org.OpenEngSB.Loom.Csharp.VisualStudio.Plugins.Assistants.Common
             _fileService.LoadFilesFrom(uris.ToArray(), names.ToArray());
         }
 
+        public IList<Artifact> LoadArtifacts()
+        {
+            return _mavenService.LoadWsdlArtifacts();
+        }
+
         public bool DonwloadsComplete()
         {
-            return Progress >= Configuration.Items.Count;
+            return _progress >= Configuration.Items.Count;
+        }
+
+        public double GetProgress()
+        {
+            if (Configuration.Items.Count == 0)
+                return 1;
+
+            return ((double)_progress) / Configuration.Items.Count;
         }
 
         public void CancelDownloads()
