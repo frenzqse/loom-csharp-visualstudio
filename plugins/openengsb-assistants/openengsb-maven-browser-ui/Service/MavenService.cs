@@ -7,7 +7,7 @@ using Org.OpenEngSB.Loom.Csharp.VisualStudio.Plugins.Assistants.Testing;
 
 namespace Org.OpenEngSB.Loom.Csharp.VisualStudio.Plugins.Assistants.Service
 {
-    class MavenService
+    public class MavenService
     {
         public string Repository { get; set; }
 
