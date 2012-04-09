@@ -31,7 +31,7 @@ namespace Org.OpenEngSB.Loom.Csharp.VisualStudio.Plugins.Assistants.Testing
 
         public Artifact NextArtifact()
         {
-            return new Artifact("Artifact: " + _nextArtifact++);
+            return new Artifact("org.openengsb.domain", "Artifact: " + _nextArtifact++);
         }
     }
 }

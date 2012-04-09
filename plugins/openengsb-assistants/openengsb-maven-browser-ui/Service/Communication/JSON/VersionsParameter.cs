@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Org.OpenEngSB.Loom.Csharp.VisualStudio.Plugins.Assistants.Service.Communication.JSON
 {
-    class VersionsParameter
+    public class VersionsParameter
     {
         public string fl;
         public string sort;

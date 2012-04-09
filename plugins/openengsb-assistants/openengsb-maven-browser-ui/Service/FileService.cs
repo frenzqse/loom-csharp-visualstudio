@@ -16,15 +16,35 @@ namespace Org.OpenEngSB.Loom.Csharp.VisualStudio.Plugins.Assistants.Service
         public delegate void UpdateProgressHandler(int i);
         public event UpdateProgressHandler ProgressEvent;
 
+        private IEnumerator<string> _urls;
+        private IEnumerator<string> _destinations;
+
         public FileService()
         {
             _webClient = new WebClient();
             _webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(DownloadFileCallback);
+            _urls = null;
+            _destinations = null;
         }
 
         public void DownloadFileCallback(object sender, AsyncCompletedEventArgs e)
         {
             ProgressEvent(1);
+            downloadNext();
+        }
+
+        private void downloadNext()
+        {
+            if (_urls == null)
+                return;
+
+            if (_destinations == null)
+                return;
+
+            if (_urls.MoveNext() && _destinations.MoveNext())
+            {
+                _webClient.DownloadFileAsync(new Uri(_urls.Current), _destinations.Current);
+            }
         }
 
         public void LoadFileFrom(string url, string destination)
@@ -37,12 +57,9 @@ namespace Org.OpenEngSB.Loom.Csharp.VisualStudio.Plugins.Assistants.Service
             if (urls.Length != destinations.Length)
                 throw new ArgumentException("Number of urls and destinations doesn't match!");
 
-            for(int i = 0; i < urls.Length; i++)
-            {
-                //_webClient.DownloadFileAsync(new Uri(urls[i]), destinations[i]);
-                Thread.Sleep(2000);
-                ProgressEvent(1);
-            }
+            _urls = urls.AsEnumerable().GetEnumerator();
+            _destinations = destinations.AsEnumerable().GetEnumerator();
+            downloadNext();
         }
 
         public void CancelDownloads()

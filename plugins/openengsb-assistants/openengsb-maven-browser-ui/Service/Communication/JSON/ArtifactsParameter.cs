@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Org.OpenEngSB.Loom.Csharp.VisualStudio.Plugins.Assistants.Service.Communication.JSON
 {
-    class ArtifactsParameter
+    public class ArtifactsParameter
     {
         public bool spellcheck;
         public string fl;

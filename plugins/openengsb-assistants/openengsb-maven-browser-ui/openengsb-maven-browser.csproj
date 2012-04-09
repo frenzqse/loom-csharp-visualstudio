@@ -11,7 +11,8 @@
     <RootNamespace>Org.OpenEngSB.Loom.Csharp.VisualStudio.Plugins.Assistants</RootNamespace>
     <AssemblyName>openengsb-maven-browser</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -57,6 +58,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -77,6 +79,18 @@
     </ApplicationDefinition>
     <Compile Include="Common\Wizard.cs" />
     <Compile Include="MavenWizard.cs" />
+    <Compile Include="Service\Communication\JSON\ArtifactsListing.cs" />
+    <Compile Include="Service\Communication\JSON\ArtifactsDoc.cs" />
+    <Compile Include="Service\Communication\JSON\ArtifactsParameter.cs" />
+    <Compile Include="Service\Communication\JSON\ArtifactsResponse.cs" />
+    <Compile Include="Service\Communication\JSON\Spellcheck.cs" />
+    <Compile Include="Service\Communication\JSON\VersionsDoc.cs" />
+    <Compile Include="Service\Communication\JSON\VersionsParameter.cs" />
+    <Compile Include="Service\Communication\JSON\ArtifactsResponseHeader.cs" />
+    <Compile Include="Service\Communication\JSON\VersionsResponse.cs" />
+    <Compile Include="Service\Communication\JSON\VersionsResponseHeader.cs" />
+    <Compile Include="Service\Communication\JSON\VersionsListing.cs" />
+    <Compile Include="Service\Communication\MavenCentralClient.cs" />
     <Compile Include="Service\FileService.cs" />
     <Compile Include="UI\CreateProjectWindow.xaml.cs">
       <DependentUpon>CreateProjectWindow.xaml</DependentUpon>
@@ -134,6 +148,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

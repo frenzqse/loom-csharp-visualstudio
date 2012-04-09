@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Org.OpenEngSB.Loom.Csharp.VisualStudio.Plugins.Assistants.Service.Communication.JSON
 {
-    class ArtifactsDoc
+    public class ArtifactsDoc
     {
         public string id;
         public string g;

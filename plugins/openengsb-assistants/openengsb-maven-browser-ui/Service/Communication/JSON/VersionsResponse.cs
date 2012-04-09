@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Org.OpenEngSB.Loom.Csharp.VisualStudio.Plugins.Assistants.Service.Communication.JSON
 {
-    class VersionsResponse
+    public class VersionsResponse
     {
         public int numFound;
         public int start;

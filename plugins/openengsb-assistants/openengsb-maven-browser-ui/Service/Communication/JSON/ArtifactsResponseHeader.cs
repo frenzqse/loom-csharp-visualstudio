@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Org.OpenEngSB.Loom.Csharp.VisualStudio.Plugins.Assistants.Service.Communication.JSON
 {
-    class ArtifactsResponseHeader
+    public class ArtifactsResponseHeader
     {
         public int status;
         public int QTime;
