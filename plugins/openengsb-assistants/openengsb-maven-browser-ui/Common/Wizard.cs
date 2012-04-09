@@ -81,6 +81,17 @@ namespace Org.OpenEngSB.Loom.Csharp.VisualStudio.Plugins.Assistants.Common
 
         public void CreateSolution()
         {
+            generateDlls();
+            createSolutionTemplate();
+        }
+
+        private void generateDlls()
+        {
+
+        }
+
+        private void createSolutionTemplate()
+        {
         }
     }
 }
