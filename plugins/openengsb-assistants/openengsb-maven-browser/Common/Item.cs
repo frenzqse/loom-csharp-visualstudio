@@ -10,6 +10,7 @@ namespace Org.OpenEngSB.Loom.Csharp.VisualStudio.Plugins.Assistants.Common
         public string Name { get; set; }
         public string Url { get; set; }
         public string Path { get; set; }
+        public string DllPath { get; set; }
 
         public ItemVersion ParentVersion { get; set; }
 
@@ -19,6 +20,7 @@ namespace Org.OpenEngSB.Loom.Csharp.VisualStudio.Plugins.Assistants.Common
             Url = url;
             ParentVersion = version;
             Path = "";
+            DllPath = "";
         }
     }
 }

@@ -69,7 +69,7 @@ namespace Org.OpenEngSB.Loom.Csharp.VisualStudio.Plugins.Assistants.Service
 
         public string CreatePath(string directory, string fileName)
         {
-            return directory + "\\" + fileName;
+            return Path.Combine(directory, fileName);
         }
     }
 }

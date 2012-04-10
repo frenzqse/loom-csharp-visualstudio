@@ -16,6 +16,7 @@ namespace Org.OpenEngSB.Loom.Csharp.VisualStudio.Plugins.Assistants.Common
         public IList<string> ProjectReferences { get; set; }
         public string SolutionName { get; set; }
         public string ProjectName { get; set; }
+        public string SolutionDirectory { get; set; }
 
         public WizardConfiguration()
         {
@@ -24,6 +25,7 @@ namespace Org.OpenEngSB.Loom.Csharp.VisualStudio.Plugins.Assistants.Common
             ProjectReferences = new List<string>();
             CsharpCompilerPath = "";
             WsdlCompilerPath = "";
+            SolutionDirectory = "";
             locateCsharpCompiler();
             locateWsdlCompiler();
         }

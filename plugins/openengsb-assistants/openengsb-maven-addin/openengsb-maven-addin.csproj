@@ -5,12 +5,12 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30424</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{1E2A3CAC-A638-42A8-A695-948A126DAFAA}</ProjectGuid>
+    <ProjectGuid>{1F71332C-491A-423A-989A-9F88C3048041}</ProjectGuid>
     <OutputType>Library</OutputType>
     <StartupObject>
     </StartupObject>
     <NoStandardLibraries>false</NoStandardLibraries>
-    <AssemblyName>openengsb-maven-browser</AssemblyName>
+    <AssemblyName>openengsb-maven-addin</AssemblyName>
     <DeploymentDirectory>.\bin\</DeploymentDirectory>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -21,7 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <WarningLevel>4</WarningLevel>
     <IncrementalBuild>false</IncrementalBuild>
-    <DocumentationFile>openengsb-maven-browser.xml</DocumentationFile>
+    <DocumentationFile>openengsb-maven-addin.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>false</DebugSymbols>
@@ -31,24 +31,21 @@
     <DefineConstants>TRACE</DefineConstants>
     <WarningLevel>4</WarningLevel>
     <IncrementalBuild>false</IncrementalBuild>
-    <DocumentationFile>openengsb-maven-browser.xml</DocumentationFile>
+    <DocumentationFile>openengsb-maven-addin.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
-    <RootNamespace>Org.OpenEngSB.Loom.Csharp.VisualStudio.Plugins.Assistants</RootNamespace>
+    <RootNamespace>Org.OpenEngSB.Loom.Csharp.VisualStudio.Plugins.Maven</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Extensibility, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Xaml" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs">
@@ -56,9 +53,6 @@
     </Compile>
     <Compile Include="Connect.cs">
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="UI\BrowserWindow.xaml.cs">
-      <DependentUpon>BrowserWindow.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -118,17 +112,16 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="openengsb-maven-browser.AddIn" />
-    <Content Include="\\vmware-host\Shared Folders\Documents\Visual Studio 2010\Addins\openengsb-maven-browser - For Testing.AddIn">
-      <Link>openengsb-maven-browser - For Testing.AddIn</Link>
+    <Content Include="openengsb-maven-addin.AddIn" />
+    <Content Include="\\vmware-host\Shared Folders\Documents\Visual Studio 2010\Addins\openengsb-maven-addin - For Testing.AddIn">
+      <Link>openengsb-maven-addin - For Testing.AddIn</Link>
     </Content>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Page Include="UI\BrowserWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <ProjectReference Include="..\openengsb-maven-browser\openengsb-maven-browser.csproj">
+      <Project>{7C6C41A6-2EC8-498B-B3C1-8D48B616F864}</Project>
+      <Name>openengsb-maven-browser</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
   <PropertyGroup>

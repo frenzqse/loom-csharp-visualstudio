@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
+using System.Windows.Forms;
 using Org.OpenEngSB.Loom.Csharp.VisualStudio.Plugins.Assistants.Common;
 
 namespace Org.OpenEngSB.Loom.Csharp.VisualStudio.Plugins.Assistants.UI
@@ -71,13 +72,13 @@ namespace Org.OpenEngSB.Loom.Csharp.VisualStudio.Plugins.Assistants.UI
         {
             if (textBox_solution.Text == string.Empty)
             {
-                MessageBox.Show("Please enter a name for the solution.");
+                System.Windows.MessageBox.Show("Please enter a name for the solution.");
                 return;
             }
 
             if (textBox_project.Text == string.Empty)
             {
-                MessageBox.Show("Please enter a name for the solution.");
+                System.Windows.MessageBox.Show("Please enter a name for the solution.");
                 return;
             }
 
@@ -86,6 +87,18 @@ namespace Org.OpenEngSB.Loom.Csharp.VisualStudio.Plugins.Assistants.UI
             SolutionWizard.Configuration.SolutionName = textBox_solution.Text;
             SolutionWizard.CreateSolution();
             Close();
+        }
+
+        private void button_browse_Click(object sender, RoutedEventArgs e)
+        {
+            FolderBrowserDialog dia = new FolderBrowserDialog();
+            DialogResult result = dia.ShowDialog();
+
+            if (result != System.Windows.Forms.DialogResult.OK)
+                return;
+
+            SolutionWizard.Configuration.SolutionDirectory = dia.SelectedPath;
+            label_destination.Content = SolutionWizard.Configuration.SolutionDirectory;
         }
     }
 }
