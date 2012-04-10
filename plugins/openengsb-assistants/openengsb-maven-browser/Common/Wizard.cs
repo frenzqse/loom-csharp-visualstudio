@@ -6,6 +6,8 @@ using System.IO;
 using System.Diagnostics;
 using Org.OpenEngSB.Loom.Csharp.VisualStudio.Plugins.Assistants.Service;
 using EnvDTE80;
+using EnvDTE100;
+using VSLangProj;
 
 namespace Org.OpenEngSB.Loom.Csharp.VisualStudio.Plugins.Assistants.Common
 {
@@ -21,7 +23,7 @@ namespace Org.OpenEngSB.Loom.Csharp.VisualStudio.Plugins.Assistants.Common
 
         private int _progress;
 
-        public delegate void ProgressHandler (double progress);
+        public delegate void ProgressHandler(double progress);
         public event ProgressHandler ProgressChanged;
 
         public Wizard(DTE2 visualStudio, WizardConfiguration config)
@@ -125,11 +127,20 @@ namespace Org.OpenEngSB.Loom.Csharp.VisualStudio.Plugins.Assistants.Common
         {
             if (_visualStudio == null)
                 return;
-            Solution2 solution = (Solution2) _visualStudio.Solution;
+
+            Solution4 solution = (Solution4) _visualStudio.Solution;
             string csTemplatePath = solution.GetProjectTemplate("ConsoleApplication.zip", "CSharp");
             string prjPath = Path.Combine(Configuration.SolutionDirectory, Configuration.ProjectName);
+
             solution.Create(Configuration.SolutionDirectory, Configuration.SolutionName);
+            prjPath = Path.GetFullPath(prjPath);
             solution.AddFromTemplate(csTemplatePath, prjPath, Configuration.ProjectName, false);
+            
+            VSProject project = solution.Projects.Item(1).Object;
+            foreach (Item i in Configuration.Items)
+            {
+                project.References.Add(i.DllPath);
+            }
         }
     }
 }

@@ -85,6 +85,7 @@ namespace Org.OpenEngSB.Loom.Csharp.VisualStudio.Plugins.Assistants.UI
             SolutionWizard.Configuration.ProjectReferences = new List<string>(ProjectReferences);
             SolutionWizard.Configuration.ProjectName = textBox_project.Text;
             SolutionWizard.Configuration.SolutionName = textBox_solution.Text;
+            SolutionWizard.Configuration.SolutionDirectory = (string) label_destination.Content;
             SolutionWizard.CreateSolution();
             Close();
         }
